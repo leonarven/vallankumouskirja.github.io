@@ -1,0 +1,11 @@
+<ul id="songlist" class="songs-list-group list-group">
+    <li class="list-group-item"
+        ng-repeat="key in $root.songsArr"
+        ng-class="{ 'active' : $root.$state.params.song_key == key }"
+        ng-init="song = $root.songsIndex[key]">
+
+		<a ui-sref="index.song({ 'song_key' : song.key })">
+			<h4 class="title"><b class="number">{{ song.num }}</b> &ndash; {{ song.title }}</h4>
+		</a>
+	</li>
+</ul>

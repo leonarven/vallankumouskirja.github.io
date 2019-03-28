@@ -1,0 +1,64 @@
+
+<!DOCTYPE html>
+<html ng-app="laulukirja-app">
+    <head>
+        <base href="http://projektit.miron.fi/vallankumouskirja/" target="_blank" />
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+        <meta property="og:url"                content="http://projektit.miron.fi/vallankumouskirja/" />
+        <meta property="og:title"              content="Työväensitsien avaruusajan mobiililaulukirja" />
+        <meta property="og:description"        content="Pönötys nolliin ja zembaloetukeno tappiin! Tervetuloa vuosisadan upeimmille Työväensitseille! Nimestä huolimatta kyseessä eivät ole sen paremmin sitsit kuin vuosijuhlatkaan. Häpeilemätön agendamme on bilettää ilman sääntöjä, ja käyttää koko ilta puhdasoppiseen syömiseen, juomiseen ja laulamiseen. Yksi toivomus meillä kuitenkin on: niiden iänikuisten opiskelijahaalarien asemesta pue päällesi just sitä mitä haluat päällesi pukea! Sillä työväensitseillä etiketti on kuin kiljupullossa ikään: hutaisten tehty ja päälle liimattu, jos sitä on ollenkaan" />
+        <meta property="og:image"              content="http://projektit.miron.fi/vallankumouskirja/media/header.jpg" />
+
+        <title>Työväensitsien avaruusajan mobiililaulukirja</title>
+
+        <link href="https://fonts.googleapis.com/css?family=Cantarell" rel="stylesheet">
+        <link rel="stylesheet" href="/libs/bootstrap-3.3.6/css/bootstrap.min.css" media="screen" title="no title" charset="utf-8">
+        <link rel="stylesheet"type="text/css" href="worker.css" media="screen" title="no title" charset="utf-8">
+    </head>
+    <body ng-class="{ 'menu-open' : $root.songlist.open }">
+        <main>
+            <section id="song-content" class="col-xs-12"
+                     ng-class="{ 'col-sm-6 col-md-8 col-lg-9 col-sm-offset-6 col-md-offset-4 col-lg-offset-3' : $root.songlist.open }"
+                     ng-if="!!$songMeta">
+
+                <article ui-view="songMeta" id="sidebar-right"
+                         class="col-xs-12 col-sm-12 col-md-12 col-lg-3 col-lg-push-9 sidebar"></article>
+
+    			<article ui-view="songView" id="content"
+                         class="col-xs-12 col-sm-12 col-md-12 col-lg-8 col-lg-pull-0"></article>
+            </section>
+
+            <section ui-view="songsList" id="songlist-wrapper"
+                     class="sidebar col-xs-12 col-sm-6 col-md-4 col-lg-3"
+                     ng-class="{ '' : $root.songlist.open }"
+                     ng-if="!!$root.songlist.open"></section>
+
+        </main>
+
+        <header class="navbar navbar-default">
+            <div class="container-fluid">
+                 <div class="navbar-header">
+        			<ul class="nav navbar-nav pull-right">
+        				<li class="font-ctrl"><a class="font-decr-btn" ng-click="$root.setSongFont(-1)" href="">A-</a></li>
+        				<li class="font-ctrl"><a class="font-incr-btn" ng-click="$root.setSongFont(+1)" href="">A+</a></li>
+        			</ul>
+                    <a class="navbar-brand" ng-click="$root.songlist.open = !$root.songlist.open" href>
+                        <span class="visible-xs-inline" ng-hide="$root.songlist.open"><b class="glyphicon glyphicon-chevron-left"></b></span> Laululista
+                    </a>
+                </div>
+             </div>
+        </header>
+
+
+		<script src="libs/libs.js" charset="utf-8"></script>
+<!--		<script src="libs/angular.min.js" charset="utf-8"></script>
+		<script src="libs/angular-ui-router.min.js" charset="utf-8"></script>
+		<script src="libs/angular-ui-notification.js" charset="utf-8"></script>-->
+		<script type="text/javascript">
+			window.LaulukirjaApp = angular.module("laulukirja-app", ["ui.router", "ui-notification"]);
+		</script>
+		<script src="worker.js" charset="utf-8"></script>
+    </body>
+</html>
