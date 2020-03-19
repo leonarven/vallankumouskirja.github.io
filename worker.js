@@ -70,9 +70,13 @@ LaulukirjaApp.run(["$rootScope", "Notification", "$state", function($rootScope, 
 	$rootScope.songsIndex = {};
 	$rootScope.font_size = 12;
 	$rootScope.setSongFont = function(n){ $rootScope.font_size += n; };
+	$rootScope.increaseFont = function(n){ $rootScope.font_size *= 1.1; };
+	$rootScope.decreaseFont = function(n){ $rootScope.font_size *= 0.9; };
 	$rootScope.songlist = {
 		open : true
 	};
+
+	window.addEventListener("resize", $rootScope.$emit.bind( $rootScope, "resize" ));
 
 	$rootScope.$on('$stateChangeStart',function(event, toState, toParams, fromState, fromParams, _options) {
 		try {
@@ -112,24 +116,27 @@ LaulukirjaApp.controller("songListController", ["$rootScope", "$scope", "$stateP
 	$scope.$stateParams = $stateParams;
 	console.log(songsIndex);
 }]);
-LaulukirjaApp.controller("songViewController", ["$rootScope", "$scope", "$sce", "songsIndex", "$songMeta", "$songBody", function($rootScope, $scope, $sce, songsIndex, $songMeta, $songBody) {
+LaulukirjaApp.controller("songViewController", ["$rootScope", "$scope", "$sce", "songsIndex", "$songMeta", "$songBody", "$timeout", function( $rootScope, $scope, $sce, songsIndex, $songMeta, $songBody, $timeout ) {
 	var scrollStalker;
-//	console.log(songsIndex, $songBody);
+
 	$scope.$songMeta = $songMeta;
 	$scope.$songBody = $songBody;
 	var songBodyElem = document.getElementById("song-body");
 	songBodyElem.innerHTML = $songBody;
-/*
-	$scope.$watch(window.scrollY, function(){
-		console.log("scrolling");
-	})
-*/
 
-	$scope.$on("$destroy", function(){
-//		clearTimeout(clearTimeout(t));
-	});
+	$rootScope.$on( "resize", refreshFont );
 
-//	$scope.body = $sce.parseAsHtml($songBody);
+	function refreshFont() {
+		return $timeout(function(){
+			try {
+				var pre = document.getElementById( "song-body" );
+				var prs = pre.parentNode.offsetWidth / pre.offsetWidth;
+				$rootScope.font_size *= prs;
+			} catch(e) {
+				console.warn( "Unable to customize font size", e );
+			}
+		});
+	}
 }]);
 LaulukirjaApp.controller("songMetaController", ["$rootScope", "$scope", "songsIndex", "$songBody", "$songMeta", function($rootScope, $scope, songsIndex, $songBody, $songMeta) {
 //	console.log(songsIndex, $songBody, $songMeta);
