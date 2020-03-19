@@ -75,7 +75,7 @@ body > header > .container-fluid .navbar-nav .font-ctrl > a.font-incr-btn  {
     height: 100%;
     padding: 0px;
     opacity: 1;
-    transition: opacity 100ms;
+    transition: opacity 200ms;
 }
 #content.loading { opacity: 0; }
 

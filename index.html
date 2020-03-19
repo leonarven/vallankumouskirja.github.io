@@ -52,9 +52,39 @@
              </div>
         </header>
 
-
 		<script src="node_modules/angular/angular.min.js" charset="utf-8"></script>
 		<script src="node_modules/angular-ui-router/release/angular-ui-router.min.js" charset="utf-8"></script>
 		<script src="dist/worker.js" charset="utf-8"></script>
+
+		<script type="text/ng-template" id="partials/songlist.html">
+			<ul id="songlist" class="songs-list-group list-group">
+				<li class="list-group-item"
+					ng-repeat="key in $root.songsArr"
+					ng-class="{ 'active' : $root.$state.params.song_key == key }"
+					ng-init="song = $root.songsIndex[key]">
+
+					<a ui-sref="index.song({ 'song_key' : song.key })">
+						<h4 class="title"><b class="number">{{ song.num }}</b> &ndash; {{ song.title }}</h4>
+					</a>
+				</li>
+			</ul>
+		</script>
+
+		<script type="text/ng-template" id="partials/songmeta.html">
+    		<div id="songmeta">
+				<h2 class="title">{{ meta.title }}</h2>
+				<h3 class="author">{{ meta.author }}</h3>
+				<p class="description">{{ meta.description }}</p>
+				<ul class="links">
+					<li ng-repeat="link in meta.links">
+						<a ng-href="{{link.href}}" target="_blank" href="#"><i class="glyphicon glyphicon-link"></i> {{link.title}}</a>
+					</li>
+				</ul>
+	    	</div>
+		</script>
+
+		<script type="text/ng-template" id="partials/songview.html">
+    		<pre id="song-body" ng-style="{ 'font-size' : ($root.font_size / 10.0) + 'em' }"></pre>
+		</script>
     </body>
 </html>
