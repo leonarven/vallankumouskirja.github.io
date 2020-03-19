@@ -1,0 +1,19 @@
+{
+  "name": "vallankumouskirja",
+  "version": "2.0.0",
+  "description": "",
+  "main": "worker.js",
+  "scripts": {
+    "build": "babel src/worker.js --out-file dist/worker.js --source-maps"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/leonarven/vallankumouskirja.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/leonarven/vallankumouskirja/issues"
+  },
+  "homepage": "https://github.com/leonarven/vallankumouskirja#readme"
+}

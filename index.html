@@ -15,8 +15,8 @@
 
         <link href="https://fonts.googleapis.com/css?family=Cantarell" rel="stylesheet">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-        <link rel="stylesheet" href="worker.css">
-        <link rel="stylesheet" href="viva.css">
+        <link rel="stylesheet" href="dist/worker.css">
+        <link rel="stylesheet" href="dist/viva.css">
     </head>
     <body ng-class="{ 'menu-open' : $root.songlist.open }">
         <main>
@@ -53,13 +53,12 @@
         </header>
 
 
-		<script src="libs/libs.js" charset="utf-8"></script>
-<!--		<script src="libs/angular.min.js" charset="utf-8"></script>
+		<script src="dist/angular.min.js" charset="utf-8"></script>
 		<script src="libs/angular-ui-router.min.js" charset="utf-8"></script>
-		<script src="libs/angular-ui-notification.js" charset="utf-8"></script>-->
+		<script src="libs/angular-ui-notification.js" charset="utf-8"></script>
 		<script type="text/javascript">
 			window.LaulukirjaApp = angular.module("laulukirja-app", ["ui.router", "ui-notification"]);
 		</script>
-		<script src="worker.js" charset="utf-8"></script>
+		<script src="dist/worker.js" charset="utf-8"></script>
     </body>
 </html>
