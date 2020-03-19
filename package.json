@@ -14,10 +14,14 @@
   "license": "ISC",
   "depedencies": {
     "angular": "1.7.9",
-	"angular-ui-router": "1.0.25"
+    "angular-ui-router": "1.0.25"
   },
   "bugs": {
     "url": "https://github.com/leonarven/vallankumouskirja/issues"
   },
-  "homepage": "https://github.com/leonarven/vallankumouskirja#readme"
+  "homepage": "https://github.com/leonarven/vallankumouskirja#readme",
+  "dependencies": {
+    "angular": "^1.7.9",
+    "angular-ui-router": "^1.0.25"
+  }
 }
