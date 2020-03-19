@@ -132,6 +132,7 @@ LaulukirjaApp.controller("songViewController", ["$rootScope", "$scope", "$sce", 
 				var pre = document.getElementById( "song-body" );
 				var prs = pre.parentNode.offsetWidth / pre.offsetWidth;
 				$rootScope.font_size *= prs;
+				console.log( "refreshFont() :: ", $rootScope.font_size, "em" );
 			} catch(e) {
 				console.warn( "Unable to customize font size", e );
 			}
