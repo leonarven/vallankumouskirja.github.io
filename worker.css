@@ -33,12 +33,16 @@ body > header a.navbar-brand {
     font-size: 1.4em;
     background-repeat: no-repeat;
     background-size: auto 100%;
+    padding: 12px 15px 18px;
 
     -webkit-transition: text-shadow 0.2s linear;
     -moz-transition: text-shadow 0.2s linear;
     -ms-transition: text-shadow 0.2s linear;
     -o-transition: text-shadow 0.2s linear;
     transition: text-shadow 0.2s linear;
+}
+body > header a.navbar-brand span > .glyphicon {
+	top: 3px;
 }
 body > header a.navbar-brand:hover {
     text-shadow: 0px 0px 20px #479c00;
