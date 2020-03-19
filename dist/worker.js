@@ -1,3 +1,4 @@
+window.LaulukirjaApp = angular.module("laulukirja-app", ["ui.router"]);
 LaulukirjaApp.config(function ($stateProvider, $urlRouterProvider) {
   $urlRouterProvider.otherwise("/index");
   $stateProvider.state("index", {
@@ -68,7 +69,7 @@ LaulukirjaApp.config(function ($stateProvider, $urlRouterProvider) {
     }
   });
 });
-LaulukirjaApp.run(["$rootScope", "Notification", "$state", function ($rootScope, Notification, $state) {
+LaulukirjaApp.run(["$rootScope", "$state", function ($rootScope, $state) {
   $rootScope.$state = $state;
   $rootScope.songsIndex = {};
   $rootScope.font_size = 12;
@@ -98,7 +99,6 @@ LaulukirjaApp.run(["$rootScope", "Notification", "$state", function ($rootScope,
     }
   });
   $rootScope.$on('$stateChangeError', function (event, toState, toParams, fromState, fromParams) {
-    Notification.error('$stateChangeError @ ' + toState.name);
     console.error('$stateChangeError @ ' + toState.to, arguments);
   });
   $rootScope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
@@ -112,7 +112,6 @@ LaulukirjaApp.run(["$rootScope", "Notification", "$state", function ($rootScope,
     console.log('$viewContentLoaded', arguments);
   });
   $rootScope.$on('$stateNotFound', function (event, unfoundState, fromState, fromParams) {
-    if (!!unfoundState.to) Notification.error('$stateNotFound @ ' + unfoundState.to);
     console.error('$stateNotFound @ ' + unfoundState.to, arguments);
   });
 }]);
