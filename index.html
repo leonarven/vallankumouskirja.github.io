@@ -16,6 +16,7 @@
         <link href="https://fonts.googleapis.com/css?family=Cantarell" rel="stylesheet">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
         <link rel="stylesheet" href="worker.css">
+        <link rel="stylesheet" href="viva.css">
     </head>
     <body ng-class="{ 'menu-open' : $root.songlist.open }">
         <main>
@@ -27,7 +28,7 @@
 	class="col-xs-12 col-sm-12 col-md-12 col-lg-3 col-lg-push-9 sidebar"></article>-->
 
     			<article ui-view="songView" id="content"
-                         class="ng-hide col-xs-12 col-sm-12 col-md-12 col-lg-8 col-lg-pull-0" ng-hide="loading"></article>
+                         class="loading col-xs-12 col-sm-12 col-md-12 col-lg-8 col-lg-pull-0" ng-class="{ 'loading': loading }"></article>
             </section>
 
             <section ui-view="songsList" id="songlist-wrapper"
