@@ -121,21 +121,24 @@ LaulukirjaApp.controller("songViewController", ["$rootScope", "$scope", "$sce", 
 
 	$scope.$songMeta = $songMeta;
 	$scope.$songBody = $songBody;
+
 	var songBodyElem = document.getElementById("song-body");
 	songBodyElem.innerHTML = $songBody;
 
 	$rootScope.$on( "resize", refreshFont );
 
+	$scope.loading = refreshFont().then(function(){
+		$scope.loading = false;
+	});
+
 	function refreshFont() {
 		return $timeout(function(){
-			try {
-				var pre = document.getElementById( "song-body" );
-				var prs = pre.parentNode.offsetWidth / pre.offsetWidth;
-				$rootScope.font_size *= prs;
-				console.log( "refreshFont() :: ", $rootScope.font_size, "em" );
-			} catch(e) {
-				console.warn( "Unable to customize font size", e );
-			}
+			var pre = document.getElementById( "song-body" );
+			var prs = pre.parentNode.offsetWidth / pre.offsetWidth;
+			$rootScope.font_size *= prs;
+			console.log( "refreshFont() :: ", $rootScope.font_size, "em" );
+		}).catch(function( e ){
+			console.warn( "Unable to customize font size", e );
 		});
 	}
 }]);
