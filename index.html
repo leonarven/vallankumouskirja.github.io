@@ -56,15 +56,24 @@
 		<script src="dist/worker.js" charset="utf-8"></script>
 
 		<script type="text/ng-template" id="partials/songlist.html">
+			<div id="search" ng-init="search=''">
+				<input type="text" class="form-control" placeholder="Hae..." ng-model="search" ng-change="filter( search )">
+			</div>
+			
 			<ul id="songlist" class="songs-list-group list-group">
 				<li class="list-group-item"
 					ng-repeat="key in $root.songsArr"
+					ng-hide="songs[key].$$filtered"
 					ng-class="{ 'active' : $root.$state.params.song_key == key }"
 					ng-init="song = $root.songsIndex[key]">
 
 					<a ui-sref="index.song({ 'song_key' : song.key })">
 						<h4 class="title"><b class="number">{{ song.num }}</b> &ndash; {{ song.title }}</h4>
 					</a>
+				</li>
+
+				<li class="list-group-item no-results" ng-if="songsCount == 0">
+					<b><h4>Ei lauluja :&lt;</h4></b>
 				</li>
 			</ul>
 		</script>

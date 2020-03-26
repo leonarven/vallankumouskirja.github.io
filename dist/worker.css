@@ -155,6 +155,7 @@ body > header > .container-fluid .navbar-nav .font-ctrl > a.font-incr-btn  {
     -o-transition: background-color 0.2s linear, text-shadow 0.2s linear;
     transition: background-color 0.2s linear, text-shadow 0.2s linear;
 }
+#songlist li > b,
 #songlist li > a {
 	color: #000;
     display: block;
@@ -168,6 +169,11 @@ body > header > .container-fluid .navbar-nav .font-ctrl > a.font-incr-btn  {
     text-align: right;
 }
 
+#songlist li.no-results {
+	border: none;
+	background: transparent !important;
+	text-align: center;
+}
 
 #songmeta {
     padding: 0em 1em;
@@ -196,4 +202,14 @@ pre#song-body {
     font-size: 1.2em;
     padding: 1em 2em;
 	display: inline-block;
+}
+
+
+#search {
+	padding: 2px;
+}
+#search > input {
+	font-size: 2em;
+    line-height: 1em;
+    height: 2em;
 }

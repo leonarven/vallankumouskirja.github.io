@@ -18,17 +18,20 @@
 						method : "GET"
 					}).then(response => {
 						var songsIndex = response.data;
-						for(var key in songsIndex) {
+
+						for (var key in songsIndex) {
 							if (songsIndex[key].disabled) {
 								delete songsIndex[key];
-							} else {
-								songsIndex[key].key = key;
+								continue;
 							}
+
+							songsIndex[ key ] = new Song( key, songsIndex[ key ]);
 						}
+
 						$rootScope.songsArr = Object.keys(songsIndex);
-						$rootScope.songsArr.sort((a, b) => {
-							return songsIndex[a].num - songsIndex[b].num;
-						});
+						
+						$rootScope.songsArr.sort((a, b) => (songsIndex[a].num - songsIndex[b].num));
+						
 						return $rootScope.songsIndex = songsIndex;
 					}).catch(console.error.bind(console, "Cannot GET 'songs/index.json'"));
 				}]
@@ -120,6 +123,36 @@
 
 	.controller("songListController", ["$rootScope", "$scope", "$stateParams", "songsIndex", function( $rootScope, $scope, $stateParams, songsIndex ) {
 		$scope.$stateParams = $stateParams;
+
+		$scope.songs = songsIndex;
+		$scope.songsCount = 0;
+
+		$scope.filter = search => {
+			search = search.toLowerCase( ).trim( );
+			if (search) search = search.split( /\s+/g );
+
+			$scope.songsCount = 0;
+
+			for (var key in songsIndex) {
+				if (search) {
+					songsIndex[ key ].$$filtered = true;
+					search.forEach( str => {
+						if (songsIndex[ key ].$search.indexOf( str ) != -1) {
+							songsIndex[ key ].$$filtered = false;
+						}
+					});
+				} else {
+					songsIndex[ key ].$$filtered = false;
+				}
+
+				if (!songsIndex[ key ].$$filtered) $scope.songsCount++;
+			}
+		};
+
+		setTimeout(() => {
+			$scope.filter();
+		});
+
 		console.log(songsIndex);
 	}])
 
@@ -171,4 +204,15 @@
 			console.log($rootScope.songsIndex);
 		}]
 	});
+
+
+
+	class Song {
+		constructor( key, data ) {
+			this.key = key;
+			for (var v in data) this[ v ] = data[ v ];
+
+			this.$search = this.title.toLowerCase();
+		}
+	}
 })();
