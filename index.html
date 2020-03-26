@@ -56,8 +56,10 @@
 		<script src="dist/worker.js" charset="utf-8"></script>
 
 		<script type="text/ng-template" id="partials/songlist.html">
-			<div id="search" ng-init="search=''">
-				<input type="text" class="form-control" placeholder="Hae..." ng-model="search" ng-change="filter( search )">
+			<div id="search">
+				<input type="text" class="form-control" placeholder="Hae..." ng-model="search" ng-change="runFilter()">
+
+				<a class="clear-btn glyphicon glyphicon-remove" ng-if="search.trim().length" ng-click="runFilter('')"></a>
 			</div>
 			
 			<ul id="songlist" class="songs-list-group list-group">
@@ -85,7 +87,7 @@
 				<p class="description">{{ meta.description }}</p>
 				<ul class="links">
 					<li ng-repeat="link in meta.links">
-						<a ng-href="{{link.href}}" target="_blank" href="#"><i class="glyphicon glyphicon-link"></i> {{link.title}}</a>
+						<a ng-href="{{ link.href }}" target="_blank" href="#"><i class="glyphicon glyphicon-link"></i> {{link.title}}</a>
 					</li>
 				</ul>
 	    	</div>

@@ -127,8 +127,11 @@
 		$scope.songs = songsIndex;
 		$scope.songsCount = 0;
 
-		$scope.filter = search => {
-			search = search.toLowerCase( ).trim( );
+		$scope.search = "";
+
+		$scope.runFilter = search => {
+			var search = $scope.search = (search == null ? $scope.search : search) || '';
+			if (search) search = search.toLowerCase( ).trim( );
 			if (search) search = search.split( /\s+/g );
 
 			$scope.songsCount = 0;
@@ -150,7 +153,7 @@
 		};
 
 		setTimeout(() => {
-			$scope.filter();
+			$scope.runFilter();
 		});
 
 		console.log(songsIndex);

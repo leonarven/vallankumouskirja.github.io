@@ -207,9 +207,18 @@ pre#song-body {
 
 #search {
 	padding: 2px;
+	position: relative;
 }
 #search > input {
 	font-size: 2em;
     line-height: 1em;
     height: 2em;
+}
+#search > .clear-btn {
+	position: absolute;
+	top: 2px;
+	right: 2px;
+	font-size: 2em;
+	text-decoration: none;
+	padding: 14px;
 }
