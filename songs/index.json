@@ -360,9 +360,12 @@
         "links": {},
         "num": 50
     },
-"kolme-pikku-miesta":{
-"title":"Kolme pikku miestä",
-"num":51
-
-}
+	"kolme-pikku-miesta":{
+		"title":"Kolme pikku miestä",
+		"num": 51
+	},
+	"juo-kaljas-laulellen": {
+		"title": "Juo kaljas laulellen",
+		"num": 52
+	}
 }
