@@ -75,7 +75,9 @@
 				</li>
 
 				<li class="list-group-item no-results" ng-if="songsCount == 0">
-					<b><h4>Ei lauluja :&lt;</h4></b>
+					<b><h4>
+						{{ (songsCount == 0) ? 'Ei lauluja :&lt;' : '...' }}
+					</h4></b>
 				</li>
 			</ul>
 		</script>
