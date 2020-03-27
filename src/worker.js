@@ -72,7 +72,7 @@
 		})
 	}])
 
-	.run([ "$rootScope", "$state", function($rootScope, $state) {
+	.run([ "$rootScope", "$state", function( $rootScope, $state ) {
 		$rootScope.$state = $state;
 		$rootScope.songsIndex = {};
 		$rootScope.font_size = 12;
@@ -80,6 +80,8 @@
 		$rootScope.setSongFont  = n => $rootScope.font_size += n;
 		$rootScope.increaseFont = n => $rootScope.font_size *= 1.1;
 		$rootScope.decreaseFont = n => $rootScope.font_size *= 0.9;
+	
+		$rootScope.search = "";
 
 		$rootScope.songlist = {
 			open : true
@@ -105,10 +107,9 @@
 
 		$rootScope.$on('$stateChangeSuccess', (event, toState, toParams, fromState, fromParams)=>{
 			console.log( '$stateChangeSuccess @ '+toState.to, arguments );
+			
 			if (toState.name == 'index') $rootScope.songlist.open = true;
-			else if (toState.name == 'index.song') {
-				if (window.innerWidth <= 768) $rootScope.songlist.open = false;
-			}
+	
 			angular.element( document.body ).attr("state", toState.name);
 		});
 
@@ -127,10 +128,8 @@
 		$scope.songs = songsIndex;
 		$scope.songsCount = 0;
 
-		$scope.search = "";
-
 		$scope.runFilter = search => {
-			var search = $scope.search = (search == null ? $scope.search : search) || '';
+			var search = $rootScope.search = (search == null ? $rootScope.search : search) || '';
 			if (search) search = search.toLowerCase( ).trim( );
 			if (search) search = search.split( /\s+/g );
 
@@ -167,6 +166,8 @@
 
 		var songBodyElem = document.getElementById("song-body");
 		songBodyElem.innerHTML = $songBody;
+
+		if (window.innerWidth <= 768) $rootScope.songlist.open = false;
 
 		$rootScope.$on( "resize", refreshFont );
 
