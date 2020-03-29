@@ -1,29 +1,29 @@
 {
-  "name": "vallankumouskirja",
-  "version": "2.0.0",
-  "description": "",
-  "main": "worker.js",
+  "name"        : "vallankumouskirja",
+  "version"     : "2.1.0",
+  "description" : "",
+  "main"        : "worker.js",
   "scripts": {
-    "build": "babel src/worker.js --out-file dist/worker.js --source-maps"
+    "build"  : "babel src/worker.js --out-file dist/worker.js --source-maps",
+	"bundle" : "cat node_modules/angular/angular.min.js node_modules/angular-ui-router/release/angular-ui-router.min.js > dist/bundle.js; cat node_modules/bootstrap/dist/css/bootstrap.min.css > dist/bundle.css"
   },
   "repository": {
-    "type": "git",
-    "url": "git+https://github.com/leonarven/vallankumouskirja.git"
+    "type" : "git",
+    "url"  : "git+https://github.com/leonarven/vallankumouskirja.git"
   },
-  "author": "",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/leonarven/vallankumouskirja/issues"
   },
   "homepage": "https://github.com/leonarven/vallankumouskirja#readme",
   "dependencies": {
-    "angular": "^1.7.9",
-    "angular-ui-router": "^1.0.25",
-    "bootstrap": "^3.3.6"
+    "angular"           : "^1.7.9",
+    "angular-ui-router" : "^1.0.25",
+    "bootstrap"         : "^3.3.6"
   },
   "devDependencies": {
-    "@babel/core": "^7.9.0",
-    "@babel/preset-env": "^7.9.0",
-    "babel-minify": "^0.5.1"
+    "@babel/core"       : "^7.9.0",
+    "@babel/preset-env" : "^7.9.0",
+    "babel-minify"      : "^0.5.1"
   }
 }
