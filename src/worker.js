@@ -9,6 +9,10 @@
 				"songsList@" : {
 					controller  : "songListController",
 					templateUrl : "partials/songlist.html"
+				},
+				"songView@" : {
+					controller : [ "$scope", "$timeout", function( $scope, $timeout ){ $scope.loading = $timeout(()=>{ $scope.loading = false; }); }],
+					template: "<h3 style='text-align:left;padding-left:1em;'><b class='glyphicon glyphicon-share-alt' style='transform:rotate(230deg);'></b> Valitse laulu laululistasta</h3>"
 				}
 			},
 			resolve : {
