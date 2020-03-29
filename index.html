@@ -113,7 +113,7 @@
 		</script>
 
 		<script type="text/ng-template" id="partials/songview.html">
-    		<pre id="song-body" ng-style="{ 'font-size' : ($root.font_size / 10.0) + 'em' }"></pre>
+    		<pre ng-include="$songMeta.$templateUrl" id="song-body" ng-style="{ 'font-size' : ($root.font_size / 10.0) + 'em' }"></pre>
 		</script>
     </body>
 </html>
