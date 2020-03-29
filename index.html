@@ -81,10 +81,9 @@
 			
 			<ul id="songlist" class="songs-list-group list-group">
 				<li class="list-group-item"
-					ng-repeat="key in $root.songsArr"
-					ng-hide="songs[key].$$filtered"
-					ng-class="{ 'active' : $root.$state.params.song_key == key }"
-					ng-init="song = $root.songsIndex[key]">
+					ng-repeat="song in Songs.sorted"
+					ng-hide="song.$$filtered"
+					ng-class="{ 'active' : $root.$state.params.song_key == song.key }">
 
 					<a ui-sref="index.song({ 'song_key' : song.key })">
 						<h4 class="title"><b class="number">{{ song.num }}</b> &ndash; {{ song.title }}</h4>
@@ -113,7 +112,7 @@
 		</script>
 
 		<script type="text/ng-template" id="partials/songview.html">
-    		<pre ng-include="$songMeta.$templateUrl" id="song-body" ng-style="{ 'font-size' : ($root.font_size / 10.0) + 'em' }"></pre>
+    		<pre ng-include="$song.$templateUrl" id="song-body" ng-style="{ 'font-size' : ($root.font_size / 10.0) + 'em' }"></pre>
 		</script>
     </body>
 </html>
