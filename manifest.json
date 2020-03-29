@@ -1,0 +1,19 @@
+{
+	"lang"             : "fi",
+	"dir"              : "ltr",
+	"name"             : "Vallankumouslaulukirja",
+	"short_name"       : "laulukirja",
+	"start_url"        : ".",
+	"display"          : "minimal-ui",
+	"background_color" : "#ffffff",
+	"theme_color"      : "#ff0000",
+	"icons": [{
+		"src"   : "media/icon_144.png",
+		"sizes" : "144x144",
+		"type"  : "image/png"
+	}, {
+		"src"   : "media/icon_128.png",
+		"sizes" : "32x32 64x64 128x128",
+		"type"  : "image/png"
+	}]
+}
