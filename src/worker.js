@@ -1,4 +1,3 @@
-(() => {
 	class Song {
 		constructor( key, data ) {
 			this.key = key;
@@ -69,6 +68,8 @@
 		}
 	})();
 
+
+(() => {
 	/************************************************************/
 
 	angular.module("laulukirja-app", [ "ui.router" ])
@@ -162,24 +163,6 @@
 		$rootScope.$on('$stateNotFound', (event, unfoundState, fromState, fromParams) => {
 			console.error('$stateNotFound @ '+unfoundState.to, arguments);
 		});
-	}])
-
-	.service( "Songs", [ "$http", function( $http ) {
-		
-		var index = this.index = {};
-
-		/****************/
-
-		this.init = url => ($http({ url }).then(response => {
-			for (var key in response.data) {
-				if (response.data[ key ].disable) continue;
-				index[ key ] = new Song( key, response.data[ key ]);
-			}
-			
-			this.sorted = Object.keys( index ).map(key => index[ key ]).sort((a, b) => (a.num - b.num));
-
-			return index;
-		}));
 	}])
 
 	.controller( "songListController", ["$rootScope", "$scope", "$stateParams", "songsIndex", "Songs", function( $rootScope, $scope, $stateParams, songsIndex, Songs ) {
