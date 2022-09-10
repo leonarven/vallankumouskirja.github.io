@@ -144,11 +144,11 @@
 			}
 		});
 
-		$rootScope.$on('$stateChangeError', (event, toState, toParams, fromState, fromParams)=>{
+		$rootScope.$on('$stateChangeError', function( event, toState, toParams, fromState, fromParams ) {
 			console.error( '$stateChangeError @ '+toState.to, arguments );
 		});
 
-		$rootScope.$on('$stateChangeSuccess', (event, toState, toParams, fromState, fromParams)=>{
+		$rootScope.$on('$stateChangeSuccess', function( event, toState, toParams, fromState, fromParams ) {
 			console.log( '$stateChangeSuccess @ '+toState.to, arguments );
 			
 			if (toState.name == 'index') $rootScope.songlist.open = true;
@@ -156,11 +156,11 @@
 			angular.element( document.body ).attr("state", toState.name);
 		});
 
-		$rootScope.$on('$viewContentLoaded', event => {
+		$rootScope.$on('$viewContentLoaded', function( event ) {
 			console.log('$viewContentLoaded', arguments);
 		});
 
-		$rootScope.$on('$stateNotFound', (event, unfoundState, fromState, fromParams) => {
+		$rootScope.$on('$stateNotFound', function( event, unfoundState, fromState, fromParams ) {
 			console.error('$stateNotFound @ '+unfoundState.to, arguments);
 		});
 	}])
