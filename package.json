@@ -5,7 +5,7 @@
   "main"        : "worker.js",
   "scripts": {
     "build"  : "babel src/worker.js --out-file dist/worker.js --source-maps",
-	"bundle" : "cat node_modules/angular/angular.min.js node_modules/angular-ui-router/release/angular-ui-router.min.js > dist/bundle.js; cat node_modules/bootstrap/dist/css/bootstrap.min.css > dist/bundle.css"
+	"bundle" : "cat node_modules/angular/angular.min.js node_modules/angular-ui-router/release/angular-ui-router.min.js | awk '!/sourceMappingURL=/' > dist/bundle.js; cat node_modules/bootstrap/dist/css/bootstrap.min.css | awk '!/sourceMappingURL=/' > dist/bundle.css"
   },
   "repository": {
     "type" : "git",
