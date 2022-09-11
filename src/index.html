@@ -13,7 +13,7 @@
 		<title>Työväensitsien avaruusajan mobiililaulukirja</title>
 
 			<link  href="../node_modules/bootstrap/dist/css/bootstrap.min.css" charset="utf-8" rel="stylesheet">        
-
+			<script src="../node_modules/hammerjs/hammer.js"></script>
 			<script src="../node_modules/angular/angular.js"></script>
 
 			<script src="../node_modules/angular-ui-router/release/angular-ui-router.min.js" type="module"></script>
@@ -61,8 +61,8 @@
 			<div class="container-fluid">
 				<div class="navbar-header">
 					<ul class="nav navbar-nav pull-right">
-						<li class="font-ctrl"><a class="font-decr-btn" ng-click="$root.setSongFont(-1)" href="">A-</a></li>
-						<li class="font-ctrl"><a class="font-incr-btn" ng-click="$root.setSongFont(+1)" href="">A+</a></li>
+						<li class="font-ctrl"><a class="font-decr-btn" ng-click="$root.$broadcast('decreaseFont')" href="">A-</a></li>
+						<li class="font-ctrl"><a class="font-incr-btn" ng-click="$root.$broadcast('increaseFont')" href="">A+</a></li>
 					</ul>
 					<a class="navbar-brand" ng-click="$root.songlist.open = !$root.songlist.open" href>
 						<span><b class="glyphicon glyphicon-menu-hamburger"></b></span> Laululista
