@@ -5,7 +5,7 @@
 	"source": "src/index.html",
 	"targets": {
 		"default": {
-			"publicUrl":".",
+			"publicUrl": ".",
 			"distDir": "./docs",
 			"sourceMap": false
 		}
@@ -33,7 +33,6 @@
 		"@babel/preset-env": "^7.9.0",
 		"@parcel/packager-raw-url": "^2.7.0",
 		"@parcel/transformer-webmanifest": "^2.7.0",
-		"babel-minify": "^0.5.1",
 		"parcel": "^2.7.0"
 	}
 }
