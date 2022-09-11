@@ -23,7 +23,7 @@
 	},
 	"homepage": "https://github.com/leonarven/vallankumouskirja#readme",
 	"dependencies": {
-		"angular": "^1.7.9",
+		"angular": "^1.8.3",
 		"angular-ui-router": "^1.0.25",
 		"babel-minify": "^0.5.2",
 		"bootstrap": "^3.3.6"
