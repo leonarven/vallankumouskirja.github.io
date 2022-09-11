@@ -80,8 +80,34 @@
 			url        : "/index",
 			views : {
 				"songsList@" : {
-					controller  : "songListController",
-					templateUrl : "partials/songlist.html"
+					controller : "songListController",
+					
+					template   : `
+<div id="search">
+	<input type="text" class="form-control" placeholder="Hae..." ng-model="$root.search" ng-change="runFilter()">
+
+	<a class="clear-btn glyphicon glyphicon-remove" ng-if="$root.search.trim().length" ng-click="runFilter('')"></a>
+</div>
+
+<ul id="songlist" class="songs-list-group list-group">
+	<li class="list-group-item"
+	    ng-repeat="song in Songs.sorted"
+	    ng-hide="song.$$filtered"
+	    ng-class="{ 'active' : $root.$state.params.song_key == song.key }">
+
+		<a ui-sref="index.song({ 'song_key' : song.key })">
+			<h4 class="title"><b class="number">{{ song.num }}</b> &ndash; {{ song.title }}</h4>
+		</a>
+	</li>
+
+	<li class="list-group-item no-results" ng-if="songsCount == 0">
+		<b><h4>
+				{{ (songsCount == 0) ? 'Ei lauluja :&lt;' : '...' }}
+			</h4></b>
+	</li>
+</ul>
+
+					`
 				},
 				"songView@" : {
 					controller : [ "$scope", "$timeout", function( $scope, $timeout ){ $scope.loading = $timeout(()=>{ $scope.loading = false; }); }],
@@ -96,11 +122,24 @@
 			views : {
 				"songView@" : {
 					controller  : "songViewController",
-					templateUrl : "partials/songview.html"
+					template : `
+<pre ng-include="$song.$templateUrl" id="song-body" ng-style="{ 'font-size' : ($root.font_size / 10.0) + 'em' }"></pre>
+					`
 				},
 				"songMeta@" : {
 					controller  : "songMetaController",
-					templateUrl : "partials/songmeta.html"
+					template : `
+<div id="songmeta">
+	<h2 class="title">{{ meta.title }}</h2>
+	<h3 class="author">{{ meta.author }}</h3>
+	<p class="description">{{ meta.description }}</p>
+	<ul class="links">
+		<li ng-repeat="link in meta.links">
+			<a ng-href="{{ link.href }}" target="_blank" href="#"><i class="glyphicon glyphicon-link"></i> {{link.title}}</a>
+		</li>
+	</ul>
+</div>
+					`
 				}
 			},
 			resolve : {
