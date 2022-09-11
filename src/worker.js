@@ -156,15 +156,22 @@
 		})
 	}])
 
-	.run([ "$rootScope", "$state", "Songs", function( $rootScope, $state, Songs ) {
+	.run([ "$rootScope", "$state", "$timeout", "Songs", function( $rootScope, $state, $timeout, Songs ) {
+
 		$rootScope.$state = $state;
 		$rootScope.songsIndex = {};
-		$rootScope.font_size = 12;
-
-		$rootScope.setSongFont  = n => $rootScope.font_size += n;
-		$rootScope.increaseFont = n => $rootScope.font_size *= 1.1;
-		$rootScope.decreaseFont = n => $rootScope.font_size *= 0.9;
 	
+		$rootScope.font_size = 10;
+		$rootScope.resetFont = resetFont;
+
+		$rootScope.$on( "resize", resetFont );
+		$rootScope.$on( "resetFont", resetFont );
+		$rootScope.$on( "toggleFont", toggleFont );
+		$rootScope.$on( "increaseFont", ( evt, n ) => ($rootScope.font_size *= (n || 1.25) ));
+		$rootScope.$on( "decreaseFont", ( evt, n ) => ($rootScope.font_size *= (n || 0.8) ));
+
+
+
 		$rootScope.search = "";
 
 		$rootScope.songlist = {
@@ -204,6 +211,65 @@
 		$rootScope.$on('$stateNotFound', function( event, unfoundState, fromState, fromParams ) {
 			console.error('$stateNotFound @ '+unfoundState.to, arguments);
 		});
+	
+		function calcLargeFont() {
+			var pre = document.getElementById( "song-body" );
+			var prs = Math.max( 0, (pre.parentNode.parentNode.offsetWidth - 10) / pre.offsetWidth );
+			return $rootScope.font_size * prs;
+
+		}
+		function calcMiddleFont() {
+			var pre = document.getElementById( "song-body" );
+			var prs = Math.max( 0, pre.parentNode.offsetWidth / pre.offsetWidth );
+			return $rootScope.font_size * prs;
+		}
+
+		function toggleFont() {
+			return $timeout(function(){
+				var middleFont = calcMiddleFont();
+				var largeFont = calcLargeFont();
+				var font = $rootScope.font_size;
+	
+				var middleDiff = Math.abs( font - middleFont );
+				var largeDiff  = Math.abs( font - largeFont );
+
+				if (largeDiff < .1) {
+					// Lähellä large-kokoa -> toggletetaan middleksi
+					font = middleFont;
+
+				} else if (middleDiff < .1) {
+					// Lähellä middle-kokoa -> toggletetaan largeksi
+					font = largeFont;
+
+				} else if (font < middleFont) {
+					font = middleFont;
+
+				} else if (font > largeFont) {
+					font = largeFont;
+
+				} else if (middleDiff > largeDiff) {
+					font = middleFont;
+
+				} else {
+					font = largeFont;
+				}
+
+				$rootScope.font_size = font;
+
+			}).catch(function( e ) {
+				console.warn( "Unable to customize font size", e );
+			});
+
+		}
+
+		function resetFont() {
+			return $timeout(function(){
+				$rootScope.font_size = calcMiddleFont();
+				console.log( "resetFont() :: ", $rootScope.font_size, "em" );
+			}).catch(function( e ){
+				console.warn( "Unable to customize font size", e );
+			});
+		}
 	}])
 
 	.controller( "songListController", ["$rootScope", "$scope", "$stateParams", "songsIndex", "Songs", function( $rootScope, $scope, $stateParams, songsIndex, Songs ) {
@@ -249,22 +315,28 @@
 
 		if (window.innerWidth <= 768) $rootScope.songlist.open = false;
 
-		$rootScope.$on( "resize", refreshFont );
-
-		$scope.loading = refreshFont().then(() => {
+		$scope.loading = $rootScope.resetFont().then(() => {
+		
 			$scope.loading = false;
 		});
 
-		function refreshFont() {
-			return $timeout(function(){
-				var pre = document.getElementById( "song-body" );
-				var prs = pre.parentNode.offsetWidth / pre.offsetWidth;
-				if (prs > 0) $rootScope.font_size *= prs;
-				console.log( "refreshFont() :: ", $rootScope.font_size, "em" );
-			}).catch(function( e ){
-				console.warn( "Unable to customize font size", e );
-			});
-		}
+		try {
+			songContentElem = ( document.getElementById( "song-content" ));
+
+			if (window.Hammer && songContentElem) {
+				
+				if ($rootScope.hammertime) $rootScope.hammertime.off( 'tap' );
+
+				$rootScope.hammertime = new Hammer( songContentElem, { });
+
+				$rootScope.hammertime.on( 'tap', function( evt ) {
+					$rootScope.$broadcast('toggleFont');
+				});
+
+				$rootScope.hammertime.get('tap').set({ taps: 2 });
+			}
+		} catch (error) { console.error( error ); }
+
 	}])
 
 	.controller("songMetaController", ["$rootScope", "$scope", "$song", function($rootScope, $scope, $song) {

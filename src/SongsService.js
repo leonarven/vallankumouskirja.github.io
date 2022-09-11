@@ -28,7 +28,7 @@ angular.module( 'laulukirja-app' ).service( "Songs", [ "$http", "$injector", fun
 
 			return $http({ url }).then( response => {
 
-				return this.setIndex( response );
+				return this.setIndex( response.data );
 			});
 		};
 	}])
