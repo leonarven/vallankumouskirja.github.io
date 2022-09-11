@@ -3,7 +3,9 @@
 			this.key = key;
 			for (var v in data) this[ v ] = data[ v ];
 
-			this.$templateUrl = `songs/${ key }/song.html`;
+			if (this.$templateUrl == null) {
+				this.$templateUrl = `songs/${ key }/song.html`;
+			}
 
 			this.$search = new SearchString({
 				title : data.title || "",
