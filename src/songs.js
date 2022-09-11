@@ -1,5 +1,4 @@
-
-
+angular.module( 'laulukirja-app' ).constant( 'songs', {
     "kenen-joukoissa-seisot": {
         "title": "Kenen joukoissa seisot",
         "author": null,
@@ -354,5 +353,23 @@
         "author": null,
         "links": {},
         "num": 10
-    }
-}
+    },
+    "nalkamaan-laulu": {
+        "title": "Nälkämaan laulu",
+        "author": null,
+        "links": {},
+        "num": 50
+    },
+	"kolme-pikku-miesta":{
+		"title":"Kolme pikku miestä",
+		"num": 51
+	},
+	"juo-kaljas-laulellen": {
+		"title": "Juo kaljas laulellen",
+		"num": 52
+	},
+	"helsinki-shangri-la": {
+		"title": "Helsinki Shangri-La", 
+		"num": 53
+	}
+});
