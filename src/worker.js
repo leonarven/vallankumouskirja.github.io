@@ -1,75 +1,4 @@
-	class Song {
-		constructor( key, data ) {
-			this.key = key;
-			for (var v in data) this[ v ] = data[ v ];
-
-			if (this.$templateUrl == null) {
-				this.$templateUrl = `songs/${ key }/song.html`;
-			}
-
-			this.$search = new SearchString({
-				title : data.title || "",
-				num   : data.num == null ? "" : data.num.toString().trim()
-			});
-		}
-	}
-
-	class SearchString{
-		constructor( argv ){
-			this.$string   = "";
-			this.$contains = {}
-
-			argv && this.extend( argv );
-		}
-
-		extend( argv ){
-			var str = null;
-			if (typeof argv == "object") {
-				str = "";
-				for (var key in argv) {
-					if (argv[ key ] != null) {
-						argv[ key ] = SearchString.filterString2searchKey( argv[ key ]);
-						this.$contains[ key ] = (this.$contains[ key ] || "") + " " + argv[ key ];
-						str += " " + argv[ key ];
-					}
-				}
-			} else if (typeof argv == "string" && argv.trim().length > 0 ){
-				str = argv;
-			}
-
-			if (typeof str == "string") {
-				this.$string = SearchString.filterString2searchKey( this.$string, str );
-			} else if (argv) {
-				console.warn( "SearchString.extend :: Invalid argument" );
-			}
-		}
-
-		toString() {
-			return this.$string;
-		}
-	}
-
-	SearchString.filterString2searchKey = (function(){
-		var regexp_torm  = /[\.,:'\(\)\[\]\{\}\/\\]/g;  // Poistettavat (whitespacella korvattavat) merkit
-		var regexp_toosm = /\s.{0,3}\s/g;                 // Liian lyhyet whitespacen ympäröimät merkkijonot ( 0-3 merkkiä) (myös whitespacen, (2-5 merkkiä))
-
-		return function( str ) {
-			if (arguments.length > 1) return SearchString.filterString2searchKey( Array.prototype.slice.call( arguments ));
-			if (Array.isArray( str )) str = parseArray2string( str );
-			if (typeof str != "string") return console.warn( "SearchString.filterString2searchkey :: Invalid argument", typeof str, str ), "";
-
-			return (" " + str.toLowerCase().replace( regexp_torm, " " ) + " ").replace( regexp_toosm, " " ).trim();
-		};
-
-		function parseArray2string( arr ){
-			return arr.filter(function( v ) {
-				return !!v;
-			}).map(function( v ) {
-				return Array.isArray( v ) ? parseArray2string( v ) : v;
-			}).join(" ");
-		}
-	})();
-
+import Song from './js/Song.js';
 
 (() => {
 	/************************************************************/
@@ -125,7 +54,7 @@
 				"songView@" : {
 					controller  : "songViewController",
 					template : `
-<pre ng-include="$song.$templateUrl" id="song-body" ng-style="{ 'font-size' : ($root.font_size / 10.0) + 'em' }"></pre>
+<pre ng-init="init()" ng-include="$song.$templateUrl" id="song-body" ng-style="{ 'font-size' : ($root.font_size / 10.0) + 'em' }"></pre>
 					`
 				},
 				"songMeta@" : {
@@ -145,18 +74,26 @@
 				}
 			},
 			resolve : {
-				"$song" : [ "$stateParams", "$templateRequest", "songsIndex", function( $stateParams, $templateRequest, index ) {
+				"$song" : [ "$stateParams", "$templateRequest", "$sce", "songsIndex", function( $stateParams, $templateRequest, $sce, index ) {
 					var key = $stateParams.song_key, song = index[key];
 
 					if (!song) throw "Could not found song '"+ key +"'";
 
-					return $templateRequest( song.$templateUrl ).then(() => song);
+					if (song.lyrics) return song;
+
+					return $templateRequest( song.$templateUrl ).then( lyrics => {
+
+						song.lyrics = lyrics;
+						song.$lyrics = $sce.trustAsHtml( lyrics );
+
+						return song;
+					});
 				}]
 			}
 		})
 	}])
 
-	.run([ "$rootScope", "$state", "$timeout", "Songs", function( $rootScope, $state, $timeout, Songs ) {
+	.run([ "$rootScope", "$state", "$timeout", "$templateCache", "Songs", function( $rootScope, $state, $timeout, Songs ) {
 
 		$rootScope.$state = $state;
 		$rootScope.songsIndex = {};
@@ -214,12 +151,14 @@
 	
 		function calcLargeFont() {
 			var pre = document.getElementById( "song-body" );
+			if (!pre) return 12;
 			var prs = Math.max( 0, (pre.parentNode.parentNode.offsetWidth - 10) / pre.offsetWidth );
 			return $rootScope.font_size * prs;
 
 		}
 		function calcMiddleFont() {
 			var pre = document.getElementById( "song-body" );
+			if (!pre) return 10;
 			var prs = Math.max( 0, pre.parentNode.offsetWidth / pre.offsetWidth );
 			return $rootScope.font_size * prs;
 		}
@@ -315,28 +254,43 @@
 
 		if (window.innerWidth <= 768) $rootScope.songlist.open = false;
 
-		$scope.loading = $rootScope.resetFont().then(() => {
-		
-			$scope.loading = false;
-		});
+		$scope.loading = true;
 
-		try {
-			songContentElem = ( document.getElementById( "song-content" ));
+		$scope.init = () => {
 
-			if (window.Hammer && songContentElem) {
+			return $timeout(() => {
+
+				return $rootScope.resetFont();
+
+			}).then(() => {
+			
+				try {
+					var songContentElem = document.getElementById( "song-content" );
+
+					if (window.Hammer && songContentElem) {
+						
+						if ($rootScope.hammertime) {
+							$rootScope.hammertime.off( 'tap' );
+							$rootScope.hammertime.off( 'pinch' );
+						}
+
+						$rootScope.hammertime = new Hammer( songContentElem, { });
+
+						$rootScope.hammertime.on( 'tap', function( evt ) {
+							$rootScope.$broadcast('toggleFont');
+						});
+
+						$rootScope.hammertime.on( 'pinch', function( evt ) {
+						});
+
+						$rootScope.hammertime.get( 'tap' ).set({ taps: 2 });
+					}
+
+				} catch (error) { console.error( error ); }
 				
-				if ($rootScope.hammertime) $rootScope.hammertime.off( 'tap' );
-
-				$rootScope.hammertime = new Hammer( songContentElem, { });
-
-				$rootScope.hammertime.on( 'tap', function( evt ) {
-					$rootScope.$broadcast('toggleFont');
-				});
-
-				$rootScope.hammertime.get('tap').set({ taps: 2 });
-			}
-		} catch (error) { console.error( error ); }
-
+				$scope.loading = false;
+			});
+		};
 	}])
 
 	.controller("songMetaController", ["$rootScope", "$scope", "$song", function($rootScope, $scope, $song) {
