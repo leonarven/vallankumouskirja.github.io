@@ -2,9 +2,11 @@
 	"name": "vallankumouskirja",
 	"version": "3.0.1",
 	"description": "",
-	"source": "src/index.html",
 	"targets": {
 		"default": {
+			"source": "src/index.html",
+			"context": "browser",
+			"outputFormat": "commonjs",
 			"publicUrl": ".",
 			"distDir": "./docs",
 			"sourceMap": false

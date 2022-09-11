@@ -8,4 +8,4 @@ for (var key in songs_json) {
 	if (songs[key] != null)  songs_json[ key ].$templateUrl = songs[ key ];
 }
 
-angular.module( 'laulukirja-app' ).constant( 'songs', songs_json );
+export default songs_json;

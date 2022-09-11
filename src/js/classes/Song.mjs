@@ -1,4 +1,4 @@
-import SearchString from './SearchString.js';
+import SearchString from './SearchString.mjs';
 
 class Song {
 	constructor( key, data ) {
