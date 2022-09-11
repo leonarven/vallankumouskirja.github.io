@@ -34,6 +34,7 @@
 		"@parcel/packager-raw-url": "^2.7.0",
 		"@parcel/resolver-glob": "^2.7.0",
 		"@parcel/transformer-webmanifest": "^2.7.0",
-		"parcel": "^2.7.0"
+		"parcel": "^2.7.0",
+		"parcel-transformer-markdown": "^2.1.1"
 	}
 }
