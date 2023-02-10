@@ -1,0 +1,1 @@
+import './ajs.app.ts';

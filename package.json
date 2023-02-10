@@ -13,9 +13,10 @@
 		}
 	},
 	"scripts": {
-		"build": "parcel build --target default",
+		"watch":  "parcel watch --target default",
+		"build":  "parcel build --target default",
 		"server": "node_modules/.bin/http-server docs/",
-		"serve": "parcel build --target default && node_modules/.bin/http-server docs/"
+		"serve":  "parcel build --target default && node_modules/.bin/http-server docs/"
 	},
 	"repository": {
 		"type": "git",
@@ -40,6 +41,7 @@
 		"@parcel/transformer-webmanifest": "^2.7.0",
 		"babel-minify": "^0.5.2",
 		"http-server": "^14.1.1",
+		"ngma": "^1.0.6",
 		"parcel": "^2.7.0",
 		"parcel-transformer-markdown": "^2.1.1"
 	}

@@ -1,0 +1,233 @@
+@font-face {
+  font-family: Cantarell;
+  font-style: normal;
+  font-weight: 400;
+  src: local(Cantarell Regular), local(Cantarell-Regular), url("https://fonts.gstatic.com/s/cantarell/v9/B50NF7ZDq37KMUvlO015jKJrPqySLQ.woff2") format("woff2");
+  unicode-range: U+??, U+131, U+152-153, U+2BB-2BC, U+2C6, U+2DA, U+2DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: Cantarell, sans-serif;
+  overflow-y: scroll;
+}
+
+main {
+  position: absolute;
+  top: 54px;
+  left: 0;
+  right: 0;
+}
+
+body > header {
+  width: 100%;
+  height: 54px;
+  background-size: auto 100%;
+  border: none !important;
+  border-radius: 0 !important;
+  position: fixed !important;
+}
+
+body > header > .container-fluid {
+  height: 100%;
+}
+
+body > header > .container-fluid > .navbar-header {
+  height: 100%;
+  width: 100%;
+  margin-right: 0;
+}
+
+body > header a.navbar-brand {
+  height: 100%;
+  -o-transition: text-shadow .2s linear;
+  background-repeat: no-repeat;
+  background-size: auto 100%;
+  padding: 12px 15px 18px;
+  font-size: 1.4em;
+  transition: text-shadow .2s linear;
+  color: #000 !important;
+}
+
+body > header a.navbar-brand span > .glyphicon {
+  top: 3px;
+}
+
+body > header a.navbar-brand:hover {
+  text-shadow: 0 0 20px #479c00;
+  cursor: pointer;
+}
+
+body > header > .container-fluid .navbar-nav {
+  margin: 0;
+}
+
+body > header > .container-fluid .navbar-nav .font-ctrl {
+  float: left;
+  font-size: 1.6em;
+}
+
+body > header > .container-fluid .navbar-nav .font-ctrl > a {
+  color: #35670b;
+  padding: 15px 7px;
+}
+
+body > header > .container-fluid .navbar-nav .font-ctrl > a:hover {
+  color: #000;
+}
+
+body > header > .container-fluid .navbar-nav .font-ctrl > a.font-decr-btn {
+  font-size: .8em;
+}
+
+body > header > .container-fluid .navbar-nav .font-ctrl > a.font-incr-btn {
+  font-size: 1.1em;
+}
+
+#content {
+  height: 100%;
+  opacity: 1;
+  text-align: center;
+  padding: 0;
+  transition: opacity .2s;
+}
+
+#content.loading {
+  opacity: 0;
+}
+
+#song-content {
+  padding: 0;
+}
+
+.sidebar {
+  height: 100%;
+  padding: 0 !important;
+}
+
+#songlist-wrapper {
+  margin-right: -1em;
+  position: fixed;
+  top: 0;
+  padding-top: 54px !important;
+}
+
+#sidebar-right {
+  background-color: #ff8484;
+  outline: 1px solid #ff4848;
+}
+
+@media (min-width: 1200px) {
+  #sidebar-right {
+    position: fixed;
+  }
+}
+
+.sidebar ul {
+  height: 100%;
+  height: calc(100% - 60px);
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  overflow-y: scroll;
+}
+
+.sidebar ul::-webkit-scrollbar {
+  width: .2em;
+  background-color: #0000;
+}
+
+.sidebar ul::-webkit-scrollbar-track {
+  background-color: #0000;
+}
+
+.sidebar ul::-webkit-scrollbar-thumb {
+  background-color: #000;
+  outline: none;
+}
+
+#songlist {
+  margin-right: -.2em;
+}
+
+#songlist li {
+  -o-transition: background-color .2s linear, text-shadow .2s linear;
+  border-bottom: 1px solid #969696;
+  padding: 0;
+  font-size: 1.2em;
+  transition: background-color .2s linear, text-shadow .2s linear;
+}
+
+#songlist li > b, #songlist li > a {
+  color: #000;
+  padding: .3em;
+  text-decoration: none;
+  display: block;
+}
+
+#songlist li > a:hover {
+  text-decoration: none;
+}
+
+#songlist li > a .author {
+  text-align: right;
+}
+
+#songlist li.no-results {
+  text-align: center;
+  border: none;
+  background: none !important;
+}
+
+#songmeta {
+  border-bottom: 1px solid #ff7676;
+  padding: 0 1em;
+}
+
+#songmeta .title {
+  margin: .3em;
+}
+
+#songmeta .author {
+  text-align: right;
+}
+
+#songmeta .links {
+  margin-left: 2em;
+}
+
+#songmeta .links > li > a {
+  font-size: 1.3em;
+}
+
+pre#song-body {
+  color: #000;
+  background-color: #0000;
+  border: none;
+  padding: 1em 2em;
+  font-size: 1.2em;
+  display: inline-block;
+}
+
+#search {
+  padding: 2px;
+  position: relative;
+}
+
+#search > input {
+  height: 2em;
+  font-size: 28px;
+  line-height: 1em;
+}
+
+#search > .clear-btn {
+  padding: 14px;
+  font-size: 2em;
+  text-decoration: none;
+  position: absolute;
+  top: 2px;
+  right: 2px;
+}
+
