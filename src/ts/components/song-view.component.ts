@@ -1,8 +1,12 @@
+import { SongListService } from '../services/song-list.service';
+
+let hammertime;
+
 export class SongViewController {
 
-	static $inject = ["$rootScope", "$scope", "$sce", "currentSong", "$timeout", "fontService", "songList" ];
+	static $inject = ["$scope", "$sce", "currentSong", "$timeout", "fontService", "songList" ];
 
-	constructor( $rootScope, $scope, $sce, currentSong, $timeout, fontService, songList ) {
+	constructor( $scope, $sce, currentSong, $timeout, fontService, songList: SongListService ) {
 			
 		console.log( "songViewController :: Initiated" );
 		
@@ -35,21 +39,21 @@ export class SongViewController {
 
 					if (window.Hammer && songContentElem) {
 						
-						if ($rootScope.hammertime) {
-							$rootScope.hammertime.off( 'tap' );
-							$rootScope.hammertime.off( 'pinch' );
+						if (hammertime) {
+							hammertime.off( 'tap' );
+							hammertime.off( 'pinch' );
 						}
 
-						$rootScope.hammertime = new Hammer( songContentElem, { });
+						hammertime = new Hammer( songContentElem, { });
 
-						$rootScope.hammertime.on( 'tap', function( evt ) {
-							$rootScope.$broadcast('toggleFont');
+						hammertime.on( 'tap', function( evt ) {
+							//$rootScope.$broadcast('toggleFont');
+							fontService.events.$emit( 'toggleFont' );
 						});
 
-						$rootScope.hammertime.on( 'pinch', function( evt ) {
-						});
+						//hammertime.on( 'pinch', function( evt ) {});
 
-						$rootScope.hammertime.get( 'tap' ).set({ taps: 2 });
+						hammertime.get( 'tap' ).set({ taps: 2 });
 					}
 
 				} catch (error) { console.error( error ); }

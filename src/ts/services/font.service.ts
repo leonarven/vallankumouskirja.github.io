@@ -1,24 +1,37 @@
+
+import { ResizeService } from './resize.service';
+
+import { ScopeLikeEvents } from '../classes/scope-like-events';
+
 export class AjsFontService {	
 
-	static $inject = [ "$rootScope", "$state", "$timeout", "$templateCache", "Songs" ];
+	static $inject = [ "$state", "$timeout", "resize" ];
 
 	size: number;
 
 	resetFont: ()=>{};
 
-	constructor( $rootScope: any, $state: any, $timeout: any, Songs: any ) {
+	events = new ScopeLikeEvents();
 
-		const self = $rootScope.font = this;
+	constructor( $state: any, $timeout: any, resize: ResizeService ) {
+
+		const self = this;
 		
 		this.size = 10;
 		
 		this.resetFont = resetFont;
 
-		$rootScope.$on( "resize", resetFont );
-		$rootScope.$on( "resetFont", resetFont );
-		$rootScope.$on( "toggleFont", toggleFont );
-		$rootScope.$on( "increaseFont", ( evt: any, n: number ) => (self.size *= (n || 1.25) ));
-		$rootScope.$on( "decreaseFont", ( evt: any, n: number ) => (self.size *= (n || 0.8) ));
+		resize.$on( "resize", resetFont );
+		
+		this.events.$on( "resetFont", resetFont );
+		this.events.$on( "toggleFont", toggleFont );
+		this.events.$on( "increaseFont", ( evt: any, n: number ) => (self.size *= (n || 1.25) ));
+		this.events.$on( "decreaseFont", ( evt: any, n: number ) => (self.size *= (n || 0.8) ));
+
+		//$rootScope.$on( "resetFont", resetFont );
+		//$rootScope.$on( "toggleFont", toggleFont );
+		//$rootScope.$on( "increaseFont", ( evt: any, n: number ) => (self.size *= (n || 1.25) ));
+		//$rootScope.$on( "decreaseFont", ( evt: any, n: number ) => (self.size *= (n || 0.8) ));
 
 
 		function calcLargeFont(): number {

@@ -1,17 +1,19 @@
+import { AjsSongsService as SongsService } from './songs.service';
+
 export class CurrentSongService {
 
 	$injector;
 	$templateRequest;
 	$sce;
-	songsIndex;
+	Songs;
 
-	static $inject = [ "$injector","$templateRequest", "$sce", "songs" ];
+	static $inject = [ "$injector","$templateRequest", "$sce", "Songs" ];
 
-	constructor( $injector, $templateRequest, $sce, songsIndex ) {
-		this.$injector     = $injector;
+	constructor( $injector, $templateRequest, $sce, Songs: SongsService ) {
+		this.$injector        = $injector;
 		this.$templateRequest = $templateRequest;
 		this.$sce             = $sce;
-		this.songsIndex       = songsIndex;
+		this.Songs            = Songs;
 	}
 
 	async get() {
@@ -19,7 +21,7 @@ export class CurrentSongService {
 		
 		if (!key) throw "Missing song_key!";
 		
-		let song = this.songsIndex[key];
+		let song = this.Songs.index[key];
 
 		if (!song) throw "Could not found song '"+ key +"'";
 
