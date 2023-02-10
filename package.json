@@ -13,7 +13,9 @@
 		}
 	},
 	"scripts": {
-		"build": "parcel build --target default"
+		"build": "parcel build --target default",
+		"server": "node_modules/.bin/http-server docs/",
+		"serve": "parcel build --target default && node_modules/.bin/http-server docs/"
 	},
 	"repository": {
 		"type": "git",
@@ -26,7 +28,7 @@
 	"homepage": "https://github.com/leonarven/vallankumouskirja#readme",
 	"dependencies": {
 		"angular": "^1.7.9",
-		"angular-ui-router": "^1.0.25",
+		"angular-ui-router": "^1.0.30",
 		"bootstrap": "^3.3.6",
 		"hammerjs": "^2.0.8"
 	},
@@ -37,6 +39,7 @@
 		"@parcel/resolver-glob": "^2.7.0",
 		"@parcel/transformer-webmanifest": "^2.7.0",
 		"babel-minify": "^0.5.2",
+		"http-server": "^14.1.1",
 		"parcel": "^2.7.0",
 		"parcel-transformer-markdown": "^2.1.1"
 	}
