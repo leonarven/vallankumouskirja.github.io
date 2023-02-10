@@ -5,7 +5,8 @@
 	"scripts": {
 		"ng": "ng",
 		"build": "ng build",
-		"watch": "ng build --watch"
+		"watch": "ng build --watch -c development",
+		"server": "node_modules/.bin/http-server docs"
 	},
 	"repository": {
 		"type": "git",

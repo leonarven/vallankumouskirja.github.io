@@ -20,7 +20,12 @@ export class AjsSongsService {
 		this.$http = $http;
 		this.$injector = $injector;
 
-		var index = this.index = {};
+		this.index = {};
+
+		try {
+			this.setIndex( this.$injector.get( "songs" ) );
+		} catch (e) {}
+
 	}
 
 	setIndex( index: ISongIndex ) {
@@ -38,11 +43,6 @@ export class AjsSongsService {
 	}
 
 	init( url: string ) {
-
-		try {
-			return this.setIndex( this.$injector.get( "songs" ) );
-		} catch (e) {}
-
 		return this.$http({ url }).then(( response: any ) => {
 
 			return this.setIndex( response.data );
