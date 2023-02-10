@@ -5,15 +5,15 @@ import { SongListController } from './ts/components/SongListController';
 import { SongViewController } from './ts/components/SongViewController';
 
 import songs from './songs';
-
-angular.module("laulukirja-app", [ "ui.router" ])
+console.log(songs);
+window.angular.module( "laulukirja-app", [ "ui.router" ])
 
 .constant(   'songs',              songs )
 
 .service(    "Songs",              AjsSongsService )
 .service(    'fontService',        AjsFontService )
 
-.config([ "$stateProvider", "$urlRouterProvider", function($stateProvider, $urlRouterProvider){
+.config([ "$stateProvider", "$urlRouterProvider", function( $stateProvider: any, $urlRouterProvider: any ) {
 	$urlRouterProvider.otherwise("/index");
 	$stateProvider.state("index", {
 		url        : "/index",
@@ -45,7 +45,7 @@ angular.module("laulukirja-app", [ "ui.router" ])
 </ul>`
 			},
 			"songView@" : {
-				controller : [ "$scope", "$timeout", function( $scope, $timeout ){ $scope.loading = $timeout(()=>{ $scope.loading = false; }); }],
+				controller : [ "$scope", "$timeout", function( $scope: any, $timeout: any ) { $scope.loading = $timeout(()=>{ $scope.loading = false; }); }],
 				template: "<h3 style='text-align:left;padding-left:1em;'><b class='glyphicon glyphicon-share-alt' style='transform:rotate(230deg);'></b> Valitse laulu laululistasta</h3>"
 			}
 		},
@@ -77,14 +77,14 @@ angular.module("laulukirja-app", [ "ui.router" ])
 			}
 		},
 		resolve : {
-			"$song" : [ "$stateParams", "$templateRequest", "$sce", "songsIndex", function( $stateParams, $templateRequest, $sce, index ) {
+			"$song" : [ "$stateParams", "$templateRequest", "$sce", "songsIndex", function( $stateParams: any, $templateRequest: any, $sce: any, index: any ) {
 				var key = $stateParams.song_key, song = index[key];
 
 				if (!song) throw "Could not found song '"+ key +"'";
 
 				if (song.lyrics) return song;
 
-				return $templateRequest( song.$templateUrl ).then( lyrics => {
+				return $templateRequest( song.$templateUrl ).then(( lyrics: string ) => {
 
 					song.lyrics = lyrics;
 					song.$lyrics = $sce.trustAsHtml( lyrics );
@@ -96,7 +96,7 @@ angular.module("laulukirja-app", [ "ui.router" ])
 	})
 }])
 
-.run([ "$rootScope", "$state", "$timeout", "$templateCache", "Songs", "fontService", function( $rootScope, $state, $timeout, Songs, fontService ) {
+.run([ "$rootScope", "$state", "$timeout", "$templateCache", "Songs", "fontService", function( $rootScope: any, $state: any, $timeout: any, Songs: AjsSongsService, fontService: AjsFontService ) {
 
 	$rootScope.$state = $state;
 	$rootScope.songsIndex = {};
@@ -130,7 +130,7 @@ angular.module("laulukirja-app", [ "ui.router" ])
 		
 		if (toState.name == 'index') $rootScope.songlist.open = true;
 
-		angular.element( document.body ).attr("state", toState.name);
+		window.angular.element( document.body ).attr("state", toState.name);
 	});
 
 	$rootScope.$on('$viewContentLoaded', function( event ) {

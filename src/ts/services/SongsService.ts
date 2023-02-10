@@ -1,41 +1,51 @@
 
 import { Song } from '../../ts/classes/Song';
 
+interface ISongIndex {
+	[key: string]: Song;
+}
+
 export class AjsSongsService {
 	
 	static $inject = [ "$http", "$injector" ];
 
-	constructor( $http, $injector ) {
+	$http;
+	$injector;
+
+	index: ISongIndex;
+
+	sorted: Song[] = [];
+
+	constructor( $http: any, $injector: any ) {
+		this.$http = $http;
+		this.$injector = $injector;
 
 		var index = this.index = {};
+	}
 
-		/****************/
+	setIndex( index: ISongIndex ) {
 
-		this.setIndex = index => {
+		this.index = index;
 
-			this.index = index;
+		for (var key in this.index) {
+			if (this.index[ key ].disable) delete this.index[ key ];
+			else this.index[ key ] = new Song( key, this.index[ key ]);
+		}
 
-			for (var key in this.index) {
-				if (this.index[ key ].disable) delete this.index[ key ];
-				else this.index[ key ] = new Song( key, this.index[ key ]);
-			}
+		this.sorted = Object.keys( this.index ).map(( key: string ) => this.index[ key ]).sort(( a: Song, b: Song ) => ((a.num||0) - (b.num||0)));
 
-			this.sorted = Object.keys( this.index ).map( key => this.index[ key ]).sort((a, b) => (a.num - b.num));
+		return this.index;
+	}
 
-			return this.index;
-		};
+	init( url: string ) {
 
-		this.init = url => {
+		try {
+			return this.setIndex( this.$injector.get( "songs" ) );
+		} catch (e) {}
 
-			try {
-				return this.setIndex( $injector.get( "songs" ) );
+		return this.$http({ url }).then(( response: any ) => {
 
-			} catch (e) {}
-
-			return $http({ url }).then( response => {
-
-				return this.setIndex( response.data );
-			});
-		};
+			return this.setIndex( response.data );
+		});
 	}
 }

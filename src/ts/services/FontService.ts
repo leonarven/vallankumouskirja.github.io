@@ -2,9 +2,13 @@ export class AjsFontService {
 
 	static $inject = [ "$rootScope", "$state", "$timeout", "$templateCache", "Songs" ];
 
-	constructor( $rootScope, $state, $timeout, Songs ) {
+	size: number;
 
-		var font = $rootScope.font = this;
+	resetFont: ()=>{};
+
+	constructor( $rootScope: any, $state: any, $timeout: any, Songs: any ) {
+
+		const self = $rootScope.font = this;
 		
 		this.size = 10;
 		
@@ -13,32 +17,40 @@ export class AjsFontService {
 		$rootScope.$on( "resize", resetFont );
 		$rootScope.$on( "resetFont", resetFont );
 		$rootScope.$on( "toggleFont", toggleFont );
-		$rootScope.$on( "increaseFont", ( evt, n ) => (font.size *= (n || 1.25) ));
-		$rootScope.$on( "decreaseFont", ( evt, n ) => (font.size *= (n || 0.8) ));
+		$rootScope.$on( "increaseFont", ( evt: any, n: number ) => (self.size *= (n || 1.25) ));
+		$rootScope.$on( "decreaseFont", ( evt: any, n: number ) => (self.size *= (n || 0.8) ));
 
 
-		function calcLargeFont() {
-			var pre = document.getElementById( "song-body" );
-			if (!pre) return 12;
-			var prs = Math.max( 0, (pre.parentNode.parentNode.offsetWidth - 10) / pre.offsetWidth );
-			return font.size * prs;
+		function calcLargeFont(): number {
+			let pre: any = document.getElementById( "song-body" );
+			let parent: any = pre && pre.parentNode && pre.parentNode.parentNode;
+
+			if (!parent || !parent.offsetWidth || !pre || !pre.offsetWidth) return 12;
+
+			var prs = Math.max( 0, (parent.offsetWidth - 10) / pre.offsetWidth );
+
+			return self.size * prs;
 
 		}
-		function calcMiddleFont() {
-			var pre = document.getElementById( "song-body" );
-			if (!pre) return 10;
-			var prs = Math.max( 0, pre.parentNode.offsetWidth / pre.offsetWidth );
-			return font.size * prs;
+		function calcMiddleFont(): number {
+			let pre: any = document.getElementById( "song-body" );
+			let parent:any  = pre && pre.parentNode;
+
+			if (!parent || !parent.offsetWidth || !pre || !pre.offsetWidth) return 10;
+
+			var prs = Math.max( 0, parent.offsetWidth / pre.offsetWidth );
+
+			return self.size * prs;
 		}
 
 		function toggleFont() {
 			return $timeout(function(){
-				var middleFont = calcMiddleFont();
-				var largeFont = calcLargeFont();
-				var font = font.size;
+				let middleFont: number = calcMiddleFont();
+				let largeFont: number = calcLargeFont();
+				let font: number = self.size;
 	
-				var middleDiff = Math.abs( font - middleFont );
-				var largeDiff  = Math.abs( font - largeFont );
+				let middleDiff = Math.abs( font - middleFont );
+				let largeDiff  = Math.abs( font - largeFont );
 
 				if (largeDiff < .1) {
 					// Lähellä large-kokoa -> toggletetaan middleksi
@@ -61,9 +73,7 @@ export class AjsFontService {
 					font = largeFont;
 				}
 
-				font.size = font;
-
-			}).catch(function( e ) {
+			}).catch(( e: any ) => {
 				console.warn( "Unable to customize font size", e );
 			});
 
@@ -71,9 +81,9 @@ export class AjsFontService {
 
 		function resetFont() {
 			return $timeout(function(){
-				font.size = calcMiddleFont();
-				console.log( "resetFont() :: ", font.size, "em" );
-			}).catch(function( e ){
+				self.size = calcMiddleFont();
+				console.log( "resetFont() :: ", self.size, "em" );
+			}).catch(( e: any ) => {
 				console.warn( "Unable to customize font size", e );
 			});
 		}

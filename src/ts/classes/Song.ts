@@ -2,9 +2,22 @@
 import { SearchString } from './SearchString';
 
 export class Song {
-	constructor( key, data ) {
+
+	key: string;
+
+	title: any;
+	num?: number;
+	
+	disable?: boolean;
+
+	$templateUrl?: string;
+	$search: SearchString;
+
+	constructor( key: string, data: any ) {
+
 		this.key = key;
-		for (var v in data) this[ v ] = data[ v ];
+
+		for (let v in data) this[ v ] = data[ v ];
 
 		if (this.$templateUrl == null) {
 			this.$templateUrl = `songs/${ key }/song.html`;
