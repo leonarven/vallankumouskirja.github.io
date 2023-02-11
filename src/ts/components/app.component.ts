@@ -1,3 +1,4 @@
+import { SongListService } from '../services/song-list.service';
 
 export class AjsAppComponentController {
 
@@ -5,7 +6,7 @@ export class AjsAppComponentController {
 
 	songList;
 
-	constructor( $scope, songList ) {
+	constructor( $scope, songList: SongListService ) {
 		$scope.songList = this.songList = songList;
 	}
 }

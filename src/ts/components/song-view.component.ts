@@ -1,4 +1,6 @@
 import { SongListService } from '../services/song-list.service';
+import { CurrentSongService } from '../services/current-song.service';
+import { AjsFontService as FontService } from '../services/font.service';
 
 let hammertime;
 
@@ -6,7 +8,7 @@ export class SongViewController {
 
 	static $inject = ["$scope", "$sce", "currentSong", "$timeout", "fontService", "songList" ];
 
-	constructor( $scope, $sce, currentSong, $timeout, fontService, songList: SongListService ) {
+	constructor( $scope, $sce, currentSong: CurrentSongService, $timeout, fontService: FontService, songList: SongListService ) {
 			
 		console.log( "songViewController :: Initiated" );
 		

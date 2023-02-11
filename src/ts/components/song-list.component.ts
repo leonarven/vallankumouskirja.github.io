@@ -1,42 +1,43 @@
+
+import { Song } from '../classes/Song';
+import { AjsSongsService as SongsService } from '../services/songs.service';
+
 export class SongListController {
 
-	static $inject = [ "$scope", "$state", "Songs", "songList" ];
+	static $inject = [ "$scope", "$state", "Songs" ];
 
-	constructor( $scope, $state, Songs, songList ) {
+	constructor( $scope, $state, Songs: SongsService ) {
 	
 		$scope.$state = $state;
 		$scope.Songs = Songs;
-
-		$scope.songList = songList
 	
-		$scope.songsCount = 0;
+		let searchResult: (null|Song[]) = null;
 
-		$scope.runFilter = search => {
-			search = $scope.search = (search == null ? $scope.search : search) || '';
-			if (search) search = search.toLowerCase( ).trim( );
-			if (search) search = search.split( /\s+/g );
+		$scope.getSongs = () => {
 
-			$scope.songsCount = 0;
+			if (searchResult != null) return searchResult;
 
-			for (var song of Songs.sorted) {
-				if (search) {
-					song.$$filtered = true;
-					search.forEach( str => {
-						if (song.$search.$string.indexOf( str ) != -1) {
-							song.$$filtered = false;
-						}
-					});
-				} else {
-					song.$$filtered = false;
-				}
+			return Songs.sorted;
+		}
 
-				if (!song.$$filtered) $scope.songsCount++;
+		$scope.runFilter = ( searchStr = $scope.search ) => {
+
+			$scope.search = searchStr = searchStr || '';
+
+			searchResult = null;
+
+			let searchArr = searchStr.toLowerCase( ).trim( ).split( /\s+/g );
+
+			if (searchArr.length) {
+
+				searchResult = Songs.sorted.filter( song => {
+					for (let word of searchArr) {
+						if (song.$search.$string.indexOf( word ) != -1) return true;
+					}
+					return false;
+				});
 			}
 		};
-
-		setTimeout(() => {
-			$scope.runFilter();
-		});
 	}
 }
 
@@ -52,17 +53,16 @@ export const SongListComponent = {
 
 		<ul id="songlist" class="songs-list-group list-group">
 			<li class="list-group-item"
-				ng-repeat="song in Songs.sorted"
-				ng-hide="song.$$filtered"
+				ng-repeat="song in getSongs()"
 				ng-class="{ 'active' : $root.$state.params.song_key == song.key }"
 			>
 				<a ui-sref="index.song({ 'song_key' : song.key })">
 					<h4 class="title"><b class="number">{{ song.num }}</b> &ndash; {{ song.title }}</h4>
 				</a>
 			</li>
-	
-			<li class="list-group-item no-results" ng-if="songsCount == 0">
-				<b><h4>{{ (songsCount == 0) ? 'Ei lauluja :&lt;' : '...' }}</h4></b>
+
+			<li class="list-group-item no-results" ng-if="searchResult != null && searchResult.length == 0">
+				<b><h4>Ei lauluja :&lt;</h4></b>
 			</li>
 		</ul>`
 };

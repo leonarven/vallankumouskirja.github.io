@@ -8,7 +8,7 @@ export class SongListService {
 
 	static $inject = [ "resize" ];
 
-	constructor( resize ) {
+	constructor( resize: ResizeService ) {
 		this.resize = resize;
 	}
 

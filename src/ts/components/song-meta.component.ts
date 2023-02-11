@@ -1,8 +1,10 @@
+import { CurrentSongService } from '../services/current-song.service';
+
 export class SongMetaController {
 
 	static $inject = [ "$scope", "currentSong" ];
 
-	constructor( $scope, currentSong ) {
+	constructor( $scope, currentSong: CurrentSongService ) {
 
 		currentSong.get().then( $song => {
 
