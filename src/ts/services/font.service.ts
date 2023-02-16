@@ -1,11 +1,16 @@
 
+import { Injectable, Inject } from '@angular/core';
 import { ResizeService } from './resize.service';
 
+import { AjsTimeout  } from './ajs.service';
 import { ScopeLikeEvents } from '../classes/scope-like-events';
 
-export class AjsFontService {	
+@Injectable({
+	providedIn: 'root'
+})
+export class FontService {	
 
-	static $inject = [ "$state", "$timeout", "resize" ];
+	static $inject = [ "$timeout", "resize" ];
 
 	size: number;
 
@@ -13,7 +18,10 @@ export class AjsFontService {
 
 	events = new ScopeLikeEvents();
 
-	constructor( $state: any, $timeout: any, resize: ResizeService ) {
+	constructor(
+		@Inject(AjsTimeout) public $timeout,
+		resize: ResizeService
+	) {
 
 		const self = this;
 		
@@ -28,12 +36,6 @@ export class AjsFontService {
 		this.events.$on( "increaseFont", ( evt: any, n: number ) => (self.size *= (n || 1.25) ));
 		this.events.$on( "decreaseFont", ( evt: any, n: number ) => (self.size *= (n || 0.8) ));
 
-		//$rootScope.$on( "resetFont", resetFont );
-		//$rootScope.$on( "toggleFont", toggleFont );
-		//$rootScope.$on( "increaseFont", ( evt: any, n: number ) => (self.size *= (n || 1.25) ));
-		//$rootScope.$on( "decreaseFont", ( evt: any, n: number ) => (self.size *= (n || 0.8) ));
-
-
 		function calcLargeFont(): number {
 			let pre: any = document.getElementById( "song-body" );
 			let parent: any = pre && pre.parentNode && pre.parentNode.parentNode;
@@ -43,11 +45,12 @@ export class AjsFontService {
 			var prs = Math.max( 0, (parent.offsetWidth - 10) / pre.offsetWidth );
 
 			return self.size * prs;
-
 		}
+
 		function calcMiddleFont(): number {
 			let pre: any = document.getElementById( "song-body" );
-			let parent:any  = pre && pre.parentNode;
+			//let parent:any  = pre && pre.parentNode;
+			let parent: any = pre && pre.parentNode && pre.parentNode.parentNode;
 
 			if (!parent || !parent.offsetWidth || !pre || !pre.offsetWidth) return 10;
 
@@ -101,6 +104,22 @@ export class AjsFontService {
 			});
 		}
 
+	}
+
+	getFont(): number {
+		return this.size;
+	};
+
+	setFont( size: number ): number {
+		return this.size = size;
+	}
+
+	decreaseFont( x = 0.8 ): number {
+		return this.setFont( this.size * x );
+	}
+
+	increaseFont( x = 1.25 ): number {
+		return this.setFont( this.size * x );
 	}
 }
 

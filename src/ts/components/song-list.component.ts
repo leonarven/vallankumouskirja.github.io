@@ -1,13 +1,51 @@
 
+import { Component, Inject } from '@angular/core';
 import { Song } from '../classes/Song';
-import { AjsSongsService as SongsService } from '../services/songs.service';
+import { LoadingService } from '../services/loading.service';
+import { SongsService   } from '../services/songs.service';
+import { CurrentSongService   } from '../services/current-song.service';
+import { AjsTimeout, AjsState } from '../services/ajs.service';
 
-export class SongListController {
+@Component({
+	selector: 'song-list',
+	template: 
+	`<div id="search">
+		<input type="text" class="form-control" placeholder="Hae..." ng-model="search" ng-change="runFilter()">
+
+		<a style="cursor:pointer" class="clear-btn glyphicon glyphicon-remove" ng-if="search.trim().length" ng-click="runFilter('')"></a>
+	</div>
+
+	<ul id="songlist" class="songs-list-group list-group">
+		<li class="list-group-item"
+			*ngFor="let song of getSongs()"
+			ng-class="{ 'active' : $root.$state.params.song_key == song.key }"
+		>
+			<a style="cursor:pointer" (click)="currentSong.select( song.key )">
+				<h4 class="title"><b class="number">{{ song.num }}</b> &ndash; {{ song.title }}</h4>
+			</a>
+		</li>
+
+		<li class="list-group-item no-results" ng-if="searchResult != null && searchResult.length == 0">
+			<b><h4>Ei lauluja :&lt;</h4></b>
+		</li>
+	</ul>`
+})
+export class SongListComponent {
 
 	static $inject = [ "$scope", "$state", "Songs" ];
 
-	constructor( $scope, $state, Songs: SongsService ) {
-	
+	search;
+	runFilter;
+	getSongs;
+	Songs;
+	$state;
+
+	constructor( @Inject( AjsState ) $state, public currentSong: CurrentSongService, Songs: SongsService ) {
+
+		this.$state = $state;
+
+		let $scope = this;
+		
 		$scope.$state = $state;
 		$scope.Songs = Songs;
 	
@@ -41,33 +79,14 @@ export class SongListController {
 	}
 }
 
-export const SongListComponent = {
-	controller : SongListController,
+@Component({
 
-	template   : `
-		<div id="search">
-			<input type="text" class="form-control" placeholder="Hae..." ng-model="search" ng-change="runFilter()">
-
-			<a style="cursor:pointer" class="clear-btn glyphicon glyphicon-remove" ng-if="search.trim().length" ng-click="runFilter('')"></a>
-		</div>
-
-		<ul id="songlist" class="songs-list-group list-group">
-			<li class="list-group-item"
-				ng-repeat="song in getSongs()"
-				ng-class="{ 'active' : $root.$state.params.song_key == song.key }"
-			>
-				<a ui-sref="index.song({ 'song_key' : song.key })">
-					<h4 class="title"><b class="number">{{ song.num }}</b> &ndash; {{ song.title }}</h4>
-				</a>
-			</li>
-
-			<li class="list-group-item no-results" ng-if="searchResult != null && searchResult.length == 0">
-				<b><h4>Ei lauluja :&lt;</h4></b>
-			</li>
-		</ul>`
-};
-
-export const PlaceholderSongListComponent = {
-	controller : [ "$scope", "$timeout", function( $scope: any, $timeout: any ) { $scope.loading = $timeout(()=>{ $scope.loading = false; }); }],
+	selector: 'placeholder-song-list',
 	template: "<h3 style='text-align:left;padding-left:1em;'><b class='glyphicon glyphicon-share-alt' style='transform:rotate(230deg);'></b> Valitse laulu laululistasta</h3>"
+})
+export class PlaceholderSongListComponent {
+
+	constructor( @Inject( AjsTimeout ) $timeout, loading: LoadingService ) {
+		$timeout(()=>{ loading.set( 0 ); });
+	}
 };

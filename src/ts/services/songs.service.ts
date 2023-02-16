@@ -1,43 +1,50 @@
 
-import { Song } from '../../ts/classes/Song';
+import { Song, ISongJson } from '../../ts/classes/Song';
+
+import SONGS_META from '../../songs/index.json';
+
+interface ISongJsonIndex {
+	[key: string]: ISongJson;
+}
 
 interface ISongIndex {
 	[key: string]: Song;
 }
 
-export class AjsSongsService {
+export class SongsService {
 	
-	static $inject = [ "$http", "$injector" ];
+	static $inject = []; // "$http" ];
 
 	$http;
-	$injector;
 
 	index: ISongIndex;
-
 	sorted: Song[] = [];
 
-	constructor( $http: any, $injector: any ) {
-		this.$http = $http;
-		this.$injector = $injector;
+	constructor() { // $http: any ) {
+		this.$http = null; //$http;
 
 		this.index = {};
 
 		try {
-			this.setIndex( this.$injector.get( "songs" ) );
+			this.setIndex( SONGS_META );
 		} catch (e) {}
-
 	}
 
-	setIndex( index: ISongIndex ) {
+	setIndex( index: ISongJsonIndex ) {
 
-		this.index = index;
+		console.debug( "AjsSongService.setIndex()", index );
 
-		for (var key in this.index) {
-			if (this.index[ key ].disable) delete this.index[ key ];
-			else this.index[ key ] = new Song( key, this.index[ key ]);
+		this.index = {};
+		this.sorted = [];
+
+		for (var key in index) {
+			if (!index[ key ].disable) {
+				this.index[ key ] = new Song( key, index[ key ]);
+				this.sorted.push( this.index[ key ] );
+			}
 		}
 
-		this.sorted = Object.keys( this.index ).map(( key: string ) => this.index[ key ]).sort(( a: Song, b: Song ) => ((a.num||0) - (b.num||0)));
+		this.sorted.sort(( a: ISongJson, b: ISongJson ) => ((a.num||0) - (b.num||0)));
 
 		return this.index;
 	}

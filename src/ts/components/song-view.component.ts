@@ -1,19 +1,33 @@
+import { Inject, Component } from '@angular/core';
 import { SongListService } from '../services/song-list.service';
 import { CurrentSongService } from '../services/current-song.service';
-import { AjsFontService as FontService } from '../services/font.service';
+import { LoadingService } from '../services/loading.service';
+import { FontService } from '../services/font.service';
+import { AjsTimeout } from '../services/ajs.service';
 
 let hammertime;
 
-export class SongViewController {
+@Component({
+	selector: 'song-view',
+	template: `<pre
+		*ngIf="$song"
+		[innerHtml]="$song.lyrics"
+		id="song-body"
+		[ngStyle]="{ 'font-size.em' : (fontService.size / 10.0) }"
+	></pre>`
+})
+export class SongViewComponent {
 
-	static $inject = ["$scope", "$sce", "currentSong", "$timeout", "fontService", "songList" ];
+	init;
+	$song;
 
-	constructor( $scope, $sce, currentSong: CurrentSongService, $timeout, fontService: FontService, songList: SongListService ) {
+	constructor( @Inject( AjsTimeout ) $timeout, currentSong: CurrentSongService, public fontService: FontService, songList: SongListService, loading: LoadingService ) {
+
+		let $scope = this;
 			
 		console.log( "songViewController :: Initiated" );
 		
-		$scope.font = fontService;
-		$scope.loading = true;
+		loading.set( true );
 
 		currentSong.get().then( $song => {
 		
@@ -25,7 +39,9 @@ export class SongViewController {
 
 			if (window.innerWidth <= 768) songList.close();
 
-			return $timeout();
+			return $timeout(() => {
+				$scope.init();
+			});
 		});
 
 		$scope.init = () => {
@@ -60,15 +76,8 @@ export class SongViewController {
 
 				} catch (error) { console.error( error ); }
 				
-				$scope.loading = false;
+				loading.set( false );
 			});
 		};
 	}
 }
-
-export const SongViewComponent = {
-	controller: SongViewController,
-	template: `
-		<pre ng-if="$song" ng-init="init()" ng-include="$song.$templateUrl" id="song-body" ng-style="{ 'font-size' : (font.size / 10.0) + 'em' }"></pre>
-	`
-};

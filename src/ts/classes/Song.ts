@@ -1,7 +1,19 @@
 
 import { SearchString } from './SearchString';
 
-export class Song {
+export interface ISongJson {
+
+	author?: (null|string);
+
+	title: any;
+
+	num?: (null|number);
+	
+	disable?: boolean;
+
+}
+
+export class Song implements ISongJson {
 
 	key: string;
 
