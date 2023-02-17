@@ -38,7 +38,7 @@ export class FontService {
 
 		function calcLargeFont(): number {
 			let pre: any = document.getElementById( "song-body" );
-			let parent: any = pre && pre.parentNode && pre.parentNode.parentNode;
+			let parent: any = pre && pre.parentNode && pre.parentNode.parentNode && pre.parentNode.parentNode.parentNode;
 
 			if (!parent || !parent.offsetWidth || !pre || !pre.offsetWidth) return 12;
 
@@ -50,7 +50,7 @@ export class FontService {
 		function calcMiddleFont(): number {
 			let pre: any = document.getElementById( "song-body" );
 			//let parent:any  = pre && pre.parentNode;
-			let parent: any = pre && pre.parentNode && pre.parentNode.parentNode;
+			let parent: any = pre && pre.parentNode && pre.parentNode.parentNode && pre.parentNode.parentNode.parentNode;
 
 			if (!parent || !parent.offsetWidth || !pre || !pre.offsetWidth) return 10;
 

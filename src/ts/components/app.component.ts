@@ -27,10 +27,12 @@ export const AjsAppComponent = {
 			 ng-class="{ 'col-sm-6 col-md-8 col-lg-9 col-sm-offset-6 col-md-offset-4 col-lg-offset-3' : songList.isOpen() }"
 		>
 
-			<article ui-view id="content"
+			<article id="content"
 				 class="loading col-xs-12 col-sm-12 col-md-12 col-lg-pull-0"
 				 ng-class="{ 'loading': loading.is(), 'col-lg-8': songList.isOpen() }"
-			></article>
+			>
+				<ui-view></ui-view>
+			</article>
 
 		</section>
 
@@ -66,10 +68,12 @@ export const AjsAppComponent = {
 			 ng-class="{ 'col-sm-6 col-md-8 col-lg-9 col-sm-offset-6 col-md-offset-4 col-lg-offset-3' : songList.isOpen() }"
 		>
 
-			<article ui-view id="content"
+			<article id="content"
 				 class="loading col-xs-12 col-sm-12 col-md-12 col-lg-pull-0"
 				 ng-class="{ 'loading': loading.is(), 'col-lg-8': songList.isOpen() }"
-			></article>
+			>
+				<ui-view></ui-view>
+			</article>
 
 		</section>
 
