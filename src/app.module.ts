@@ -1,5 +1,6 @@
 import { DoBootstrap, NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule  } from '@angular/common';
+import { FormsModule   } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { UpgradeModule } from '@angular/upgrade/static';
 
@@ -25,8 +26,9 @@ import './ajs.app.ts';
 @NgModule({
 	imports: [
 		BrowserModule,
+		UpgradeModule,
 		CommonModule,
-		UpgradeModule
+		FormsModule,
 	],
 	declarations: [
 		AppComponent,
@@ -47,6 +49,8 @@ import './ajs.app.ts';
 		ResizeService,
 	],
 	exports: [
+		FormsModule,
+		CommonModule,
 		AppComponent,
 		SongListComponent,
 		SongViewComponent
