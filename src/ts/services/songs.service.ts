@@ -32,7 +32,7 @@ export class SongsService {
 
 	setIndex( index: ISongJsonIndex ) {
 
-		console.debug( "AjsSongService.setIndex()", index );
+		console.debug( "SongsService.setIndex()", index );
 
 		this.index = {};
 		this.sorted = [];

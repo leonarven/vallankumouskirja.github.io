@@ -37,8 +37,8 @@ export class FontService {
 		this.events.$on( "decreaseFont", ( evt: any, n: number ) => (self.size *= (n || 0.8) ));
 
 		function calcLargeFont(): number {
-			let pre: any = document.getElementById( "song-body" );
-			let parent: any = pre && pre.parentNode && pre.parentNode.parentNode && pre.parentNode.parentNode.parentNode;
+			let pre:    any = document.getElementById( "song-body" );
+			let parent: any = document.getElementById( "content" );
 
 			if (!parent || !parent.offsetWidth || !pre || !pre.offsetWidth) return 12;
 
@@ -48,9 +48,8 @@ export class FontService {
 		}
 
 		function calcMiddleFont(): number {
-			let pre: any = document.getElementById( "song-body" );
-			//let parent:any  = pre && pre.parentNode;
-			let parent: any = pre && pre.parentNode && pre.parentNode.parentNode && pre.parentNode.parentNode.parentNode;
+			let pre:    any = document.getElementById( "song-body" );
+			let parent: any = document.getElementById( "content" );
 
 			if (!parent || !parent.offsetWidth || !pre || !pre.offsetWidth) return 10;
 

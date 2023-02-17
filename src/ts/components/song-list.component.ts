@@ -78,15 +78,3 @@ export class SongListComponent {
 		};
 	}
 }
-
-@Component({
-
-	selector: 'placeholder-song-list',
-	template: "<h3 style='text-align:left;padding-left:1em;'><b class='glyphicon glyphicon-share-alt' style='transform:rotate(230deg);'></b> Valitse laulu laululistasta</h3>"
-})
-export class PlaceholderSongListComponent {
-
-	constructor( @Inject( AjsTimeout ) $timeout, loading: LoadingService ) {
-		$timeout(()=>{ loading.set( 0 ); });
-	}
-};
