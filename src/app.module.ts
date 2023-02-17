@@ -1,7 +1,9 @@
 import { DoBootstrap, NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule  } from '@angular/common';
+import { FormsModule   } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { UpgradeModule } from '@angular/upgrade/static';
+import { UIRouterUpgradeModule } from '@uirouter/angular-hybrid';
 
 import { ajsTimeoutServiceProvider, ajsInjectorServiceProvider, ajsSceServiceProvider, ajsTemplateRequestServiceProvider, ajsStateServiceProvider } from './ts/services/ajs.service'
 
@@ -12,26 +14,64 @@ import { CurrentSongService           } from './ts/services/current-song.service
 import { ResizeService                } from './ts/services/resize.service'; 
 import { LoadingService               } from './ts/services/loading.service'; 
 
-import { AppComponent      } from './ts/components/app.component';
-import { SongViewComponent } from './ts/components/song-view.component';
-import { SongListComponent } from './ts/components/song-list.component';
+import { AppComponent                } from './ts/components/app.component';
+import { SongMetaComponent            } from './ts/components/song-meta.component';
+import { SongViewComponent            } from './ts/components/song-view.component';
+import { PlaceholderSongViewComponent } from './ts/components/song-view.component';
+import { SongListComponent            } from './ts/components/song-list.component';
 
 import angular from 'angular';
 
-import './ajs.app.ts';
+import { AngularJSAppModule } from './ajs.app';
 
-//angular.element(() => angular.bootstrap( document, [ 'laulukirja' ]));
+/************************************************************/
+
+const states = [{
+	name: "index",
+	url: "/index",
+	componentSelector: 'placeholder-song-view',
+	componentName: 'placeholderSongView',
+	component: PlaceholderSongViewComponent,
+},{
+	name: "index.song",
+	url: "/:songKey",
+	componentSelector: 'song-view',
+	componentName: 'songView',
+	component: SongViewComponent,
+}];
+
+const ng2States = states.map( v => {
+	let { name, url, component } = v;
+	return {
+		name, url,
+		views: { '@': { component } }
+	};
+});
+
+const ng1States = [];
+
+AngularJSAppModule.run([ '$stateRegistry', '$urlService', ( $stateRegistry, $urlService ) => {
+
+	$urlService.rules.initial({ state: 'index' });
+
+	for (let state of ng1States) $stateRegistry.register( state );
+}]);
+
+/****************************************************************/
 
 @NgModule({
 	imports: [
 		BrowserModule,
+		UpgradeModule,
+		UIRouterUpgradeModule.forRoot({ states: ng2States }),
 		CommonModule,
-		UpgradeModule
+		FormsModule,
 	],
 	declarations: [
 		AppComponent,
 		SongListComponent,
-		SongViewComponent
+		SongViewComponent,
+		PlaceholderSongViewComponent,
 	],
 	providers: [
 		ajsTimeoutServiceProvider,
@@ -47,9 +87,12 @@ import './ajs.app.ts';
 		ResizeService,
 	],
 	exports: [
+		FormsModule,
+		CommonModule,
 		AppComponent,
 		SongListComponent,
-		SongViewComponent
+		SongViewComponent,
+		PlaceholderSongViewComponent,
 	]
 })
 export class AppModule implements DoBootstrap {
@@ -57,6 +100,6 @@ export class AppModule implements DoBootstrap {
 	constructor( private upgrade: UpgradeModule ) {}
 
 	ngDoBootstrap() {
-		this.upgrade.bootstrap( document.body, [ 'laulukirja' ] );
+		this.upgrade.bootstrap( document.body, [ AngularJSAppModule.name ], { strictDi: true });
 	}
 }

@@ -9,7 +9,13 @@ let hammertime;
 
 @Component({
 	selector: 'song-view',
-	template: `<pre
+	template: `
+	<pre
+		class="alert alert-danger"
+		style="display:inline-block;margin-top:1em;"
+       		*ngIf="error">{{ error }}</pre>
+
+	<pre
 		*ngIf="$song"
 		[innerHtml]="$song.lyrics"
 		id="song-body"
@@ -18,6 +24,7 @@ let hammertime;
 })
 export class SongViewComponent {
 
+	error;
 	init;
 	$song;
 
@@ -39,45 +46,79 @@ export class SongViewComponent {
 
 			if (window.innerWidth <= 768) songList.close();
 
-			return $timeout(() => {
-				$scope.init();
-			});
+			return $scope.init();
+
+		}).catch( error => {
+
+			if (!this.$song) {
+				this.error = new Error( "Laulua ei onnistuttu lataamaan!" );
+			} else {
+				this.error = error;
+			}
+
+			console.error( error );
+
+		}).then(() => {
+
+			loading.set( false );
 		});
 
 		$scope.init = () => {
 
 			return $timeout(() => {
 
+				let hammertime = iniHammer();
+
+				if (hammertime) hammertime.on( 'tap', function( evt ) {
+					//$rootScope.$broadcast('toggleFont');
+					fontService.events.$emit( 'toggleFont' );
+				});
+
 				return fontService.resetFont();
-
-			}).then(() => {
-			
-				try {
-					var songContentElem = document.getElementById( "song-content" );
-
-					if (window.Hammer && songContentElem) {
-						
-						if (hammertime) {
-							hammertime.off( 'tap' );
-							hammertime.off( 'pinch' );
-						}
-
-						hammertime = new Hammer( songContentElem, { });
-
-						hammertime.on( 'tap', function( evt ) {
-							//$rootScope.$broadcast('toggleFont');
-							fontService.events.$emit( 'toggleFont' );
-						});
-
-						//hammertime.on( 'pinch', function( evt ) {});
-
-						hammertime.get( 'tap' ).set({ taps: 2 });
-					}
-
-				} catch (error) { console.error( error ); }
-				
-				loading.set( false );
 			});
 		};
+	}
+}
+
+function iniHammer() {
+			
+	let hammertime;
+
+	try {
+		var songContentElem = document.getElementById( "song-content" );
+
+		if (window.Hammer && songContentElem) {
+	
+			hammertime = window.Hammer.instance;
+
+			if (hammertime) {
+				hammertime.off( 'tap' );
+				hammertime.off( 'pinch' );
+			}
+
+			hammertime = Hammer.instance= new Hammer( songContentElem, { });
+
+			//hammertime.on( 'pinch', function( evt ) {});
+
+			hammertime.get( 'tap' ).set({ taps: 2 });
+	
+			return hammertime;
+		}
+
+	} catch (error) {
+		console.error( error );
+	}
+	
+	return hammertime;
+}
+
+@Component({
+	selector: 'placeholder-song-view',
+	template: "<h3 style='text-align:left;padding-left:1em;'><b class='glyphicon glyphicon-share-alt' style='transform:rotate(230deg);'></b> Valitse laulu laululistasta</h3>"
+})
+export class PlaceholderSongViewComponent {
+
+	constructor( @Inject( AjsTimeout ) $timeout, loading: LoadingService ) {
+		$timeout(()=>{ loading.set( 0 ); });
 	}
 }
