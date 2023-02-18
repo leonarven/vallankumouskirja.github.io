@@ -16,7 +16,11 @@ import { AjsTimeout, AjsState } from '../services/ajs.service';
 	</div>
 
 	<ul id="songlist" class="songs-list-group list-group">
-		<li class="list-group-item" *ngFor="let song of getSongs()">
+		<li
+			class="list-group-item"
+			*ngFor="let song of getSongs()"
+			[ngClass]="{ 'active': currentSong.current && currentSong.current == song }"
+		>
 			<a style="cursor:pointer" (click)="currentSong.select( song.key )">
 				<h4 class="title"><b class="number">{{ song.num }}</b> &ndash; {{ song.title }}</h4>
 			</a>
