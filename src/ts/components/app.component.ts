@@ -33,10 +33,14 @@ import { FontService } from '../services/font.service';
 		<div class="container-fluid">
 			<div class="navbar-header">
 				<ul class="nav navbar-nav pull-right">
-					<li class="font-ctrl"><a class="font-decr-btn" (click)="font.decreaseFont()" href="">A-</a></li>
-					<li class="font-ctrl"><a class="font-incr-btn" (click)="font.increaseFont()" href="">A+</a></li>
+					<li class="font-ctrl"><a class="font-decr-btn btn" (click)="font.decreaseFont()">A-</a></li>
+					<li class="font-ctrl"><a class="font-incr-btn btn" (click)="font.increaseFont()">A+</a></li>
 				</ul>
-				<a class="navbar-brand" (click)="songList.toggleOpen()" href>
+				<a
+					class="navbar-brand"
+					style="user-select:none"
+					(click)="songList.toggleOpen()"
+				>
 					<span><b class="glyphicon glyphicon-menu-hamburger"></b></span> Laululista
 				</a>
 			</div>

@@ -12,9 +12,6 @@ import { SongListComponent            } from './ts/components/song-list.componen
 
 import { downgradeInjectable, downgradeComponent } from '@angular/upgrade/static';
 
-import angular from 'angular';
-window.angular = angular;
-
 export const AngularJSAppModule = angular.module( "laulukirja", [ "ui.router", 'ui.router.upgrade' ])
 
 .service( "currentSong", downgradeInjectable( CurrentSongService ))
