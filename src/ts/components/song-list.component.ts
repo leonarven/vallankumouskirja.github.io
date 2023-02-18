@@ -10,7 +10,13 @@ import { AjsTimeout, AjsState } from '../services/ajs.service';
 	selector: 'song-list',
 	template: 
 	`<div id="search">
-		<input type="text" class="form-control" placeholder="Hae..." [(ngModel)]="search" (ngModelChange)="runFilter()">
+		<input
+			type="text"
+			class="form-control"
+			style="user-select:none"
+			placeholder="Hae..." [(ngModel)]="search"
+			(ngModelChange)="runFilter()"
+		>
 
 		<a style="cursor:pointer" class="clear-btn glyphicon glyphicon-remove" *ngIf="search.trim().length" (click)="runFilter('')"></a>
 	</div>
@@ -18,6 +24,7 @@ import { AjsTimeout, AjsState } from '../services/ajs.service';
 	<ul id="songlist" class="songs-list-group list-group">
 		<li
 			class="list-group-item"
+			style="user-select:none"
 			*ngFor="let song of getSongs()"
 			[ngClass]="{ 'active': currentSong.current && currentSong.current == song }"
 		>
@@ -26,7 +33,11 @@ import { AjsTimeout, AjsState } from '../services/ajs.service';
 			</a>
 		</li>
 
-		<li class="list-group-item no-results" *ngIf="searchResult != null && searchResult.length == 0">
+		<li
+			class="list-group-item no-results"
+			style="user-select:none"
+			*ngIf="searchResult != null && searchResult.length == 0"
+		>
 			<b><h4>Ei lauluja :&lt;</h4></b>
 		</li>
 	</ul>`

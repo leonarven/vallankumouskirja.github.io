@@ -20,8 +20,6 @@ import { SongViewComponent            } from './ts/components/song-view.componen
 import { PlaceholderSongViewComponent } from './ts/components/song-view.component';
 import { SongListComponent            } from './ts/components/song-list.component';
 
-import angular from 'angular';
-
 import { AngularJSAppModule } from './ajs.app';
 
 /************************************************************/
@@ -50,6 +48,7 @@ const ng2States = states.map( v => {
 
 const ng1States = [];
 
+AngularJSAppModule.config([ '$urlServiceProvider', $urlService => $urlService.deferIntercept() ]);
 AngularJSAppModule.run([ '$stateRegistry', '$urlService', ( $stateRegistry, $urlService ) => {
 
 	$urlService.rules.initial({ state: 'index' });
