@@ -1,5 +1,6 @@
 import { SongsService } from './songs.service';
 import { AjsState, AjsInjector, AjsSce, AjsTemplateRequest } from './ajs.service'
+import { Song } from '../classes/Song';
 import { Injectable, Inject } from '@angular/core';
 	
 @Injectable({
@@ -10,6 +11,8 @@ export class CurrentSongService {
 	$templateRequest;
 	$sce;
 	Songs;
+
+	current: (null|Song) = null;
 
 	static $inject = [ "$sce", "Songs" ];
 
@@ -44,6 +47,8 @@ export class CurrentSongService {
 			if (song.lyrics) return song;
 
 			return this.$templateRequest( song.$templateUrl ).then(( lyrics: string ) => {
+
+				this.current = song;
 
 				song.lyrics = lyrics;
 				song.$lyrics = this.$sce.trustAsHtml( lyrics );
