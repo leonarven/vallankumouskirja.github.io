@@ -70,8 +70,7 @@ export class SongViewComponent {
 				let hammertime = iniHammer();
 
 				if (hammertime) hammertime.on( 'tap', function( evt ) {
-					//$rootScope.$broadcast('toggleFont');
-					fontService.events.$emit( 'toggleFont' );
+					fontService.toggleFont();
 				});
 
 				return fontService.resetFont();
@@ -96,7 +95,7 @@ function iniHammer() {
 				hammertime.off( 'pinch' );
 			}
 
-			hammertime = Hammer.instance= new Hammer( songContentElem, { });
+			hammertime = Hammer.instance = new Hammer( songContentElem, { });
 
 			//hammertime.on( 'pinch', function( evt ) {});
 
