@@ -1,5 +1,5 @@
 
-import { Injectable, Inject } from '@angular/core';
+import { Injectable, Inject, ApplicationRef } from '@angular/core';
 import { ResizeService } from './resize.service';
 
 import { AjsTimeout  } from './ajs.service';
@@ -15,6 +15,7 @@ export class FontService {
 	size: number = 10;
 
 	constructor(
+		private aref: ApplicationRef,
 		@Inject(AjsTimeout) public $timeout,
 		resize: ResizeService
 	) {
@@ -28,34 +29,43 @@ export class FontService {
 			let middleFont: number = this.calcMiddleFont();
 			let largeFont:  number = this.calcLargeFont();
 			
+			let size: number = this.size;
+
 			if (Math.abs( largeFont - middleFont ) < .3) {
 				// Fonttien kokoero on niin pieni, että ohitetaan koko toggle ja vakioidaan middle'ksi
-				return this.size = middleFont;
-			}
-
-			let middleDiff = Math.abs( this.size - middleFont );
-			let largeDiff  = Math.abs( this.size - largeFont );
-
-			if (largeDiff < .1) {
-				// Lähellä large-kokoa -> toggletetaan middleksi
-				this.size = middleFont;
-
-			} else if (middleDiff < .1) {
-				// Lähellä middle-kokoa -> toggletetaan largeksi
-				this.size = largeFont;
-
-			} else if (font < middleFont) {
-				this.size = middleFont;
-
-			} else if (font > largeFont) {
-				this.size = largeFont;
-
-			} else if (middleDiff > largeDiff) {
-				this.size = middleFont;
+				size = middleFont;
 
 			} else {
-				this.size = largeFont;
+
+				let middleDiff = Math.abs( size - middleFont );
+				let largeDiff  = Math.abs( size - largeFont );
+
+				if (largeDiff < .1) {
+					// Lähellä large-kokoa -> toggletetaan middleksi
+					size = middleFont;
+
+				} else if (middleDiff < .1) {
+					// Lähellä middle-kokoa -> toggletetaan largeksi
+					size = largeFont;
+
+				} else if (size < middleFont) {
+					size = middleFont;
+
+				} else if (size > largeFont) {
+					size = largeFont;
+
+				} else if (middleDiff > largeDiff) {
+					size = middleFont;
+
+				} else {
+					size = largeFont;
+				}
 			}
+
+			this.size = size;
+
+			this.aref.tick();
+
 		}).catch(( e: any ) => {
 			console.warn( "Unable to customize font size", e );
 		});
