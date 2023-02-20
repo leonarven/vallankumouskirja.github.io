@@ -12,102 +12,86 @@ export class FontService {
 
 	static $inject = [ "$timeout", "resize" ];
 
-	size: number;
-
-	resetFont: ()=>{};
-
-	events = new ScopeLikeEvents();
+	size: number = 10;
 
 	constructor(
 		@Inject(AjsTimeout) public $timeout,
 		resize: ResizeService
 	) {
-
-		const self = this;
+		this.$timeout = $timeout;
 		
-		this.size = 10;
-		
-		this.resetFont = resetFont;
+		resize.$on( "resize", () => this.resetFont() );
+	}
 
-		resize.$on( "resize", resetFont );
-		
-		this.events.$on( "resetFont", resetFont );
-		this.events.$on( "toggleFont", toggleFont );
-		this.events.$on( "increaseFont", ( evt: any, n: number ) => (self.size *= (n || 1.25) ));
-		this.events.$on( "decreaseFont", ( evt: any, n: number ) => (self.size *= (n || 0.8) ));
+	toggleFont() {
+		return this.$timeout(() => {
+			let middleFont: number = this.calcMiddleFont();
+			let largeFont:  number = this.calcLargeFont();
+			let font:       number = this.size;
 
-		function calcLargeFont(): number {
-			let pre:    any = document.getElementById( "song-body" );
-			let parent: any = document.getElementById( "content" );
+			let middleDiff = Math.abs( font - middleFont );
+			let largeDiff  = Math.abs( font - largeFont );
 
-			if (!parent || !parent.offsetWidth || !pre || !pre.offsetWidth) return 12;
+			if (largeDiff < .1) {
+				// Lähellä large-kokoa -> toggletetaan middleksi
+				this.size = middleFont;
 
-			var prs = Math.max( 0, (parent.offsetWidth - 10) / pre.offsetWidth );
+			} else if (middleDiff < .1) {
+				// Lähellä middle-kokoa -> toggletetaan largeksi
+				this.size = largeFont;
 
-			return self.size * prs;
-		}
+			} else if (font < middleFont) {
+				this.size = middleFont;
 
-		function calcMiddleFont(): number {
-			let pre:    any = document.getElementById( "song-body" );
-			let parent: any = document.getElementById( "content" );
+			} else if (font > largeFont) {
+				this.size = largeFont;
 
-			if (!parent || !parent.offsetWidth || !pre || !pre.offsetWidth) return 10;
+			} else if (middleDiff > largeDiff) {
+				this.size = middleFont;
 
-			var prs = Math.max( 0, parent.offsetWidth / pre.offsetWidth );
+			} else {
+				this.size = largeFont;
+			}
+		}).catch(( e: any ) => {
+			console.warn( "Unable to customize font size", e );
+		});
+	}
 
-			return self.size * prs;
-		}
+	calcLargeFont(): number {
+		let pre:    any = document.getElementById( "song-body" );
+		let parent: any = document.getElementById( "content" );
+		parent = parent && parent.parentNode;
 
-		function toggleFont() {
-			return $timeout(function(){
-				let middleFont: number = calcMiddleFont();
-				let largeFont: number = calcLargeFont();
-				let font: number = self.size;
-	
-				let middleDiff = Math.abs( font - middleFont );
-				let largeDiff  = Math.abs( font - largeFont );
+		if (!parent || !parent.offsetWidth || !pre || !pre.offsetWidth) return 12;
 
-				if (largeDiff < .1) {
-					// Lähellä large-kokoa -> toggletetaan middleksi
-					font = middleFont;
+		var prs = Math.max( 0, (parent.offsetWidth - 10) / pre.offsetWidth );
 
-				} else if (middleDiff < .1) {
-					// Lähellä middle-kokoa -> toggletetaan largeksi
-					font = largeFont;
+		return this.size * prs;
+	}
 
-				} else if (font < middleFont) {
-					font = middleFont;
+	calcMiddleFont(): number {
+		let pre:    any = document.getElementById( "song-body" );
+		let parent: any = document.getElementById( "content" );
 
-				} else if (font > largeFont) {
-					font = largeFont;
+		if (!parent || !parent.offsetWidth || !pre || !pre.offsetWidth) return 10;
 
-				} else if (middleDiff > largeDiff) {
-					font = middleFont;
+		var prs = Math.max( 0, parent.offsetWidth / pre.offsetWidth );
 
-				} else {
-					font = largeFont;
-				}
+		return this.size * prs;
+	}
 
-			}).catch(( e: any ) => {
-				console.warn( "Unable to customize font size", e );
-			});
-
-		}
-
-		function resetFont() {
-			return $timeout(function(){
-				self.size = calcMiddleFont();
-				console.log( "resetFont() :: ", self.size, "em" );
-			}).catch(( e: any ) => {
-				console.warn( "Unable to customize font size", e );
-			});
-		}
-
+	resetFont() {
+		return this.$timeout(() => {
+			this.size = this.calcMiddleFont();
+			console.log( "resetFont() :: ", this.size, "em" );
+		}).catch(( e: any ) => {
+			console.warn( "Unable to customize font size", e );
+		});
 	}
 
 	getFont(): number {
 		return this.size;
-	};
+	}
 
 	setFont( size: number ): number {
 		return this.size = size;
