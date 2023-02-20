@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { SongListService } from '../services/song-list.service';
+import { CurrentSongService } from '../services/current-song.service';
 import { LoadingService } from '../services/loading.service';
 import { FontService } from '../services/font.service';
 
@@ -33,15 +34,16 @@ import { FontService } from '../services/font.service';
 		<div class="container-fluid">
 			<div class="navbar-header">
 				<ul class="nav navbar-nav pull-right">
-					<li class="font-ctrl"><a class="font-decr-btn btn" (click)="font.decreaseFont()">A-</a></li>
-					<li class="font-ctrl"><a class="font-incr-btn btn" (click)="font.increaseFont()">A+</a></li>
+					<li class="font-ctrl"><a class="font-decr-btn" (click)="font.decreaseFont()">A-</a></li>
+					<li class="font-ctrl"><a class="font-incr-btn" (click)="font.increaseFont()">A+</a></li>
 				</ul>
 				<a
 					class="navbar-brand"
 					style="user-select:none"
 					(click)="songList.toggleOpen()"
 				>
-					<span><b class="glyphicon glyphicon-menu-hamburger"></b></span> Laululista
+					<span><b class="glyphicon glyphicon-menu-hamburger"></b></span>
+					<span class="hidden-xs">&nbsp;Laululista{{ !currentSong.current ? '' : (' / ' + currentSong.current.title) }}</span>
 				</a>
 			</div>
 		</div>
@@ -50,6 +52,7 @@ import { FontService } from '../services/font.service';
 export class AppComponent {
 	constructor(
 		public songList: SongListService,
+		public currentSong: CurrentSongService,
 		public loading: LoadingService,
 		public font: FontService
 	) {}
