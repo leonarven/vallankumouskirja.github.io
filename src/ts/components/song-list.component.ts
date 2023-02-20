@@ -4,7 +4,6 @@ import { Song } from '../classes/Song';
 import { LoadingService } from '../services/loading.service';
 import { SongsService   } from '../services/songs.service';
 import { CurrentSongService   } from '../services/current-song.service';
-import { AjsTimeout, AjsState } from '../services/ajs.service';
 
 @Component({
 	selector: 'song-list',
@@ -85,13 +84,11 @@ export class SongListComponent {
 		}, 100);
 	}
 
-	constructor( private cdr: ChangeDetectorRef, @Inject( AjsState ) $state, public currentSong: CurrentSongService, Songs: SongsService ) {
+	constructor( private cdr: ChangeDetectorRef, public currentSong: CurrentSongService, Songs: SongsService ) {
 
-		this.$state = $state;
 
 		let $scope = this;
 		
-		$scope.$state = $state;
 		$scope.Songs = Songs;
 
 		$scope.getSongs = () => {

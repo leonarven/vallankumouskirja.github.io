@@ -14,18 +14,6 @@ export const ajsStateServiceProvider = {
 };
 
 
-export const AjsTimeout = new InjectionToken("AjsTimeout");
-
-export function ajsTimeoutServiceFactory(i: any) {
-  return i.get('$timeout');
-}
-export const ajsTimeoutServiceProvider = {
-  provide: AjsTimeout,
-  useFactory: ajsTimeoutServiceFactory,
-  deps: ['$injector']
-};
-
-
 export const AjsInjector = new InjectionToken("AjsInjector");
 
 export function ajsInjectorServiceFactory(i: any) {
@@ -60,6 +48,3 @@ export const ajsTemplateRequestServiceProvider = {
   useFactory: ajsTemplateRequestServiceFactory,
   deps: ['$injector']
 };
-
-
-

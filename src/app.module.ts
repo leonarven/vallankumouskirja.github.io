@@ -5,7 +5,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { UpgradeModule } from '@angular/upgrade/static';
 import { UIRouterUpgradeModule } from '@uirouter/angular-hybrid';
 
-import { ajsTimeoutServiceProvider, ajsInjectorServiceProvider, ajsSceServiceProvider, ajsTemplateRequestServiceProvider, ajsStateServiceProvider } from './ts/services/ajs.service'
+import { ajsInjectorServiceProvider, ajsSceServiceProvider, ajsTemplateRequestServiceProvider, ajsStateServiceProvider } from './ts/services/ajs.service'
 
 import { FontService               } from './ts/services/font.service';
 import { SongsService                 } from './ts/services/songs.service';
@@ -73,7 +73,6 @@ AngularJSAppModule.run([ '$stateRegistry', '$urlService', ( $stateRegistry, $url
 		PlaceholderSongViewComponent,
 	],
 	providers: [
-		ajsTimeoutServiceProvider,
 		ajsInjectorServiceProvider,
 		ajsSceServiceProvider,
 		ajsTemplateRequestServiceProvider,

@@ -3,7 +3,6 @@ import { SongListService } from '../services/song-list.service';
 import { CurrentSongService } from '../services/current-song.service';
 import { LoadingService } from '../services/loading.service';
 import { FontService } from '../services/font.service';
-import { AjsTimeout } from '../services/ajs.service';
 
 let hammertime;
 
@@ -28,7 +27,7 @@ export class SongViewComponent {
 	init;
 	$song;
 
-	constructor( @Inject( AjsTimeout ) $timeout, currentSong: CurrentSongService, public fontService: FontService, songList: SongListService, loading: LoadingService ) {
+	constructor( currentSong: CurrentSongService, public fontService: FontService, songList: SongListService, loading: LoadingService ) {
 
 		let $scope = this;
 			
@@ -65,16 +64,13 @@ export class SongViewComponent {
 
 		$scope.init = () => {
 
-			return $timeout(() => {
+			let hammertime = iniHammer();
 
-				let hammertime = iniHammer();
-
-				if (hammertime) hammertime.on( 'tap', function( evt ) {
-					fontService.toggleFont();
-				});
-
-				return fontService.resetFont();
+			if (hammertime) hammertime.on( 'tap', function( evt ) {
+				fontService.toggleFont();
 			});
+
+			return fontService.resetFont();
 		};
 	}
 }
@@ -117,7 +113,7 @@ function iniHammer() {
 })
 export class PlaceholderSongViewComponent {
 
-	constructor( @Inject( AjsTimeout ) $timeout, loading: LoadingService ) {
-		$timeout(()=>{ loading.set( 0 ); });
+	constructor( loading: LoadingService ) {
+		loading.set( 0 );
 	}
 }
