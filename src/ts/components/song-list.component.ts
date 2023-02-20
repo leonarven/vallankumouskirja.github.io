@@ -40,7 +40,25 @@ import { AjsTimeout, AjsState } from '../services/ajs.service';
 		>
 			<b><h4>Ei lauluja :&lt;</h4></b>
 		</li>
-	</ul>`
+
+		<li class="list-group-item footer" *ngIf="searchResult != null && searchResult.length == 0">
+			<p><a href="mailto:vallankumouslaulukirja@miron.fi">L&auml;het&auml; palautetta</a></p>
+		</li>
+
+		<li class="list-group-item notice" *ngIf="searchResult == null">
+			<p>Laulukirjaa kehitetään tällä hetkellä aktiivisesti, joten <a href="mailto:vallankumouslaulukirja@miron.fi">l&auml;het&auml; palautetta</a>, mikäli havaitset jotain huomautettavaa.</p>
+		</li>
+	</ul>`,
+	styles: [
+		`.list-group-item.footer,
+		.list-group-item.notice,
+		.list-group-item.no-results {
+			margin: 10px 0px;
+			border: none !important;
+			background: transparent !important;
+			text-align: center;
+		}`
+	]
 })
 export class SongListComponent {
 
