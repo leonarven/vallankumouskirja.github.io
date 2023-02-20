@@ -27,10 +27,14 @@ export class FontService {
 		return this.$timeout(() => {
 			let middleFont: number = this.calcMiddleFont();
 			let largeFont:  number = this.calcLargeFont();
-			let font:       number = this.size;
+			
+			if (Math.abs( largeFont - middleFont ) < .3) {
+				// Fonttien kokoero on niin pieni, että ohitetaan koko toggle ja vakioidaan middle'ksi
+				return this.size = middleFont;
+			}
 
-			let middleDiff = Math.abs( font - middleFont );
-			let largeDiff  = Math.abs( font - largeFont );
+			let middleDiff = Math.abs( this.size - middleFont );
+			let largeDiff  = Math.abs( this.size - largeFont );
 
 			if (largeDiff < .1) {
 				// Lähellä large-kokoa -> toggletetaan middleksi
