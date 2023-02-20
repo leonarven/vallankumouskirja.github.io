@@ -229,3 +229,10 @@ pre#song-body {
 	text-decoration: none;
 	padding: 14px;
 }
+#song-body h1 { font-size: 2.00em; }
+#song-body h2 { font-size: 1.50em; }
+#song-body h3 { font-size: 1.25em; }
+#song-body h4 { font-size: 1.10em; }
+#song-body h5 { font-size: 1.00em; }
+#song-body h6 { font-size: 0.80em; }
+

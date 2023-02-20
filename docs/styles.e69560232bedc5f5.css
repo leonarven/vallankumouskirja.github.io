@@ -161,7 +161,7 @@ app-root > header a.navbar-brand:hover {
 	font-size: 2em;
 	text-decoration: none;
 	padding: 14px;
-}app-root > header {
+}#song-body h1 { font-size: 2.00em; }#song-body h2 { font-size: 1.50em; }#song-body h3 { font-size: 1.25em; }#song-body h4 { font-size: 1.10em; }#song-body h5 { font-size: 1.00em; }#song-body h6 { font-size: 0.80em; }app-root > header {
     background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAIcCAYAAADc9X/mAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAACdAAAAnQGPcuduAAAAB3RJTUUH4QMNFAgdFPYt9wAAABl0RVh0Q29tbWVudABDcmVhdGVkIHdpdGggR0lNUFeBDhcAAAENSURBVFjD7dG9SsRQEMXx/5lMYrK6C4KiuG9gYS+CrS9p62OIT2EtFvai3ebjWMRUItgpcm/1Y4aZA3N1c4sBgs/3z5CSZoyjkSDrTAzkrje2yVASVZB7TYck8vH+lecnEC1uBNqvsEcQhLvVCikaG8+VagmNuka0jZmGuUVAniDaqSKvgSM16GHd+bhN9LapnbsevYMFMCC7aY2rcA9WD46AIGBasiyIMMhLuiHlb68x74ecFvjL6bQgDOJnmwsKCgoKCgoKCgoKCgp+BVpgSFMjghwVyEFOGnBAOsZ5yoYGyJfDNXXfk3djz+lmjS7AA6AkvO4OiCEqzq8uUUT4bLtFAiuE5sjyBQV/Hh9wBVppD46QCQAAAABJRU5ErkJggg==');
 }app-root > header a.navbar-brand {
     padding-left: 75px;
