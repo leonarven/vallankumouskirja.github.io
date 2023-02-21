@@ -20,7 +20,10 @@ let hammertime;
 		[innerHtml]="$song.lyrics"
 		id="song-body"
 		[ngStyle]="{ 'font-size.em' : (fontService.size / 10.0) }"
-	></pre>`
+	></pre>`,
+	styles: [
+		'#song-body { line-height: 2em; }'
+	]
 })
 export class SongViewComponent {
 
