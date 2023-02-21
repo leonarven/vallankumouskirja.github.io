@@ -21,6 +21,11 @@ export class FontService {
 		resize.$on( "resize", () => this.resetFont() );
 	}
 
+	resetFont() {
+		this.size = this.calcMiddleFont();
+		console.log( "resetFont() :: ", this.size, "em" );
+	}
+
 	toggleFont() {
 
 		let middleFont: number = this.calcMiddleFont();
@@ -85,11 +90,6 @@ export class FontService {
 		var prs = Math.max( 0, parent.offsetWidth / pre.offsetWidth );
 
 		return this.size * prs;
-	}
-
-	resetFont() {
-		this.size = this.calcMiddleFont();
-		console.log( "resetFont() :: ", this.size, "em" );
 	}
 
 	getFont(): number {

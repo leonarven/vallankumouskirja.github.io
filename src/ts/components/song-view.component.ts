@@ -1,4 +1,4 @@
-import { Inject, Component } from '@angular/core';
+import { Inject, Component, ChangeDetectorRef, OnInit } from '@angular/core';
 import { SongListService } from '../services/song-list.service';
 import { CurrentSongService } from '../services/current-song.service';
 import { LoadingService } from '../services/loading.service';
@@ -21,13 +21,13 @@ let hammertime;
 		[ngStyle]="{ 'font-size.em' : (fontService.size / 10.0) }"
 	></pre>`
 })
-export class SongViewComponent {
+export class SongViewComponent extends OnInit{
 
 	error;
 	init;
 	$song;
 
-	constructor( currentSong: CurrentSongService, public fontService: FontService, songList: SongListService, loading: LoadingService ) {
+	constructor( private cdr: ChangeDetectorRef, currentSong: CurrentSongService, public fontService: FontService, songList: SongListService, loading: LoadingService ) {
 
 		let $scope = this;
 			
@@ -60,6 +60,8 @@ export class SongViewComponent {
 		}).then(() => {
 
 			loading.set( false );
+
+			cdr.detectChanges();
 		});
 
 		$scope.init = () => {
