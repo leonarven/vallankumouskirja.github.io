@@ -43,6 +43,7 @@ import { FontService } from '../services/font.service';
 					(click)="songList.toggleOpen()"
 				>
 					<span><b class="glyphicon glyphicon-menu-hamburger"></b></span>
+					<!--<span class="hidden-xs">&nbsp;Laululista{{ !currentSong.current ? '' : (' / ' + (!currentSong.current.author ? '' : (currentSong.current.author + ': ')) + currentSong.current.title) }}</span>-->
 					<span class="hidden-xs">&nbsp;Laululista{{ !currentSong.current ? '' : (' / ' + currentSong.current.title) }}</span>
 				</a>
 			</div>
