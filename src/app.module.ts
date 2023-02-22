@@ -4,17 +4,18 @@ import { FormsModule   } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { UpgradeModule } from '@angular/upgrade/static';
 import { UIRouterUpgradeModule } from '@uirouter/angular-hybrid';
+import { HttpClientModule } from '@angular/common/http';
 
-import { ajsTimeoutServiceProvider, ajsInjectorServiceProvider, ajsSceServiceProvider, ajsTemplateRequestServiceProvider, ajsStateServiceProvider } from './ts/services/ajs.service'
+import { ajsTimeoutServiceProvider, ajsInjectorServiceProvider, ajsStateServiceProvider } from './ts/services/ajs.service'
 
-import { FontService               } from './ts/services/font.service';
+import { FontService                 } from './ts/services/font.service';
 import { SongsService                 } from './ts/services/songs.service';
 import { SongListService              } from './ts/services/song-list.service';
 import { CurrentSongService           } from './ts/services/current-song.service'; 
 import { ResizeService                } from './ts/services/resize.service'; 
 import { LoadingService               } from './ts/services/loading.service'; 
 
-import { AppComponent                } from './ts/components/app.component';
+import { AppComponent                 } from './ts/components/app.component';
 import { SongMetaComponent            } from './ts/components/song-meta.component';
 import { SongViewComponent            } from './ts/components/song-view.component';
 import { PlaceholderSongViewComponent } from './ts/components/song-view.component';
@@ -65,6 +66,7 @@ AngularJSAppModule.run([ '$stateRegistry', '$urlService', ( $stateRegistry, $url
 		UIRouterUpgradeModule.forRoot({ states: ng2States }),
 		CommonModule,
 		FormsModule,
+		HttpClientModule
 	],
 	declarations: [
 		AppComponent,
@@ -75,8 +77,6 @@ AngularJSAppModule.run([ '$stateRegistry', '$urlService', ( $stateRegistry, $url
 	providers: [
 		ajsTimeoutServiceProvider,
 		ajsInjectorServiceProvider,
-		ajsSceServiceProvider,
-		ajsTemplateRequestServiceProvider,
 		ajsStateServiceProvider,
 		LoadingService,
 		SongsService,

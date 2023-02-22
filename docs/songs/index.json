@@ -1,25 +1,19 @@
 {
 	"united-fruit": {
 		"title": "United Fruit",
-		"author": "Agit Prop",
-		"num": null
+		"author": "Agit Prop"
 	},
 	"tango-fasismin-ja-kapitalismin-suhteesta": {
-		"title": "Tango fasismin ja kapitalismin suhteesta",
-		"num": null
+		"title": "Tango fasismin ja kapitalismin suhteesta"
 	},
 	"savolainen-balladi": {
-		"title": "Savolainen balladi",
-		"num": null
+		"title": "Savolainen balladi"
 	},
 	"veli-sisko": {
-		"title": "Veli, sisko",
-		"num": null
+		"title": "Veli, sisko"
 	},
 	"kenen-joukoissa-seisot": {
 		"title": "Kenen joukoissa seisot",
-		"author": null,
-		"links": {},
 		"num": 4
 	},
 	"oppimisen-ylistys": {
@@ -32,7 +26,6 @@
 	},
 	"riistajan-lait": {
 		"title": "Riistäjän lait",
-		"author": null,
 		"links": {},
 		"num": 8
 	},

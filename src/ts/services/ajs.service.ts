@@ -37,29 +37,3 @@ export const ajsInjectorServiceProvider = {
   deps: [ '$injector' ]
 };
 
-
-export const AjsSce = new InjectionToken("AjsSce");
-
-export function ajsSceServiceFactory(i: any) {
-  return i.get('$sce');
-}
-export const ajsSceServiceProvider = {
-  provide: AjsSce,
-  useFactory: ajsSceServiceFactory,
-  deps: ['$injector']
-};
-
-
-export const AjsTemplateRequest = new InjectionToken("AjsTemplateRequest");
-
-export function ajsTemplateRequestServiceFactory(i: any) {
-  return i.get('$templateRequest');
-}
-export const ajsTemplateRequestServiceProvider = {
-  provide: AjsTemplateRequest,
-  useFactory: ajsTemplateRequestServiceFactory,
-  deps: ['$injector']
-};
-
-
-

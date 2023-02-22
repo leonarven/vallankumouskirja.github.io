@@ -1,5 +1,5 @@
 import { SongsService } from './songs.service';
-import { AjsState, AjsInjector, AjsSce, AjsTemplateRequest } from './ajs.service'
+import { AjsState, AjsInjector } from './ajs.service'
 import { Song } from '../classes/Song';
 import { Injectable, Inject } from '@angular/core';
 	
@@ -9,22 +9,15 @@ import { Injectable, Inject } from '@angular/core';
 export class CurrentSongService {
 
 	$templateRequest;
-	$sce;
 	Songs;
 
 	current: (null|Song) = null;
 
-	static $inject = [ "$sce", "Songs" ];
-
 	constructor(
 		@Inject( AjsInjector ) public $injector,
-		@Inject( AjsTemplateRequest ) $templateRequest,
-		@Inject( AjsSce ) $sce,
 		@Inject( AjsState ) public $state,
 		Songs: SongsService
 	) {
-		this.$templateRequest = $templateRequest;
-		this.$sce             = $sce;
 		this.Songs            = Songs;
 	}
 
@@ -52,18 +45,7 @@ export class CurrentSongService {
 
 		if (!song) throw `Could not found song '${ songKey }'`;
 
-		return (song.lyrics
-		 ? Promise.resolve( song )
-		 : (this.$templateRequest( song.$templateUrl ).then(( lyrics: string ) => {
-
-			song.lyrics = lyrics;
-			song.$lyrics = this.$sce.trustAsHtml( lyrics );
-
-		}))).then(() => {
-
-			return this.current = song;
-			
-		});
+		return this.Songs.resolveSongWithLyrics( song ).then( song => this.current = song );
 	}
 
 	async get() {

@@ -1,7 +1,69 @@
 
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+
 import { Song, ISongJson } from '../../ts/classes/Song';
 
-import SONGS_META from '../../songs/index.json';
+import SONGS_INDEX_JSON from '../../songs/index.json';
+
+const SONGS_OBJ = {};
+	
+for (let key in SONGS_INDEX_JSON) {
+	
+	let item = SONGS_INDEX_JSON[ key ]
+
+	if (typeof key == "string") {
+	
+		if (item.key) {
+			key = item.key;
+		}
+	} else {
+
+		if (item.key) {
+			key = item.key;
+		} else if (typeof item.title == "string") {
+			key = item.title
+		} else {
+			throw new Error( "Unable to solve key" );
+		}
+	}
+
+	if (!item.title) item.title = key;
+
+	if (SONGS_OBJ[ key ]) throw new Error( `Duplicate key '${ key }'` );
+
+	item.key = key;
+
+	SONGS_OBJ[ key ] = item;
+}
+
+const SONGS_ARR = Object.keys( SONGS_OBJ ).map( k => SONGS_OBJ[ k ] );
+
+const SONGS_INDEX = SONGS_OBJ;
+
+/*
+debugger; 
+
+import('../../songs/index.json').then(foo => {
+
+	let asd = Object.keys( foo )[0]
+
+	return import('../../songs/'+asd+'/index.json').then(bar => {
+		foo; bar;
+		debugger;
+	}).catch(e => {
+		debugger;
+	});
+});*/
+
+/*SONGS_ARR.map( key => {
+	return import( '../../songs/' + key + '/meta.json').then( meta => {
+		debugger;
+		console.log( key, meta );
+	}).catch(e => {
+		console.warn( key, e );
+	});
+});*/
 
 interface ISongJsonIndex {
 	[key: string]: ISongJson;
@@ -11,22 +73,23 @@ interface ISongIndex {
 	[key: string]: Song;
 }
 
+@Injectable({
+	providedIn: 'root'
+})
 export class SongsService {
 	
-	static $inject = []; // "$http" ];
-
-	$http;
+	static $inject = [];
 
 	index: ISongIndex;
 	sorted: Song[] = [];
 
-	constructor() { // $http: any ) {
-		this.$http = null; //$http;
-
+	constructor(
+		public http: HttpClient
+	) {
 		this.index = {};
 
 		try {
-			this.setIndex( SONGS_META );
+			this.setIndex( SONGS_INDEX );
 		} catch (e) {}
 	}
 
@@ -49,10 +112,28 @@ export class SongsService {
 		return this.index;
 	}
 
-	init( url: string ) {
-		return this.$http({ url }).then(( response: any ) => {
+	async resolveSongWithLyrics( song: Song ) {
 
-			return this.setIndex( response.data );
+		if (song.lyrics) return song;
+
+/*
+		return (song.lyrics
+		 ? Promise.resolve( song )
+		 : (this.$templateRequest( song.$templateUrl ).then(( lyrics: string ) => {
+
+			song.lyrics = lyrics;
+
+		 });*/
+
+		if (!song.$templateUrl) throw new Error( "templateUrl missing!" );
+
+		return this.http.get( song.$templateUrl, {
+			responseType: 'text'
+		}).toPromise().then(( lyrics: any ) => {
+
+			song.lyrics = lyrics;
+
+			return song;
 		});
 	}
 }
