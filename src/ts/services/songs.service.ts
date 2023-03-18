@@ -6,6 +6,7 @@ import { Song, ISongJson } from '../../ts/classes/Song';
 
 import SONGS_INDEX_JSON from '../../songs/index.json';
 
+const SONGS_BY_NUM = {};
 const SONGS_OBJ = {};
 	
 for (let key in SONGS_INDEX_JSON) {
@@ -29,6 +30,11 @@ for (let key in SONGS_INDEX_JSON) {
 	}
 
 	if (!item.title) item.title = key;
+
+	if (item.num != null) {
+		if (SONGS_BY_NUM[ item.num ]) console.warn( `Duplicate num '${ item.num }'`);
+		else SONGS_BY_NUM[ item.num ] = item;
+	}
 
 	if (SONGS_OBJ[ key ]) throw new Error( `Duplicate key '${ key }'` );
 
