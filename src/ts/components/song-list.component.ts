@@ -1,9 +1,10 @@
 
 import { ChangeDetectorRef, Component, Input, Inject } from '@angular/core';
 import { Song } from '../classes/Song';
-import { LoadingService } from '../services/loading.service';
-import { SongsService   } from '../services/songs.service';
+import { LoadingService       } from '../services/loading.service';
+import { SongsService         } from '../services/songs.service';
 import { CurrentSongService   } from '../services/current-song.service';
+import { SongListService      } from '../services/song-list.service';
 import { AjsTimeout, AjsState } from '../services/ajs.service';
 
 @Component({
@@ -28,7 +29,7 @@ import { AjsTimeout, AjsState } from '../services/ajs.service';
 			*ngFor="let song of getSongs()"
 			[ngClass]="{ 'active': currentSongKey == song.key }"
 		>
-			<a style="cursor:pointer" (click)="currentSongKey = song.key">
+			<a style="cursor:pointer" (click)="currentSongKey == song.key ? songList.close() : (currentSongKey = song.key)">
 				<h4 class="title"><b class="number">{{ song.num }}</b> &ndash; {{ song.title }}</h4>
 			</a>
 		</li>
@@ -85,7 +86,13 @@ export class SongListComponent {
 		}, 100);
 	}
 
-	constructor( private cdr: ChangeDetectorRef, @Inject( AjsState ) $state, public currentSong: CurrentSongService, Songs: SongsService ) {
+	constructor(
+		private cdr: ChangeDetectorRef,
+		@Inject( AjsState ) $state,
+		public songList: SongListService,
+		public currentSong: CurrentSongService,
+		Songs: SongsService
+	) {
 
 		this.$state = $state;
 
