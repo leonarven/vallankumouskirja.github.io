@@ -30,7 +30,7 @@ import { FontService } from '../services/font.service';
 
 	</main>
 
-	<header class="navbar navbar-default">
+	<header class="navbar navbar-default" [class.songlist-open]="songList.isOpen()">
 		<div class="container-fluid">
 			<div class="navbar-header">
 				<ul class="nav navbar-nav pull-right">
@@ -48,7 +48,14 @@ import { FontService } from '../services/font.service';
 				</a>
 			</div>
 		</div>
-	</header>`
+	</header>`,
+	styles: [
+		`@media (max-width: 768px) {
+			header.songlist-open .font-ctrl {
+				display: none;
+ 			}
+		}`
+	]
 })
 export class AppComponent {
 	constructor(
