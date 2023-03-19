@@ -23,7 +23,8 @@ let hammertime;
 	></pre>`,
 	styles: [
 		'#song-body { line-height: 2em; }',
-		`#song-body.fixed-size {
+		`#song-body.fixed-size, :host ::ng-deep #song-body > .fixed-size {
+			line-height: 2em;
 			font-size: 1.8rem !important;
 			width: 100%;
 			white-space: pre-wrap;
