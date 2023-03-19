@@ -74,6 +74,7 @@
         "num": 25,
         "title": "Suomi myyntiin",
         "author": null,
+        "subheading": "(S\u00e4vel: Suomen Keskusta r.p, san.T.Hiltunen)",
         "links": {},
         "song_file": "suomi-myyntiin.html"
     },
@@ -132,6 +133,7 @@
         "num": 30,
         "title": "Oikeuden jumalatar",
         "author": null,
+        "subheading": "(S\u00e4vel: Helsinki Shangri-La)",
         "links": {},
         "song_file": "oikeuden-jumalatar.html"
     },
@@ -260,6 +262,7 @@
     "oodi-vihervasemmistolaisuudelle": {
         "num": 34,
         "title": "Oodi vihervasemmistolaisuudelle",
+        "subheading": "(S\u00e4vel: Pikku-Matin auto)",
         "author": null,
         "links": {},
         "song_file": "oodi-vihervasemmistolaisuudelle.html"
@@ -303,6 +306,7 @@
         "title": "ViVassa juodaan kiljua",
         "author": null,
         "links": {},
+        "subheading": "(S\u00e4vel: Oodi ilolle, san. Tampereen Viva ja T.Hiltunen)",
         "song_file": "vivassa-juodaan-kiljua.html"
     },
     "pikku-kakkosen-posti": {
@@ -337,6 +341,7 @@
     "nuoriso-valmis-on-maistelemaan": {
         "num": 27,
         "title": "Nuoriso valmis on maistelemaan",
+        "subheading": "(S\u00e4vel: Nuorison marssi, san. Milka Hanhela)",
         "author": null,
         "links": {},
         "song_file": "nuoriso-valmis-on-maistelemaan.html"
@@ -344,6 +349,7 @@
     "nalkaisen-vegaanin-taisteluhuuto": {
         "num": 28,
         "title": "N\u00e4lk\u00e4isen vegaanin taisteluhuuto",
+        "subheading": "(S\u00e4vel: Varshavjanka, san. KSVN)",
         "author": null,
         "links": {},
         "song_file": "nalkaisen-vegaanin-taisteluhuuto.html"
@@ -353,6 +359,7 @@
         "title": "Valkoinen cis-heteromies",
         "author": null,
         "links": {},
+        "subheading": "(S\u00e4vel: Levoton tuhkimo, san. Anna Lemstr\u00f6m)",
         "song_file": "valkoinen-cis-heteromies.html"
     },
     "ampukaa-komissaarit": {
