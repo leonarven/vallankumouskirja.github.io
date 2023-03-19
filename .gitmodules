@@ -1,0 +1,3 @@
+[submodule "src/songs"]
+	path = src/songs
+	url = git@github.com:leonarven/vallankumouslaulut.git
