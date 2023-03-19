@@ -22,7 +22,13 @@ let hammertime;
 		[ngStyle]="{ 'font-size.em' : (fontService.size / 10.0) }"
 	></pre>`,
 	styles: [
-		'#song-body { line-height: 2em; }'
+		'#song-body { line-height: 2em; }',
+		`#song-body.fixed-size {
+			font-size: 1.8rem !important;
+			width: 100%;
+			white-space: pre-wrap;
+			word-break: normal;
+		}`
 	]
 })
 export class SongViewComponent {
