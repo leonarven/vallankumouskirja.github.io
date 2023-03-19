@@ -26,6 +26,7 @@ export class Song implements ISongJson {
 	
 	disable?: boolean;
 
+	song_file: string = "";
 	$templateUrl: string = "";
 	$search: SearchString;
 
@@ -35,7 +36,11 @@ export class Song implements ISongJson {
 
 		for (let v in data) this[ v ] = data[ v ];
 
-		if (!this.$templateUrl) {
+		if (!this.song_file) {
+			this.song_file = `${ key }.html`;
+		}
+		
+		if (!this.$templateUrl) {// @DEPRECATED
 			this.$templateUrl = `songs/${ key }/song.html`;
 		}
 
