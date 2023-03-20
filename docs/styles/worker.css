@@ -203,15 +203,6 @@ app-root > header a.navbar-brand:hover {
 }
 
 
-pre#song-body {
-    background-color: transparent;
-    border: none;
-    color: #000;
-    font-size: 1.2em;
-    padding: 1em 2em;
-	display: inline-block;
-}
-
 
 #search {
 	padding: 2px;
