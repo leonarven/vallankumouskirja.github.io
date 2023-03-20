@@ -13,6 +13,8 @@ export class CurrentSongService {
 
 	current: (null|Song) = null;
 
+	fixedSize: boolean = false;
+
 	constructor(
 		@Inject( AjsInjector ) public $injector,
 		@Inject( AjsState ) public $state,

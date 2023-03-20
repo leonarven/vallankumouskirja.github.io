@@ -20,10 +20,19 @@ let hammertime;
 		[innerHtml]="$song.lyrics"
 		id="song-body"
 		[ngStyle]="{ 'font-size.em' : (fontService.size / 10.0) }"
+		[class.fixed-size]="currentSong.fixedSize"
 	></pre>`,
 	styles: [
-		'#song-body { line-height: 2em; }',
-		`#song-body.fixed-size, :host ::ng-deep #song-body > .fixed-size {
+		`#song-body {
+			line-height: 2em;
+			background-color: transparent;
+			border: none;
+			color: #000;
+			font-size: 1.2em;
+			padding: 1rem 2rem;
+			display: inline-block;
+		}`,
+		`:host ::ng-deep #song-body.fixed-size .fixed-size {
 			line-height: 2em;
 			font-size: 1.8rem !important;
 			width: 100%;
@@ -33,15 +42,12 @@ let hammertime;
 	]
 })
 export class SongViewComponent {
-
+	
 	error;
-	init;
 	$song;
 
-	constructor( @Inject( AjsTimeout ) $timeout, currentSong: CurrentSongService, public fontService: FontService, songList: SongListService, loading: LoadingService ) {
+	constructor( @Inject( AjsTimeout ) $timeout, public currentSong: CurrentSongService, public fontService: FontService, songList: SongListService, loading: LoadingService ) {
 
-		let $scope = this;
-			
 		console.log( "songViewController :: Initiated" );
 		
 		loading.set( true );
@@ -50,13 +56,7 @@ export class SongViewComponent {
 		
 			console.log( "songViewController :: Loaded song " + $song.title, $song );
 
-			$scope.$song = $song;
-
-			var songBodyElem = document.getElementById("song-body");
-
-			if (window.innerWidth <= 768) songList.close();
-
-			return $scope.init();
+			return $timeout( () => this.init( $song ) );
 
 		}).catch( error => {
 
@@ -70,22 +70,41 @@ export class SongViewComponent {
 
 		}).then(() => {
 
+			if (window.innerWidth <= 768) songList.close();
+
 			loading.set( false );
 		});
+	}
 
-		$scope.init = () => {
+	setSong( $song ) {
+	
+		this.$song = $song;
 
-			return $timeout(() => {
+		let fixedSize = false;
 
-				let hammertime = iniHammer();
+		try {
+			let wrapperElem = document.createElement( "section" );
 
-				if (hammertime) hammertime.on( 'tap', function( evt ) {
-					fontService.toggleFont();
-				});
+			wrapperElem.innerHTML = $song.lyrics;
 
-				return fontService.resetFont();
-			});
-		};
+			fixedSize = !!wrapperElem.querySelector( "section > article.fixed-size" );
+		
+		} catch (error) {}
+
+		this.currentSong.fixedSize = fixedSize;
+	}
+
+	init( $song ) {
+
+		this.setSong( $song );
+
+		let hammertime = iniHammer();
+
+		if (hammertime) hammertime.on( 'tap', event => {
+			this.fontService.toggleFont();
+		});
+
+		return this.fontService.resetFont();
 	}
 }
 
