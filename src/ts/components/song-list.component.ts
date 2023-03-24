@@ -5,7 +5,8 @@ import { LoadingService       } from '../services/loading.service';
 import { SongsService         } from '../services/songs.service';
 import { CurrentSongService   } from '../services/current-song.service';
 import { SongListService      } from '../services/song-list.service';
-import { AjsTimeout, AjsState } from '../services/ajs.service';
+//import { AjsTimeout           } from '../services/ajs.service';
+import { AjsState             } from '../services/ajs.service';
 
 @Component({
 	selector: 'song-list',

@@ -3,7 +3,7 @@ import { SongListService } from '../services/song-list.service';
 import { CurrentSongService } from '../services/current-song.service';
 import { LoadingService } from '../services/loading.service';
 import { FontService } from '../services/font.service';
-import { AjsTimeout } from '../services/ajs.service';
+//import { AjsTimeout } from '../services/ajs.service';
 
 let hammertime;
 
@@ -46,7 +46,28 @@ export class SongViewComponent {
 	error;
 	$song;
 
-	constructor( @Inject( AjsTimeout ) $timeout, public currentSong: CurrentSongService, public fontService: FontService, songList: SongListService, loading: LoadingService ) {
+	constructor(
+		//@Inject( AjsTimeout ) $timeout,   
+		public currentSong: CurrentSongService,
+		public fontService: FontService,
+		songList: SongListService,
+		loading: LoadingService
+	) {
+
+		let $timeout = ( callback = () => {}, timeout = 0 ) => {
+			return new Promise(( resolve, reject )=> {
+				setTimeout( async () => {
+					try {
+						let result = await callback();
+						resolve( result );
+					} catch (error) {
+						reject( error );
+					}
+				}, timeout);
+			});
+		};
+
+
 
 		console.log( "songViewController :: Initiated" );
 		
@@ -146,7 +167,7 @@ function iniHammer() {
 })
 export class PlaceholderSongViewComponent {
 
-	constructor( @Inject( AjsTimeout ) $timeout, loading: LoadingService ) {
-		$timeout(()=>{ loading.set( 0 ); });
+	constructor( loading: LoadingService ) {
+		loading.set( 0 );
 	}
 }
