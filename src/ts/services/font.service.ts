@@ -1,7 +1,7 @@
 
 import { Injectable, Inject, ApplicationRef } from '@angular/core';
 import { ResizeService } from './resize.service';
-import { CurrentSongService } from './current-song.service';
+
 import { ScopeLikeEvents } from '../classes/scope-like-events';
 
 @Injectable({
@@ -9,30 +9,28 @@ import { ScopeLikeEvents } from '../classes/scope-like-events';
 })
 export class FontService {	
 
+	static $inject = [ "resize" ];
+
 	size: number = 10;
 
 	constructor(
-		public currentSong: CurrentSongService,
 		private aref: ApplicationRef,
 		resize: ResizeService
 	) {
-
+		
 		resize.$on( "resize", () => this.resetFont() );
 	}
 
-	async toggleFont() {
-		try {
-			this.size = this.solveFontSize();
-		} catch (e) {
-			console.warn( "Unable to customize font size", e );
-		}
+	resetFont() {
+		this.size = this.calcMiddleFont();
+		console.log( "resetFont() :: ", this.size, "em" );
 	}
 
-	solveFontSize(): number {
+	toggleFont() {
 
-		const middleFont: number = this.calcMiddleFont();
-		const largeFont:  number = this.calcLargeFont();
-
+		let middleFont: number = this.calcMiddleFont();
+		let largeFont:  number = this.calcLargeFont();
+		
 		let size: number = this.size;
 
 		if (Math.abs( largeFont - middleFont ) < .3) {
@@ -41,8 +39,8 @@ export class FontService {
 
 		} else {
 
-			const middleDiff = Math.abs( size - middleFont );
-			const largeDiff  = Math.abs( size - largeFont );
+			let middleDiff = Math.abs( size - middleFont );
+			let largeDiff  = Math.abs( size - largeFont );
 
 			if (largeDiff < .1) {
 				// Lähellä large-kokoa -> toggletetaan middleksi
@@ -66,7 +64,9 @@ export class FontService {
 			}
 		}
 
-		return size;
+		this.size = size;
+
+		this.aref.tick();
 	}
 
 	calcLargeFont(): number {
@@ -92,45 +92,19 @@ export class FontService {
 		return this.size * prs;
 	}
 
-	async resetFont() {
-		try {
-			this.size = this.calcMiddleFont();
-			console.log( "resetFont() :: ", this.size, "em" );
-		} catch (e) {
-			console.warn( "Unable to customize font size", e );
-		}
-	}
-
 	getFont(): number {
 		return this.size;
 	}
 
 	setFont( size: number ): number {
-
 		return this.size = size;
 	}
 
 	decreaseFont( x = 0.8 ): number {
-
-		if (this.currentSong.fixedSize) {
-
-			this.currentSong.fixedSize = false;
-
-			this.size = this.solveFontSize();
-		}
-
 		return this.setFont( this.size * x );
 	}
 
 	increaseFont( x = 1.25 ): number {
-
-		if (this.currentSong.fixedSize) {
-
-			this.currentSong.fixedSize = false;
-
-			this.size = this.solveFontSize();
-		}
-
 		return this.setFont( this.size * x );
 	}
 }

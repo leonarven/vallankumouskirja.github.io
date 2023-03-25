@@ -16,8 +16,7 @@ import { FontService } from '../services/font.service';
 				 class="loading col-xs-12 col-sm-12 col-md-12 col-lg-pull-0"
 				 [ngClass]="{ 'loading': loading.is(), 'col-lg-8': songList.isOpen() }"
 			>
-				<router-outlet></router-outlet>
-				<!--<ui-view></ui-view>-->
+				<ui-view></ui-view>
 			</article>
 
 		</section>
@@ -31,7 +30,7 @@ import { FontService } from '../services/font.service';
 
 	</main>
 
-	<header class="navbar navbar-default" [class.songlist-open]="songList.isOpen()">
+	<header class="navbar navbar-default">
 		<div class="container-fluid">
 			<div class="navbar-header">
 				<ul class="nav navbar-nav pull-right">
@@ -44,19 +43,11 @@ import { FontService } from '../services/font.service';
 					(click)="songList.toggleOpen()"
 				>
 					<span><b class="glyphicon glyphicon-menu-hamburger"></b></span>
-					<!--<span class="hidden-xs">&nbsp;Laululista{{ !currentSong.current ? '' : (' / ' + (!currentSong.current.author ? '' : (currentSong.current.author + ': ')) + currentSong.current.title) }}</span>-->
 					<span class="hidden-xs">&nbsp;Laululista{{ !currentSong.current ? '' : (' / ' + currentSong.current.title) }}</span>
 				</a>
 			</div>
 		</div>
-	</header>`,
-	styles: [
-		`@media (max-width: 768px) {
-			header.songlist-open .font-ctrl {
-				display: none;
- 			}
-		}`
-	]
+	</header>`
 })
 export class AppComponent {
 	constructor(
