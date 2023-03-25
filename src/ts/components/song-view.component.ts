@@ -1,4 +1,5 @@
-import { Inject, Component } from '@angular/core';
+import { OnInit, Inject, Component } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { SongListService } from '../services/song-list.service';
 import { CurrentSongService } from '../services/current-song.service';
 import { LoadingService } from '../services/loading.service';
@@ -41,43 +42,47 @@ let hammertime;
 		}`
 	]
 })
-export class SongViewComponent {
+export class SongViewComponent implements OnInit {
 	
 	error?: Error;
 	$song;
 
+	subscription;
+
 	constructor(
-		//@Inject( AjsTimeout ) $timeout,   
 		public currentSong: CurrentSongService,
 		public fontService: FontService,
-		songList: SongListService,
-		loading: LoadingService
-	) {
+		public route: ActivatedRoute,
+		public songList: SongListService,
+		public loading: LoadingService
+	) {}
 
-		let $timeout = ( callback = () => {}, timeout = 0 ) => {
-			return new Promise(( resolve, reject )=> {
-				setTimeout( async () => {
-					try {
-						let result = await callback();
-						resolve( result );
-					} catch (error) {
-						reject( error );
-					}
-				}, timeout);
-			});
-		};
-
-
+	ngOnInit() {
 
 		console.log( "songViewController :: Initiated" );
 		
-		loading.set( true );
+		this.loading.set( true );
 
-		currentSong.get().then( $song => {
+		this.subscription = this.route.params.subscribe( params => {
+			if (params["songKey"]) {
+				this.setSongKey( params["songKey"] );
+			}
+		});
+	}
+
+	ngOnDestroy() {
+		this.subscription.unsubscribe();
+	}
+
+	setSongKey( songKey ) {
+		
+		this.loading.set( true );
+
+		return this.currentSong.set( songKey ).then( $song => {
 		
 			console.log( "songViewController :: Loaded song " + $song.title, $song );
 
-			return $timeout( () => this.init( $song ) );
+			return this.init( $song );
 
 		}).catch( error => {
 
@@ -91,9 +96,9 @@ export class SongViewComponent {
 
 		}).then(() => {
 
-			if (window.innerWidth <= 768) songList.close();
+			if (window.innerWidth <= 768) this.songList.close();
 
-			loading.set( false );
+			this.loading.set( false );
 		});
 	}
 

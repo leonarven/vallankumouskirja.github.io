@@ -132,13 +132,5 @@ export class SongListComponent implements OnInit {
 	}
 
 	ngOnInit() {
-
-		this.route.params.subscribe(params => {
-			debugger;
-		});
-
-		this.route.queryParams.subscribe(params => {
-			debugger;
-		});
 	}
 }

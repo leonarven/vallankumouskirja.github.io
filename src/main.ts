@@ -1,10 +1,10 @@
 import "../node_modules/hammerjs/hammer.js";
 
-import { NgZone                 } from '@angular/core';
-import { UIRouter, UrlService   } from '@uirouter/core';
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+//import { NgZone                 } from '@angular/core';
+//import { UIRouter, UrlService   } from '@uirouter/core';
 
-import { AppModule          } from './app.module';
+import { AppModule              } from './app.module';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
 platformBrowserDynamic().bootstrapModule( AppModule ).then( platformRef => {
 

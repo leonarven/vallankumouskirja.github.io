@@ -42,7 +42,6 @@ export class CurrentSongService {
 
 		return this.set( songKey ).then( song => {
 			
-			debugger;
 			if (song == null) {
 
 				this.router.navigate([ 'index' ])
