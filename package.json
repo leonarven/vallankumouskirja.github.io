@@ -1,6 +1,6 @@
 {
 	"name": "vallankumouskirja",
-	"version": "4.0.1",
+	"version": "4.1.0",
 	"description": "Työväensitsien avaruusajan mobiililaulukirja",
 	"scripts": {
 		"ng": "ng",
