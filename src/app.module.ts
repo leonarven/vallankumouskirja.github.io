@@ -6,9 +6,11 @@ import { UpgradeModule } from '@angular/upgrade/static';
 import { UIRouterUpgradeModule } from '@uirouter/angular-hybrid';
 import { HttpClientModule } from '@angular/common/http';
 
+import { AppRoutingModule } from './app-routing.module';
+
 //import { ajsTimeoutServiceProvider    } from './ts/services/ajs.service'
-import { ajsInjectorServiceProvider   } from './ts/services/ajs.service'
-import { ajsStateServiceProvider      } from './ts/services/ajs.service'
+//import { ajsInjectorServiceProvider   } from './ts/services/ajs.service'
+//import { ajsStateServiceProvider      } from './ts/services/ajs.service'
 
 import { FontService                  } from './ts/services/font.service';
 import { SongsService                 } from './ts/services/songs.service';
@@ -23,7 +25,7 @@ import { SongViewComponent            } from './ts/components/song-view.componen
 import { PlaceholderSongViewComponent } from './ts/components/song-view.component';
 import { SongListComponent            } from './ts/components/song-list.component';
 
-import { AngularJSAppModule } from './ajs.app';
+//import { AngularJSAppModule } from './ajs.app';
 
 /************************************************************/
 
@@ -63,10 +65,11 @@ const ng1States = [];
 	imports: [
 		BrowserModule,
 		UpgradeModule,
-		UIRouterUpgradeModule.forRoot({ states: ng2States }),
+		//UIRouterUpgradeModule.forRoot({ states: ng2States }),
 		CommonModule,
 		FormsModule,
-		HttpClientModule
+		HttpClientModule,
+		AppRoutingModule
 	],
 	declarations: [
 		AppComponent,
@@ -76,8 +79,8 @@ const ng1States = [];
 	],
 	providers: [
 		//ajsTimeoutServiceProvider,
-		ajsInjectorServiceProvider,
-		ajsStateServiceProvider,
+		//ajsInjectorServiceProvider,
+		//ajsStateServiceProvider,
 		LoadingService,
 		SongsService,
 		SongListService,
@@ -93,10 +96,10 @@ const ng1States = [];
 		SongViewComponent,
 		PlaceholderSongViewComponent,
 	],
-//	bootstrap: [ AppComponent ]
+	bootstrap: [ AppComponent ]
 })
-//export class AppModule {}
-export class AppModule implements DoBootstrap {
+export class AppModule {}
+/*export class AppModule implements DoBootstrap {
 	
 	constructor( private upgrade: UpgradeModule ) {}
 
@@ -104,4 +107,4 @@ export class AppModule implements DoBootstrap {
 		this.upgrade.bootstrap( document.body, [ AngularJSAppModule.name ], { strictDi: true });
 	}
 }
-
+*/

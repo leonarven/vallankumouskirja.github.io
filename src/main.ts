@@ -8,12 +8,13 @@ import { AppModule          } from './app.module';
 
 platformBrowserDynamic().bootstrapModule( AppModule ).then( platformRef => {
 
-	const urlService: UrlService = platformRef.injector.get( UIRouter ).urlService;
+	/*const urlService: UrlService = platformRef.injector.get( UIRouter ).urlService;
 
 	function startUIRouter() {
 		urlService.listen();
 		urlService.sync();
 	}
 
-	platformRef.injector.get<NgZone>( NgZone ).run( startUIRouter );
+	platformRef.injector.get<NgZone>( NgZone ).run( startUIRouter );*/
+
 });

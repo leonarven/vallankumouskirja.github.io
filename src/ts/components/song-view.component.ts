@@ -13,7 +13,7 @@ let hammertime;
 	<pre
 		class="alert alert-danger"
 		style="display:inline-block;margin-top:1em;"
-       		*ngIf="error">{{ error }}</pre>
+       		*ngIf="error">{{ error.message }} &#x2639;</pre>
 
 	<pre
 		*ngIf="$song"
@@ -43,7 +43,7 @@ let hammertime;
 })
 export class SongViewComponent {
 	
-	error;
+	error?: Error;
 	$song;
 
 	constructor(

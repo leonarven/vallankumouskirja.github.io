@@ -12,7 +12,7 @@ import { SongListComponent            } from './ts/components/song-list.componen
 
 import { downgradeInjectable, downgradeComponent } from '@angular/upgrade/static';
 
-export const AngularJSAppModule = angular.module( "laulukirja", [ "ui.router", 'ui.router.upgrade' ])
+export const AngularJSAppModule = angular.module( "laulukirja", [])// "ui.router" ])//, 'ui.router.upgrade' ])
 
 .service( "currentSong", downgradeInjectable( CurrentSongService ))
 .service( "songList",    downgradeInjectable( SongListService ))

@@ -2,16 +2,16 @@
 import { InjectionToken } from '@angular/core';
 
 
-export const AjsState = new InjectionToken("AjsState");
-
-export function ajsStateServiceFactory(i: any) {
-  return i.get('$state');
-}
-export const ajsStateServiceProvider = {
-  provide: AjsState,
-  useFactory: ajsStateServiceFactory,
-  deps: ['$injector']
-};
+//export const AjsState = new InjectionToken("AjsState");
+//
+//export function ajsStateServiceFactory(i: any) {
+//  return i.get('$state');
+//}
+//export const ajsStateServiceProvider = {
+//  provide: AjsState,
+//  useFactory: ajsStateServiceFactory,
+//  deps: ['$injector']
+//};
 
 
 /*export const AjsTimeout = new InjectionToken("AjsTimeout");

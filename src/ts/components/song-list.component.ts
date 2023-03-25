@@ -1,12 +1,13 @@
 
-import { ChangeDetectorRef, Component, Input, Inject } from '@angular/core';
+import { OnInit, ChangeDetectorRef, Component, Input, Inject } from '@angular/core';
 import { Song } from '../classes/Song';
 import { LoadingService       } from '../services/loading.service';
 import { SongsService         } from '../services/songs.service';
 import { CurrentSongService   } from '../services/current-song.service';
 import { SongListService      } from '../services/song-list.service';
 //import { AjsTimeout           } from '../services/ajs.service';
-import { AjsState             } from '../services/ajs.service';
+//import { AjsState             } from '../services/ajs.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
 	selector: 'song-list',
@@ -62,15 +63,15 @@ import { AjsState             } from '../services/ajs.service';
 		}`
 	]
 })
-export class SongListComponent {
+export class SongListComponent implements OnInit {
 
-	static $inject = [ "$scope", "$state", "Songs" ];
+	//static $inject = [ "$scope", "$state", "Songs" ];
 
 	runFilter;
 
 	getSongs;
 	Songs;
-	$state;
+	//$state;
 	
 	search: string = "";
 	//@Input('search') search: string = "";
@@ -89,17 +90,18 @@ export class SongListComponent {
 
 	constructor(
 		private cdr: ChangeDetectorRef,
-		@Inject( AjsState ) $state,
+		//@Inject( AjsState ) $state,
 		public songList: SongListService,
 		public currentSong: CurrentSongService,
-		Songs: SongsService
+		Songs: SongsService,
+		private route: ActivatedRoute
 	) {
 
-		this.$state = $state;
+		//this.$state = $state;
 
 		let $scope = this;
 		
-		$scope.$state = $state;
+		//$scope.$state = $state;
 		$scope.Songs = Songs;
 
 		$scope.getSongs = () => {
@@ -127,5 +129,16 @@ export class SongListComponent {
 				});
 			}
 		};
+	}
+
+	ngOnInit() {
+
+		this.route.params.subscribe(params => {
+			debugger;
+		});
+
+		this.route.queryParams.subscribe(params => {
+			debugger;
+		});
 	}
 }
