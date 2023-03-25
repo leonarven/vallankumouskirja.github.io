@@ -28,13 +28,17 @@ export class CurrentSongService {
 
 		return this.set( songKey ).then( song => {
 			
-			if (song == null) {
+			try {
+				if (song == null) {
 
-				this.router.navigate([ 'index' ])
+					this.router.navigate([ 'index' ])
 
-			} else {
+				} else {
 
-				this.router.navigate([ 'index/'+songKey ])
+					this.router.navigate([ 'index/'+songKey ])
+				}
+			} catch (error) {
+				console.error( error );
 			}
 		});
 	}
