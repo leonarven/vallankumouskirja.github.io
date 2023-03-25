@@ -1,9 +1,10 @@
-import { Inject, Component } from '@angular/core';
+import { OnInit, Inject, Component } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { SongListService } from '../services/song-list.service';
 import { CurrentSongService } from '../services/current-song.service';
 import { LoadingService } from '../services/loading.service';
 import { FontService } from '../services/font.service';
-import { AjsTimeout } from '../services/ajs.service';
+//import { AjsTimeout } from '../services/ajs.service';
 
 let hammertime;
 
@@ -13,7 +14,7 @@ let hammertime;
 	<pre
 		class="alert alert-danger"
 		style="display:inline-block;margin-top:1em;"
-       		*ngIf="error">{{ error }}</pre>
+       		*ngIf="error">{{ error.message }} &#x2639;</pre>
 
 	<pre
 		*ngIf="$song"
@@ -41,22 +42,47 @@ let hammertime;
 		}`
 	]
 })
-export class SongViewComponent {
+export class SongViewComponent implements OnInit {
 	
-	error;
+	error?: Error;
 	$song;
 
-	constructor( @Inject( AjsTimeout ) $timeout, public currentSong: CurrentSongService, public fontService: FontService, songList: SongListService, loading: LoadingService ) {
+	subscription;
+
+	constructor(
+		public currentSong: CurrentSongService,
+		public fontService: FontService,
+		public route: ActivatedRoute,
+		public songList: SongListService,
+		public loading: LoadingService
+	) {}
+
+	ngOnInit() {
 
 		console.log( "songViewController :: Initiated" );
 		
-		loading.set( true );
+		this.loading.set( true );
 
-		currentSong.get().then( $song => {
+		this.subscription = this.route.params.subscribe( params => {
+			if (params["songKey"]) {
+				this.setSongKey( params["songKey"] );
+			}
+		});
+	}
+
+	ngOnDestroy() {
+		this.subscription.unsubscribe();
+	}
+
+	setSongKey( songKey ) {
+		
+		this.loading.set( true );
+
+		return this.currentSong.set( songKey ).then( $song => {
 		
 			console.log( "songViewController :: Loaded song " + $song.title, $song );
 
-			return $timeout( () => this.init( $song ) );
+			return this.init( $song );
 
 		}).catch( error => {
 
@@ -70,9 +96,9 @@ export class SongViewComponent {
 
 		}).then(() => {
 
-			if (window.innerWidth <= 768) songList.close();
+			if (window.innerWidth <= 768) this.songList.close();
 
-			loading.set( false );
+			this.loading.set( false );
 		});
 	}
 
@@ -146,7 +172,7 @@ function iniHammer() {
 })
 export class PlaceholderSongViewComponent {
 
-	constructor( @Inject( AjsTimeout ) $timeout, loading: LoadingService ) {
-		$timeout(()=>{ loading.set( 0 ); });
+	constructor( loading: LoadingService ) {
+		loading.set( 0 );
 	}
 }

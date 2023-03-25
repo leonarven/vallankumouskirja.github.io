@@ -6,9 +6,13 @@ import { UpgradeModule } from '@angular/upgrade/static';
 import { UIRouterUpgradeModule } from '@uirouter/angular-hybrid';
 import { HttpClientModule } from '@angular/common/http';
 
-import { ajsTimeoutServiceProvider, ajsInjectorServiceProvider, ajsStateServiceProvider } from './ts/services/ajs.service'
+import { AppRoutingModule } from './app-routing.module';
 
-import { FontService                 } from './ts/services/font.service';
+//import { ajsTimeoutServiceProvider    } from './ts/services/ajs.service'
+//import { ajsInjectorServiceProvider   } from './ts/services/ajs.service'
+//import { ajsStateServiceProvider      } from './ts/services/ajs.service'
+
+import { FontService                  } from './ts/services/font.service';
 import { SongsService                 } from './ts/services/songs.service';
 import { SongListService              } from './ts/services/song-list.service';
 import { CurrentSongService           } from './ts/services/current-song.service'; 
@@ -21,7 +25,7 @@ import { SongViewComponent            } from './ts/components/song-view.componen
 import { PlaceholderSongViewComponent } from './ts/components/song-view.component';
 import { SongListComponent            } from './ts/components/song-list.component';
 
-import { AngularJSAppModule } from './ajs.app';
+//import { AngularJSAppModule } from './ajs.app';
 
 /************************************************************/
 
@@ -49,13 +53,11 @@ const ng2States = states.map( v => {
 
 const ng1States = [];
 
-AngularJSAppModule.config([ '$urlServiceProvider', $urlService => $urlService.deferIntercept() ]);
-AngularJSAppModule.run([ '$stateRegistry', '$urlService', ( $stateRegistry, $urlService ) => {
-
-	$urlService.rules.initial({ state: 'index' });
-
-	for (let state of ng1States) $stateRegistry.register( state );
-}]);
+//AngularJSAppModule.config([ '$urlServiceProvider', $urlService => $urlService.deferIntercept() ]);
+//AngularJSAppModule.run([ '$stateRegistry', '$urlService', ( $stateRegistry, $urlService ) => {
+//	$urlService.rules.initial({ state: 'index' });
+//	for (let state of ng1States) $stateRegistry.register( state );
+//}]);
 
 /****************************************************************/
 
@@ -63,10 +65,11 @@ AngularJSAppModule.run([ '$stateRegistry', '$urlService', ( $stateRegistry, $url
 	imports: [
 		BrowserModule,
 		UpgradeModule,
-		UIRouterUpgradeModule.forRoot({ states: ng2States }),
+		//UIRouterUpgradeModule.forRoot({ states: ng2States }),
 		CommonModule,
 		FormsModule,
-		HttpClientModule
+		HttpClientModule,
+		AppRoutingModule
 	],
 	declarations: [
 		AppComponent,
@@ -75,9 +78,9 @@ AngularJSAppModule.run([ '$stateRegistry', '$urlService', ( $stateRegistry, $url
 		PlaceholderSongViewComponent,
 	],
 	providers: [
-		ajsTimeoutServiceProvider,
-		ajsInjectorServiceProvider,
-		ajsStateServiceProvider,
+		//ajsTimeoutServiceProvider,
+		//ajsInjectorServiceProvider,
+		//ajsStateServiceProvider,
 		LoadingService,
 		SongsService,
 		SongListService,
@@ -92,9 +95,11 @@ AngularJSAppModule.run([ '$stateRegistry', '$urlService', ( $stateRegistry, $url
 		SongListComponent,
 		SongViewComponent,
 		PlaceholderSongViewComponent,
-	]
+	],
+	bootstrap: [ AppComponent ]
 })
-export class AppModule implements DoBootstrap {
+export class AppModule {}
+/*export class AppModule implements DoBootstrap {
 	
 	constructor( private upgrade: UpgradeModule ) {}
 
@@ -102,3 +107,4 @@ export class AppModule implements DoBootstrap {
 		this.upgrade.bootstrap( document.body, [ AngularJSAppModule.name ], { strictDi: true });
 	}
 }
+*/

@@ -1,6 +1,6 @@
 import { Injectable, Inject } from '@angular/core';
 
-import { AjsTimeout } from './ajs.service';
+//import { AjsTimeout } from './ajs.service';
 
 @Injectable({
 	providedIn: 'root'
@@ -11,9 +11,25 @@ export class ResizeService {
 
 	$timeout;
 
-	static $inject = [ "$timeout" ];
+	//static $inject = [ "$timeout" ];
 
-	constructor( @Inject( AjsTimeout ) $timeout ) {
+	constructor(
+		//@Inject( AjsTimeout ) $timeout
+       	) {
+
+		let $timeout = ( callback = () => {}, timeout = 0 ) => {
+			return new Promise(( resolve, reject )=> {
+				setTimeout( async () => {
+					try {
+						let result = await callback();
+						resolve( result );
+					} catch (error) {
+						reject( error );
+					}
+				}, timeout);
+			});
+		};
+
 		this.$timeout = $timeout;
 
 		window.addEventListener( "resize", () => {

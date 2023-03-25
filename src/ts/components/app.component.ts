@@ -16,7 +16,8 @@ import { FontService } from '../services/font.service';
 				 class="loading col-xs-12 col-sm-12 col-md-12 col-lg-pull-0"
 				 [ngClass]="{ 'loading': loading.is(), 'col-lg-8': songList.isOpen() }"
 			>
-				<ui-view></ui-view>
+				<router-outlet></router-outlet>
+				<!--<ui-view></ui-view>-->
 			</article>
 
 		</section>
