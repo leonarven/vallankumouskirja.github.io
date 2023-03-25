@@ -1,5 +1,4 @@
 import { SongsService } from './songs.service';
-//import { AjsState, AjsInjector } from './ajs.service'
 import { Song } from '../classes/Song';
 import { Injectable, Inject } from '@angular/core';
 import { ActivatedRoute, Router, ParamMap } from '@angular/router';
@@ -12,7 +11,6 @@ import { switchMap } from 'rxjs/operators';
 export class CurrentSongService {
 
 	$templateRequest;
-	Songs;
 
 	songKey;
 
@@ -23,20 +21,8 @@ export class CurrentSongService {
 	constructor(
 		private route: ActivatedRoute,
 		private router: Router,
-		//@Inject( AjsInjector ) public $injector,
-		//@Inject( AjsState ) public $state,
-		Songs: SongsService
-	) {
-		this.Songs            = Songs;
-		/*this.route.paramMap.pipe( switchMap((params: ParamMap) => {
-			debugger;
-			return params;
-		}));
-		return;*/
-		/*this.route.params.subscribe( params => {
-			debugger;
-		})*/
-	}
+		public Songs: SongsService
+	) {}
 
 	async select( songKey: (null|string) ) {
 
@@ -45,12 +31,10 @@ export class CurrentSongService {
 			if (song == null) {
 
 				this.router.navigate([ 'index' ])
-				//this.$state.go( 'index' );
 
 			} else {
 
 				this.router.navigate([ 'index/'+songKey ])
-				//this.$state.go( 'index.song', { songKey }); 
 			}
 		});
 	}
@@ -77,18 +61,11 @@ export class CurrentSongService {
 		});
 	}
 
-	async getSongKey() {
-
+	async solveSongKey() {
 		return this.songKey;
-
-		try {
-			//return this.route.snapshot.firstChild && this.route.snapshot.firstChild.params["songKey"];
-		} catch (e) {}
-
-		return angular.element(document.body).injector().get('$stateParams').songKey;
 	}
 
 	async get() {
-		return this.set( await this.getSongKey());
+		return this.set( await this.solveSongKey());
 	}
 }

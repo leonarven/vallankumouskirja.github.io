@@ -5,8 +5,6 @@ import { LoadingService       } from '../services/loading.service';
 import { SongsService         } from '../services/songs.service';
 import { CurrentSongService   } from '../services/current-song.service';
 import { SongListService      } from '../services/song-list.service';
-//import { AjsTimeout           } from '../services/ajs.service';
-//import { AjsState             } from '../services/ajs.service';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -65,16 +63,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class SongListComponent implements OnInit {
 
-	//static $inject = [ "$scope", "$state", "Songs" ];
-
-	runFilter;
-
-	getSongs;
-	Songs;
-	//$state;
-	
 	search: string = "";
-	//@Input('search') search: string = "";
 
 	searchResult: (null|Song[]) = null;
 
@@ -83,54 +72,42 @@ export class SongListComponent implements OnInit {
 	}
 	set currentSongKey( key: (null|string) ) {
 		this.currentSong.select( key );
-		setTimeout(() => {
-			this.cdr.detectChanges();
-		}, 100);
 	}
 
 	constructor(
 		private cdr: ChangeDetectorRef,
-		//@Inject( AjsState ) $state,
 		public songList: SongListService,
 		public currentSong: CurrentSongService,
-		Songs: SongsService,
+		public Songs: SongsService,
 		private route: ActivatedRoute
-	) {
+	) {}
 
-		//this.$state = $state;
+	ngOnInit() { }
 
-		let $scope = this;
-		
-		//$scope.$state = $state;
-		$scope.Songs = Songs;
+	getSongs() {
 
-		$scope.getSongs = () => {
+		if (this.searchResult != null) return this.searchResult;
 
-			if (this.searchResult != null) return this.searchResult;
-
-			return Songs.sorted;
-		}
-
-		$scope.runFilter = ( searchStr = $scope.search ) => {
-
-			$scope.search = searchStr = searchStr || '';
-
-			this.searchResult = null;
-
-			let searchArr = searchStr.toLowerCase( ).trim( ).split( /\s+/g );
-
-			if (searchArr.length) {
-
-				this.searchResult = Songs.sorted.filter( song => {
-					for (let word of searchArr) {
-						if (song.$search.$string.indexOf( word ) != -1) return true;
-					}
-					return false;
-				});
-			}
-		};
+		return this.Songs.sorted;
 	}
 
-	ngOnInit() {
+
+	runFilter( searchStr = this.search ) {
+
+		this.search = searchStr = searchStr || '';
+
+		this.searchResult = null;
+
+		let searchArr = searchStr.toLowerCase( ).trim( ).split( /\s+/g );
+
+		if (searchArr.length) {
+
+			this.searchResult = this.Songs.sorted.filter( song => {
+				for (let word of searchArr) {
+					if (song.$search.$string.indexOf( word ) != -1) return true;
+				}
+				return false;
+			});
+		}
 	}
 }

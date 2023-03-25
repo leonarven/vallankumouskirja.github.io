@@ -2,7 +2,6 @@
 import { Injectable, Inject, ApplicationRef } from '@angular/core';
 import { ResizeService } from './resize.service';
 import { CurrentSongService } from './current-song.service';
-//import { AjsTimeout  } from './ajs.service';
 import { ScopeLikeEvents } from '../classes/scope-like-events';
 
 @Injectable({
@@ -10,45 +9,23 @@ import { ScopeLikeEvents } from '../classes/scope-like-events';
 })
 export class FontService {	
 
-	static $inject = [ "$timeout", "resize" ];
-
 	size: number = 10;
-
-	$timeout;
 
 	constructor(
 		public currentSong: CurrentSongService,
 		private aref: ApplicationRef,
-		//@Inject(AjsTimeout) public $timeout,
 		resize: ResizeService
 	) {
-		let $timeout = ( callback = () => {}, timeout = 0 ) => {
-			return new Promise(( resolve, reject )=> {
-				setTimeout( async () => {
-					try {
-						let result = await callback();
-						resolve( result );
-					} catch (error) {
-						reject( error );
-					}
-				}, timeout);
-			});
-		}
-		this.$timeout = $timeout;
-		
+
 		resize.$on( "resize", () => this.resetFont() );
 	}
 
-	toggleFont() {
-		return this.$timeout(() => {
-
+	async toggleFont() {
+		try {
 			this.size = this.solveFontSize();
-
-			this.aref.tick();
-
-		}).catch(( e: any ) => {
+		} catch (e) {
 			console.warn( "Unable to customize font size", e );
-		});
+		}
 	}
 
 	solveFontSize(): number {
@@ -115,13 +92,13 @@ export class FontService {
 		return this.size * prs;
 	}
 
-	resetFont() {
-		return this.$timeout(() => {
+	async resetFont() {
+		try {
 			this.size = this.calcMiddleFont();
 			console.log( "resetFont() :: ", this.size, "em" );
-		}).catch(( e: any ) => {
+		} catch (e) {
 			console.warn( "Unable to customize font size", e );
-		});
+		}
 	}
 
 	getFont(): number {

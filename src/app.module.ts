@@ -8,10 +8,6 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 
-//import { ajsTimeoutServiceProvider    } from './ts/services/ajs.service'
-//import { ajsInjectorServiceProvider   } from './ts/services/ajs.service'
-//import { ajsStateServiceProvider      } from './ts/services/ajs.service'
-
 import { FontService                  } from './ts/services/font.service';
 import { SongsService                 } from './ts/services/songs.service';
 import { SongListService              } from './ts/services/song-list.service';
@@ -25,47 +21,12 @@ import { SongViewComponent            } from './ts/components/song-view.componen
 import { PlaceholderSongViewComponent } from './ts/components/song-view.component';
 import { SongListComponent            } from './ts/components/song-list.component';
 
-//import { AngularJSAppModule } from './ajs.app';
-
-/************************************************************/
-
-const states = [{
-	name: "index",
-	url: "/index",
-	componentSelector: 'placeholder-song-view',
-	componentName: 'placeholderSongView',
-	component: PlaceholderSongViewComponent,
-},{
-	name: "index.song",
-	url: "/:songKey",
-	componentSelector: 'song-view',
-	componentName: 'songView',
-	component: SongViewComponent,
-}];
-
-const ng2States = states.map( v => {
-	let { name, url, component } = v;
-	return {
-		name, url,
-		views: { '@': { component } }
-	};
-});
-
-const ng1States = [];
-
-//AngularJSAppModule.config([ '$urlServiceProvider', $urlService => $urlService.deferIntercept() ]);
-//AngularJSAppModule.run([ '$stateRegistry', '$urlService', ( $stateRegistry, $urlService ) => {
-//	$urlService.rules.initial({ state: 'index' });
-//	for (let state of ng1States) $stateRegistry.register( state );
-//}]);
-
 /****************************************************************/
 
 @NgModule({
 	imports: [
 		BrowserModule,
 		UpgradeModule,
-		//UIRouterUpgradeModule.forRoot({ states: ng2States }),
 		CommonModule,
 		FormsModule,
 		HttpClientModule,
@@ -78,9 +39,6 @@ const ng1States = [];
 		PlaceholderSongViewComponent,
 	],
 	providers: [
-		//ajsTimeoutServiceProvider,
-		//ajsInjectorServiceProvider,
-		//ajsStateServiceProvider,
 		LoadingService,
 		SongsService,
 		SongListService,
@@ -99,12 +57,3 @@ const ng1States = [];
 	bootstrap: [ AppComponent ]
 })
 export class AppModule {}
-/*export class AppModule implements DoBootstrap {
-	
-	constructor( private upgrade: UpgradeModule ) {}
-
-	ngDoBootstrap() {
-		this.upgrade.bootstrap( document.body, [ AngularJSAppModule.name ], { strictDi: true });
-	}
-}
-*/
