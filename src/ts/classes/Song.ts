@@ -17,12 +17,17 @@ export class Song implements ISongJson {
 
 	key: string;
 
-	title: any;
+	title: string = "";
+
+	author: string = "";
+
+	lyrics?: string;
 	num?: number;
 	
 	disable?: boolean;
 
-	$templateUrl?: string;
+	song_file: string = "";
+	$templateUrl: string = "";
 	$search: SearchString;
 
 	constructor( key: string, data: any ) {
@@ -31,13 +36,18 @@ export class Song implements ISongJson {
 
 		for (let v in data) this[ v ] = data[ v ];
 
-		if (this.$templateUrl == null) {
+		if (!this.song_file) {
+			this.song_file = `${ key }.html`;
+		}
+		
+		if (!this.$templateUrl) {// @DEPRECATED
 			this.$templateUrl = `songs/${ key }/song.html`;
 		}
 
 		this.$search = new SearchString({
-			title : data.title || "",
-			num   : data.num == null ? "" : data.num.toString().trim()
+			title  : data.title || "",
+			author : data.author || "",
+			num    : data.num == null ? "" : `${ data.num }`
 		});
 	}
 }

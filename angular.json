@@ -45,15 +45,27 @@
 						"polyfills": "src/polyfills.ts",
 						"tsConfig": "tsconfig.app.json",
 						"assets": [
-							"src/songs",
+							"src/songs/dist",
 							"src/media",
 							"src/styles",
-							"src/manifest.json"
+							"src/manifest.json",
+							"src/CNAME",
+							"src/robots.txt",
+							"src/sitemap-songs.xml"
 						],
 						"styles": [
 							"src/styles.css"
 						],
 						"scripts": []					
+					}
+				},
+				"newbuild": {
+					"builder": "@angular-builders/custom-webpack:browser",
+					"options": {
+						"customWebpackConfig": {
+							"path": "./webpack.config.js",
+							"replaceDuplicatePlugins": true
+						}
 					}
 				},
 				"build": {
@@ -66,10 +78,13 @@
 						"polyfills": "src/polyfills.ts",
 						"tsConfig": "tsconfig.app.json",
 						"assets": [
-							"src/songs",
+							"src/songs/dist",
 							"src/media",
 							"src/styles",
-							"src/manifest.json"
+							"src/manifest.json",
+							"src/CNAME",
+							"src/robots.txt",
+							"src/sitemap-songs.xml"
 						],
 						"styles": [
 							"src/styles.css"
@@ -78,7 +93,7 @@
 					},
 					"configurations": {
 						"production": {
-							"optimization": false,
+							"optimization": true,
 							"outputHashing": "all"
 						},
 						"development": {

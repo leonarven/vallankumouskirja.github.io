@@ -1,9 +1,11 @@
 
-import { ChangeDetectorRef, Component, Input, Inject } from '@angular/core';
+import { OnInit, ChangeDetectorRef, Component, Input, Inject } from '@angular/core';
 import { Song } from '../classes/Song';
-import { LoadingService } from '../services/loading.service';
-import { SongsService   } from '../services/songs.service';
+import { LoadingService       } from '../services/loading.service';
+import { SongsService         } from '../services/songs.service';
 import { CurrentSongService   } from '../services/current-song.service';
+import { SongListService      } from '../services/song-list.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
 	selector: 'song-list',
@@ -27,7 +29,7 @@ import { CurrentSongService   } from '../services/current-song.service';
 			*ngFor="let song of getSongs()"
 			[ngClass]="{ 'active': currentSongKey == song.key }"
 		>
-			<a style="cursor:pointer" (click)="currentSongKey = song.key">
+			<a style="cursor:pointer" (click)="select(song.key)">
 				<h4 class="title"><b class="number">{{ song.num }}</b> &ndash; {{ song.title }}</h4>
 			</a>
 		</li>
@@ -59,18 +61,9 @@ import { CurrentSongService   } from '../services/current-song.service';
 		}`
 	]
 })
-export class SongListComponent {
+export class SongListComponent implements OnInit {
 
-	static $inject = [ "$scope", "$state", "Songs" ];
-
-	runFilter;
-
-	getSongs;
-	Songs;
-	$state;
-	
 	search: string = "";
-	//@Input('search') search: string = "";
 
 	searchResult: (null|Song[]) = null;
 
@@ -79,42 +72,50 @@ export class SongListComponent {
 	}
 	set currentSongKey( key: (null|string) ) {
 		this.currentSong.select( key );
-		setTimeout(() => {
-			this.cdr.detectChanges();
-		}, 100);
 	}
 
-	constructor( private cdr: ChangeDetectorRef, public currentSong: CurrentSongService, Songs: SongsService ) {
+	constructor(
+		private cdr: ChangeDetectorRef,
+		public songList: SongListService,
+		public currentSong: CurrentSongService,
+		public Songs: SongsService,
+		private route: ActivatedRoute
+	) {}
 
+	ngOnInit() { }
 
-		let $scope = this;
-		
-		$scope.Songs = Songs;
-
-		$scope.getSongs = () => {
-
-			if (this.searchResult != null) return this.searchResult;
-
-			return Songs.sorted;
+	select( songKey: string ) {
+		if (!this.currentSong.current || this.currentSong.current.key != songKey) {
+			this.currentSongKey = songKey;
+		} else if (window.innerWidth <= 768) {
+			this.songList.close();
 		}
+	}
 
-		$scope.runFilter = ( searchStr = $scope.search ) => {
+	getSongs() {
 
-			$scope.search = searchStr = searchStr || '';
+		if (this.searchResult != null) return this.searchResult;
 
-			this.searchResult = null;
+		return this.Songs.sorted;
+	}
 
-			let searchArr = searchStr.toLowerCase( ).trim( ).split( /\s+/g );
 
-			if (searchArr.length) {
+	runFilter( searchStr = this.search ) {
 
-				this.searchResult = Songs.sorted.filter( song => {
-					for (let word of searchArr) {
-						if (song.$search.$string.indexOf( word ) != -1) return true;
-					}
-					return false;
-				});
-			}
-		};
+		this.search = searchStr = searchStr || '';
+
+		this.searchResult = null;
+
+		let searchArr = searchStr.toLowerCase( ).trim( ).split( /\s+/g );
+
+		if (searchArr.length) {
+
+			this.searchResult = this.Songs.sorted.filter( song => {
+				for (let word of searchArr) {
+					if (song.$search.$string.indexOf( word ) != -1) return true;
+				}
+				return false;
+			});
+		}
 	}
 }

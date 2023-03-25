@@ -2,12 +2,6 @@ export class ScopeLikeEvents {
 
 	callbacks = {};
 
-	$timeout;
-
-	constructor( $timeout? ) {
-		if ($timeout) this.$timeout = $timeout;
-	}
-
 	$on( key, callback ) {
 		if (!this.callbacks[ key ]) this.callbacks[ key ] = [];
 
@@ -22,8 +16,6 @@ export class ScopeLikeEvents {
 				} catch (error) {
 				}
 			}
-
-			if (this.$timeout) this.$timeout();
 		}
 	}
 }

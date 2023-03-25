@@ -1,4 +1,6 @@
 node_modules
 .angular
 .parcel-cache
-vallankumouslaulukirja.code-workspace
+vallankumouskirja.code-workspace
+docs/babelized
+random

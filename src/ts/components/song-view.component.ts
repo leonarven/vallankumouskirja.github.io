@@ -1,4 +1,5 @@
-import { Inject, Component, ChangeDetectorRef, OnInit } from '@angular/core';
+import { OnInit, Inject, Component } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { SongListService } from '../services/song-list.service';
 import { CurrentSongService } from '../services/current-song.service';
 import { LoadingService } from '../services/loading.service';
@@ -12,40 +13,77 @@ let hammertime;
 	<pre
 		class="alert alert-danger"
 		style="display:inline-block;margin-top:1em;"
-       		*ngIf="error">{{ error }}</pre>
+       		*ngIf="error">{{ error.message }} &#x2639;</pre>
 
 	<pre
 		*ngIf="$song"
 		[innerHtml]="$song.lyrics"
 		id="song-body"
 		[ngStyle]="{ 'font-size.em' : (fontService.size / 10.0) }"
-	></pre>`
+		[class.fixed-size]="currentSong.fixedSize"
+	></pre>`,
+	styles: [
+		`#song-body {
+			line-height: 2em;
+			background-color: transparent;
+			border: none;
+			color: #000;
+			font-size: 1.2em;
+			padding: 1rem 2rem;
+			display: inline-block;
+		}`,
+		`:host ::ng-deep #song-body.fixed-size .fixed-size {
+			line-height: 2em;
+			font-size: 1.8rem !important;
+			width: 100%;
+			white-space: pre-wrap;
+			word-break: normal;
+		}`
+	]
 })
-export class SongViewComponent extends OnInit{
-
-	error;
-	init;
+export class SongViewComponent implements OnInit {
+	
+	error?: Error;
 	$song;
 
-	constructor( private cdr: ChangeDetectorRef, currentSong: CurrentSongService, public fontService: FontService, songList: SongListService, loading: LoadingService ) {
+	subscription;
 
-		let $scope = this;
-			
+	constructor(
+		public currentSong: CurrentSongService,
+		public fontService: FontService,
+		public route: ActivatedRoute,
+		public songList: SongListService,
+		public loading: LoadingService
+	) {}
+
+	ngOnInit() {
+
 		console.log( "songViewController :: Initiated" );
 		
-		loading.set( true );
+		this.loading.set( true );
 
-		currentSong.get().then( $song => {
+		this.subscription = this.route.params.subscribe( params => {
+			if (params["songKey"]) {
+				this.setSongKey( params["songKey"] );
+			}
+		});
+	}
+
+	ngOnDestroy() {
+		this.subscription.unsubscribe();
+	}
+
+	public setSongKey( songKey: string ) {
+		
+		this.loading.set( true );
+
+		return this.currentSong.set( songKey ).then( $song => {
+
+			if (!$song) throw "!$song";
 		
 			console.log( "songViewController :: Loaded song " + $song.title, $song );
 
-			$scope.$song = $song;
-
-			var songBodyElem = document.getElementById("song-body");
-
-			if (window.innerWidth <= 768) songList.close();
-
-			return $scope.init();
+			return this.setSong( $song );
 
 		}).catch( error => {
 
@@ -59,21 +97,36 @@ export class SongViewComponent extends OnInit{
 
 		}).then(() => {
 
-			loading.set( false );
+			if (window.innerWidth <= 768) this.songList.close();
 
-			cdr.detectChanges();
+			this.loading.set( false );
+		});
+	}
+
+	private setSong( $song ) {
+	
+		this.$song = $song;
+
+		let fixedSize = false;
+
+		try {
+			let wrapperElem = document.createElement( "section" );
+
+			wrapperElem.innerHTML = $song.lyrics;
+
+			fixedSize = !!wrapperElem.querySelector( "section > article.fixed-size" );
+		
+		} catch (error) {}
+
+		this.currentSong.fixedSize = fixedSize;
+
+		let hammertime = iniHammer();
+
+		if (hammertime) hammertime.on( 'tap', event => {
+			this.fontService.toggleFont();
 		});
 
-		$scope.init = () => {
-
-			let hammertime = iniHammer();
-
-			if (hammertime) hammertime.on( 'tap', function( evt ) {
-				fontService.toggleFont();
-			});
-
-			return fontService.resetFont();
-		};
+		return this.fontService.resetFont();
 	}
 }
 

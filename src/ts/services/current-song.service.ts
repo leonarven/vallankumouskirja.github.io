@@ -1,7 +1,9 @@
 import { SongsService } from './songs.service';
-import { AjsState, AjsInjector, AjsSce, AjsTemplateRequest } from './ajs.service'
 import { Song } from '../classes/Song';
 import { Injectable, Inject } from '@angular/core';
+import { ActivatedRoute, Router, ParamMap } from '@angular/router';
+import { switchMap } from 'rxjs/operators';
+
 	
 @Injectable({
 	providedIn: 'root'
@@ -9,35 +11,34 @@ import { Injectable, Inject } from '@angular/core';
 export class CurrentSongService {
 
 	$templateRequest;
-	$sce;
-	Songs;
+
+	songKey;
 
 	current: (null|Song) = null;
 
-	static $inject = [ "$sce", "Songs" ];
+	fixedSize: boolean = false;
 
 	constructor(
-		@Inject( AjsInjector ) public $injector,
-		@Inject( AjsTemplateRequest ) $templateRequest,
-		@Inject( AjsSce ) $sce,
-		@Inject( AjsState ) public $state,
-		Songs: SongsService
-	) {
-		this.$templateRequest = $templateRequest;
-		this.$sce             = $sce;
-		this.Songs            = Songs;
-	}
+		private route: ActivatedRoute,
+		private router: Router,
+		public Songs: SongsService
+	) {}
 
 	async select( songKey: (null|string) ) {
 
 		return this.set( songKey ).then( song => {
-			if (song == null) {
+			
+			try {
+				if (song == null) {
 
-				this.$state.go( 'index' );
+					this.router.navigate([ 'index' ])
 
-			} else {
+				} else {
 
-				this.$state.go( 'index.song', { songKey });
+					this.router.navigate([ 'index/'+songKey ])
+				}
+			} catch (error) {
+				console.error( error );
 			}
 		});
 	}
@@ -45,28 +46,30 @@ export class CurrentSongService {
 	async set( songKey: (null|string) ) {
 
 		if (songKey == null) {
-			return this.current = null;
+			this.songKey = null;
+			this.current = null;
+			return null;
 		}
 
 		let song = this.Songs.index[songKey];
 
 		if (!song) throw `Could not found song '${ songKey }'`;
 
-		return (song.lyrics
-		 ? Promise.resolve( song )
-		 : (this.$templateRequest( song.$templateUrl ).then(( lyrics: string ) => {
+		return this.Songs.resolveSongWithLyrics( song ).then( song => {
 
-			song.lyrics = lyrics;
-			song.$lyrics = this.$sce.trustAsHtml( lyrics );
+			this.songKey = songKey;
+	
+			this.current = song
 
-		}))).then(() => {
-
-			return this.current = song;
-			
+			return song;
 		});
 	}
 
+	async solveSongKey() {
+		return this.songKey;
+	}
+
 	async get() {
-		return this.set( this.$injector.get("$stateParams").songKey );
+		return this.set( await this.solveSongKey());
 	}
 }

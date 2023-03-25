@@ -7,14 +7,10 @@ import { Injectable } from '@angular/core';
 export class SongListService {
 
 	open: boolean = true;
-	
-	resize;
 
-	static $inject = [ "resize" ];
-
-	constructor( resize: ResizeService ) {
-		this.resize = resize;
-	}
+	constructor(
+		public resize: ResizeService
+	) {}
 
 	toggleOpen() {
 		return this.isOpen( !this.open );
