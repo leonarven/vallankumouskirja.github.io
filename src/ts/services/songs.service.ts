@@ -91,8 +91,6 @@ interface ISongIndex {
 })
 export class SongsService {
 	
-	static $inject = [];
-
 	index: ISongIndex;
 	sorted: Song[] = [];
 

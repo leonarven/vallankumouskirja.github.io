@@ -4,7 +4,6 @@ import { SongListService } from '../services/song-list.service';
 import { CurrentSongService } from '../services/current-song.service';
 import { LoadingService } from '../services/loading.service';
 import { FontService } from '../services/font.service';
-//import { AjsTimeout } from '../services/ajs.service';
 
 let hammertime;
 
@@ -74,15 +73,17 @@ export class SongViewComponent implements OnInit {
 		this.subscription.unsubscribe();
 	}
 
-	setSongKey( songKey ) {
+	public setSongKey( songKey: string ) {
 		
 		this.loading.set( true );
 
 		return this.currentSong.set( songKey ).then( $song => {
+
+			if (!$song) throw "!$song";
 		
 			console.log( "songViewController :: Loaded song " + $song.title, $song );
 
-			return this.init( $song );
+			return this.setSong( $song );
 
 		}).catch( error => {
 
@@ -102,7 +103,7 @@ export class SongViewComponent implements OnInit {
 		});
 	}
 
-	setSong( $song ) {
+	private setSong( $song ) {
 	
 		this.$song = $song;
 
@@ -118,11 +119,6 @@ export class SongViewComponent implements OnInit {
 		} catch (error) {}
 
 		this.currentSong.fixedSize = fixedSize;
-	}
-
-	init( $song ) {
-
-		this.setSong( $song );
 
 		let hammertime = iniHammer();
 

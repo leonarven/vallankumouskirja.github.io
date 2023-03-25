@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CurrentSongService } from '../services/current-song.service';
 
 @Component({
@@ -15,18 +15,23 @@ import { CurrentSongService } from '../services/current-song.service';
 			</ul>
 		</div>`
 })
-export class SongMetaComponent {
+export class SongMetaComponent implements OnInit {
 	
 	meta: any;
       
-	constructor( currentSong: CurrentSongService ) {
+	constructor(
+		public currentSong: CurrentSongService
+	) {}
 
-		currentSong.get().then( $song => {
+	ngOnInit() {
+		this.currentSong.get().then( $song => {
+
+			if (!$song) return;
 
 			this.meta = {
 				title  : $song.title,
 				author : $song.author || null,
-				links  : $song.links  || {},
+				//links  : $song.links  || {},
 			};
 
 			for (let title in this.meta.links) {
