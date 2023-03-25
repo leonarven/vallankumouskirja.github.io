@@ -4,12 +4,14 @@ import { ResizeService } from './resize.service';
 import { CurrentSongService } from './current-song.service';
 import { ScopeLikeEvents } from '../classes/scope-like-events';
 
+const BASE_SIZE = 10;
+
 @Injectable({
 	providedIn: 'root'
 })
 export class FontService {	
 
-	size: number = 10;
+	size: number = BASE_SIZE;
 
 	constructor(
 		public currentSong: CurrentSongService,
@@ -94,7 +96,7 @@ export class FontService {
 
 	async resetFont() {
 		try {
-			this.size = this.calcMiddleFont();
+			this.size = BASE_SIZE; // this.calcMiddleFont();
 			console.log( "resetFont() :: ", this.size, "em" );
 		} catch (e) {
 			console.warn( "Unable to customize font size", e );

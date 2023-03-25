@@ -16,7 +16,7 @@ export class CurrentSongService {
 
 	current: (null|Song) = null;
 
-	fixedSize: boolean = false;
+	fixedSize: boolean = true;
 
 	constructor(
 		private route: ActivatedRoute,

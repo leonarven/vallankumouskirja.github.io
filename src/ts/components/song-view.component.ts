@@ -107,18 +107,18 @@ export class SongViewComponent implements OnInit {
 	
 		this.$song = $song;
 
-		let fixedSize = false;
+		//let fixedSize = false;
 
-		try {
-			let wrapperElem = document.createElement( "section" );
+		//try {
+			//let wrapperElem = document.createElement( "section" );
 
-			wrapperElem.innerHTML = $song.lyrics;
+			//wrapperElem.innerHTML = $song.lyrics;
 
-			fixedSize = !!wrapperElem.querySelector( "section > article.fixed-size" );
+			//fixedSize = !!wrapperElem.querySelector( "section > article.fixed-size" );
 		
-		} catch (error) {}
+		//} catch (error) {}
 
-		this.currentSong.fixedSize = fixedSize;
+		this.currentSong.fixedSize = true;
 
 		let hammertime = iniHammer();
 
