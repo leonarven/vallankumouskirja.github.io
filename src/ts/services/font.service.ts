@@ -30,8 +30,8 @@ export class FontService {
 
 	solveFontSize(): number {
 
-		let middleFont: number = this.calcMiddleFont();
-		let largeFont:  number = this.calcLargeFont();
+		const middleFont: number = this.calcMiddleFont();
+		const largeFont:  number = this.calcLargeFont();
 
 		let size: number = this.size;
 
@@ -41,8 +41,8 @@ export class FontService {
 
 		} else {
 
-			let middleDiff = Math.abs( size - middleFont );
-			let largeDiff  = Math.abs( size - largeFont );
+			const middleDiff = Math.abs( size - middleFont );
+			const largeDiff  = Math.abs( size - largeFont );
 
 			if (largeDiff < .1) {
 				// Lähellä large-kokoa -> toggletetaan middleksi

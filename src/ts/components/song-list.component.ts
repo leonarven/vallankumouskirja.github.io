@@ -29,7 +29,7 @@ import { ActivatedRoute } from '@angular/router';
 			*ngFor="let song of getSongs()"
 			[ngClass]="{ 'active': currentSongKey == song.key }"
 		>
-			<a style="cursor:pointer" (click)="currentSongKey == song.key ? songList.close() : (currentSongKey = song.key)">
+			<a style="cursor:pointer" (click)="select(song.key)">
 				<h4 class="title"><b class="number">{{ song.num }}</b> &ndash; {{ song.title }}</h4>
 			</a>
 		</li>
@@ -83,6 +83,14 @@ export class SongListComponent implements OnInit {
 	) {}
 
 	ngOnInit() { }
+
+	select( songKey: string ) {
+		if (!this.currentSong.current || this.currentSong.current.key != songKey) {
+			this.currentSongKey = songKey;
+		} else if (window.innerWidth <= 768) {
+			this.songList.close();
+		}
+	}
 
 	getSongs() {
 
