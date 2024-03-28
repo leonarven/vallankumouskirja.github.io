@@ -1,14 +1,14 @@
 {
     "jaahyvaiset-aseille": {
         "num": 16,
-        "title": "Jäähyväiset aseille",
-        "author": "Kollaa Kestää",
+        "title": "J\u00e4\u00e4hyv\u00e4iset aseille",
+        "author": "Kollaa Kest\u00e4\u00e4",
         "song_file": "jaahyvaiset-aseille.html"
     },
     "rahan-takii": {
         "num": 59,
         "title": "Rahan takii",
-        "author": "Annti Tuisku",
+        "author": "Antti Tuisku",
         "song_file": "rahan-takii.html"
     },
     "sinua-sinua-rakastan": {
@@ -45,8 +45,7 @@
         "num": "26",
         "title": "Kenen joukoissa seisot",
         "author": null,
-        "song_file": "kenen-joukoissa-seisot.html",
-        "o_num": 4
+        "song_file": "kenen-joukoissa-seisot.html"
     },
     "oppimisen-ylistys": {
         "num": "2",
@@ -55,40 +54,35 @@
         "links": {
             "El\u00e4v\u00e4 arkisto: Agit-Prop, 1975": "http://yle.fi/aihe/artikkeli/2007/04/30/agit-prop-oppimisen-ylistys"
         },
-        "song_file": "oppimisen-ylistys.html",
-        "o_num": 7
+        "song_file": "oppimisen-ylistys.html"
     },
     "riistajan-lait": {
         "num": "28",
         "title": "Riist\u00e4j\u00e4n lait",
         "links": {},
         "author": null,
-        "song_file": "riistajan-lait.html",
-        "o_num": 8
+        "song_file": "riistajan-lait.html"
     },
     "kalliolle-kukkulalle": {
         "num": "18",
         "title": "Kalliolle kukkulalle",
         "author": null,
         "links": {},
-        "song_file": "kalliolle-kukkulalle.html",
-        "o_num": 40
+        "song_file": "kalliolle-kukkulalle.html"
     },
     "balladi-toveri-viljasesta": {
         "num": "6",
         "title": "Balladi toveri Viljasesta",
         "author": null,
         "links": {},
-        "song_file": "balladi-toveri-viljasesta.html",
-        "o_num": 12
+        "song_file": "balladi-toveri-viljasesta.html"
     },
     "vapaa-venaja": {
         "num": "35",
         "title": "Vapaa Ven\u00e4j\u00e4",
         "author": null,
         "links": {},
-        "song_file": "vapaa-venaja.html",
-        "o_num": 49
+        "song_file": "vapaa-venaja.html"
     },
     "kolme-pikku-assaa": {
         "num": "60",
@@ -96,8 +90,7 @@
         "author": null,
         "links": {},
         "subheading": "(S\u00e4vel: Kolme pikkumiest\u00e4)",
-        "song_file": "kolme-pikku-assaa.html",
-        "o_num": 24
+        "song_file": "kolme-pikku-assaa.html"
     },
     "suomi-myyntiin": {
         "num": 125,
@@ -112,8 +105,7 @@
         "title": "Kansainv\u00e4linen",
         "author": null,
         "links": {},
-        "song_file": "kansainvalinen.html",
-        "o_num": null
+        "song_file": "kansainvalinen.html"
     },
     "the-internationale": {
         "num": 102,
@@ -127,32 +119,28 @@
         "title": "Punakaartin marssi",
         "author": null,
         "links": {},
-        "song_file": "punakaartin-marssi.html",
-        "o_num": 13
+        "song_file": "punakaartin-marssi.html"
     },
     "nuorison-marssi": {
         "num": "62",
         "title": "Nuorison marssi",
         "author": null,
         "links": {},
-        "song_file": "nuorison-marssi.html",
-        "o_num": 3
+        "song_file": "nuorison-marssi.html"
     },
     "kisallittaret": {
         "num": "34",
         "title": "Kis\u00e4llitt\u00e4ret",
         "author": null,
         "links": {},
-        "song_file": "kisallittaret.html",
-        "o_num": 5
+        "song_file": "kisallittaret.html"
     },
     "allendelle": {
         "num": "7",
         "title": "Allendelle",
         "author": null,
         "links": {},
-        "song_file": "allendelle.html",
-        "o_num": 11
+        "song_file": "allendelle.html"
     },
     "bella-ciao": {
         "num": "25",
@@ -161,8 +149,7 @@
         "links": {
             "Youtube": "https://www.youtube.com/watch?v=VS8GIqjPVHM"
         },
-        "song_file": "bella-ciao.html",
-        "o_num": 14
+        "song_file": "bella-ciao.html"
     },
     "oikeuden-jumalatar": {
         "num": 130,
@@ -177,48 +164,42 @@
         "title": "Partisaanin marssi",
         "author": null,
         "links": {},
-        "song_file": "partisaanimarssi.html",
-        "o_num": 15
+        "song_file": "partisaanimarssi.html"
     },
     "natalia": {
         "num": "8",
         "title": "Natalia ",
         "author": null,
         "links": {},
-        "song_file": "natalia.html",
-        "o_num": 6
+        "song_file": "natalia.html"
     },
     "nuoruustango": {
         "num": "19",
         "title": "Nuoruustango",
         "author": null,
         "links": {},
-        "song_file": "nuoruustango.html",
-        "o_num": 58
+        "song_file": "nuoruustango.html"
     },
     "hasta-siempre-comandante": {
         "num": "4",
         "title": "Hasta siempre, Comandante",
         "author": null,
         "links": {},
-        "song_file": "hasta-siempre-comandante.html",
-        "o_num": 16
+        "song_file": "hasta-siempre-comandante.html"
     },
     "jos-rakastat": {
         "num": "23",
         "title": "Jos rakastat",
         "author": null,
         "links": {},
-        "song_file": "jos-rakastat.html",
-        "o_num": 42
+        "song_file": "jos-rakastat.html"
     },
     "uralin-pihlaja": {
         "num": "21",
         "title": "Uralin pihlaja",
         "author": null,
         "links": {},
-        "song_file": "uralin-pihlaja.html",
-        "o_num": 43
+        "song_file": "uralin-pihlaja.html"
     },
     "varrella-virran": {
         "num": 144,
@@ -239,8 +220,7 @@
         "title": "Min\u00e4 suojelen sinua kaikelta",
         "author": null,
         "links": {},
-        "song_file": "mina-suojelen-sinua-kaikelta.html",
-        "o_num": 47
+        "song_file": "mina-suojelen-sinua-kaikelta.html"
     },
     "lenin-seta-asuu-venajalla": {
         "num": 160,
@@ -255,24 +235,21 @@
         "author": null,
         "links": {},
         "subheading": "(S\u00e4v. Pikajuna Meksikoon)",
-        "song_file": "sikajuna-brysseliin.html",
-        "o_num": 23
+        "song_file": "sikajuna-brysseliin.html"
     },
     "warshawjanka": {
         "num": "39",
         "title": "Warshawjanka",
         "author": null,
         "links": {},
-        "song_file": "warshawjanka.html",
-        "o_num": 17
+        "song_file": "warshawjanka.html"
     },
     "partisaanivalssi": {
         "num": "17",
         "title": "Partisaanivalssi",
         "author": null,
         "links": {},
-        "song_file": "partisaanivalssi.html",
-        "o_num": 18
+        "song_file": "partisaanivalssi.html"
     },
     "herrojen-kanssa-pellon-laidassa": {
         "num": 161,
@@ -286,8 +263,7 @@
         "title": "Laulu siirtoty\u00f6l\u00e4isest\u00e4",
         "author": null,
         "links": {},
-        "song_file": "laulu-siirtotyolaisesta.html",
-        "o_num": 19
+        "song_file": "laulu-siirtotyolaisesta.html"
     },
     "taistojen-tiella": {
         "num": 120,
@@ -298,7 +274,7 @@
     },
     "wir-sind-uberall": {
         "num": 162,
-        "title": "Wir sind überall",
+        "title": "Wir sind \u00fcberall",
         "author": null,
         "links": {},
         "song_file": "wir-sind-uberall.html"
@@ -308,8 +284,7 @@
         "title": "Solidarity forever",
         "author": null,
         "links": {},
-        "song_file": "solidarity-forever.html",
-        "o_num": 41
+        "song_file": "solidarity-forever.html"
     },
     "oodi-vihervasemmistolaisuudelle": {
         "num": 134,
@@ -331,8 +306,7 @@
         "title": "Vapauden kaiho",
         "author": null,
         "links": {},
-        "song_file": "vapauden-kaiho.html",
-        "o_num": 9
+        "song_file": "vapauden-kaiho.html"
     },
     "se-erityinen-tyowaen-risteily-kappale": {
         "num": 137,
@@ -415,16 +389,14 @@
         "author": null,
         "links": {},
         "subheading": "(S\u00e4vel: Levoton tuhkimo, san. Anna Lemstr\u00f6m)",
-        "song_file": "valkoinen-cis-heteromies.html",
-        "o_num": 29
+        "song_file": "valkoinen-cis-heteromies.html"
     },
     "ampukaa-komissaarit": {
         "num": "50",
         "title": "Ampukaa komissaarit, nuo hullut koirat",
         "author": null,
         "links": {},
-        "song_file": "ampukaa-komissaarit.html",
-        "o_num": 65
+        "song_file": "ampukaa-komissaarit.html"
     },
     "volga": {
         "num": 148,
@@ -438,16 +410,14 @@
         "title": "Toveri, mit\u00e4 odotat?",
         "author": null,
         "links": {},
-        "song_file": "toveri-mita-odotat.html",
-        "o_num": 21
+        "song_file": "toveri-mita-odotat.html"
     },
     "koyhaliston-marssi": {
         "num": "41",
         "title": "K\u00f6yh\u00e4list\u00f6n marssi",
         "author": null,
         "links": {},
-        "song_file": "koyhaliston-marssi.html",
-        "o_num": 22
+        "song_file": "koyhaliston-marssi.html"
     },
     "working-class-hero": {
         "num": 145,
@@ -465,7 +435,7 @@
     },
     "loldiers-anthem": {
         "num": 53,
-        "title": "Loldiers Anthem / Emme suostu pelk\u00e4\u00e4m\u00e4\u00e4n",
+        "title": "Emme suostu pelk\u00e4\u00e4m\u00e4\u00e4n",
         "author": "Paleface",
         "links": {
             "Youtube": "https://www.youtube.com/watch?v=-0lht7PZLac"
@@ -474,7 +444,7 @@
     },
     "haistakaa-paska-koko-valtiovalta": {
         "num": 139,
-        "title": "Haistakaa paska koko valtiovalta",
+        "title": "haistakaa paska koko valtiovalta",
         "author": "Irwin",
         "song_file": "haistakaa-paska-koko-valtiovalta.html"
     },
@@ -483,8 +453,7 @@
         "title": "Esko Kulonen",
         "author": null,
         "links": {},
-        "song_file": "esko-kulonen.html",
-        "o_num": 10
+        "song_file": "esko-kulonen.html"
     },
     "nalkamaan-laulu": {
         "num": 150,
@@ -497,8 +466,7 @@
         "num": "27",
         "title": "Kolme pikku miest\u00e4",
         "author": null,
-        "song_file": "kolme-pikku-miesta.html",
-        "o_num": 51
+        "song_file": "kolme-pikku-miesta.html"
     },
     "juo-kaljas-laulellen": {
         "num": 152,
