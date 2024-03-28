@@ -47,7 +47,7 @@ import { ActivatedRoute } from '@angular/router';
 		</li>
 
 		<li class="list-group-item notice" *ngIf="searchResult == null">
-			<p>Laulukirjaa kehitetään tällä hetkellä aktiivisesti, joten <a href="mailto:vallankumouslaulukirja@miron.fi">l&auml;het&auml; palautetta</a>, mikäli havaitset jotain huomautettavaa.</p>
+			<p>Laulukirjaa kehitetään, joten <a href="https://docs.google.com/forms/d/e/1FAIpQLSdwoZsppuBa2C6ELUPCvE40Wq--JSoNwOtoNYunDE9z0eeA_A/viewform">l&auml;het&auml; palautetta</a>, mikäli havaitset jotain huomautettavaa.</p>
 		</li>
 	</ul>`,
 	styles: [
