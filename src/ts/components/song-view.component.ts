@@ -38,6 +38,10 @@ let hammertime;
 			width: 100%;
 			white-space: pre-wrap;
 			word-break: normal;
+		}
+		
+		:host ::ng-deep #song-body section {
+			text-align: left;
 		}`
 	]
 })

@@ -1,4 +1,22 @@
 {
+    "jaahyvaiset-aseille": {
+        "num": 16,
+        "title": "Jäähyväiset aseille",
+        "author": "Kollaa Kestää",
+        "song_file": "jaahyvaiset-aseille.html"
+    },
+    "rahan-takii": {
+        "num": 59,
+        "title": "Rahan takii",
+        "author": "Annti Tuisku",
+        "song_file": "rahan-takii.html"
+    },
+    "sinua-sinua-rakastan": {
+        "num": 22,
+        "title": "Sinua, sinua rakastan",
+        "author": "Caj Chydenius",
+        "song_file": "sinua-sinua-rakastan.html"
+    },
     "united-fruit": {
         "num": 157,
         "title": "United Fruit",
