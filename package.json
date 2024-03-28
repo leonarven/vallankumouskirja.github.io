@@ -8,6 +8,7 @@
 		"build:watch": "ng build --watch --optimization=false",
 		"postbuild": "bash postbuild.sh",
 		"watch": "ng build --watch -c development",
+		"serve": "ng serve -c development",
 		"server": "node_modules/.bin/http-server docs"
 	},
 	"repository": {
