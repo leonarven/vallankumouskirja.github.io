@@ -3,7 +3,6 @@ import { CommonModule  } from '@angular/common';
 import { FormsModule   } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { UpgradeModule } from '@angular/upgrade/static';
-import { UIRouterUpgradeModule } from '@uirouter/angular-hybrid';
 import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
